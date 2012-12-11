@@ -53,6 +53,8 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
     
     /** Cached list of system function metadata, created in constructor */
     private List<org.teiid.metadata.FunctionMethod> functions = new ArrayList<org.teiid.metadata.FunctionMethod>();
+
+		private ClassLoader classLoader;
     
     /**
      * Construct a source of system metadata.
@@ -1102,6 +1104,14 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
      * @throws ClassNotFoundException If class could not be found
      */
     public Class<?> getInvocationClass(String className) throws ClassNotFoundException {
-        return Class.forName(className);    
-    }
+        return Class.forName(className, true, classLoader==null?Thread.currentThread().getContextClassLoader():classLoader);
+		}
+					     
+		public void setClassLoader(ClassLoader classLoader) {
+		 		this.classLoader = classLoader;
+		}
+												    
+		public ClassLoader getClassLoader() {
+				return classLoader;
+		}
 }

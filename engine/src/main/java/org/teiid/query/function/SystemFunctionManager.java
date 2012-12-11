@@ -34,6 +34,7 @@ public class SystemFunctionManager {
 
 	private FunctionTree systemFunctionTree;
 	private boolean allowEnvFunction = true;
+	private ClassLoader classLoader;
 	
 	public FunctionTree getSystemFunctions() {
     	if(systemFunctionTree == null) { 
@@ -73,5 +74,13 @@ public class SystemFunctionManager {
 
 	public void setAllowEnvFunction(boolean allowEnvFunction) {
 		this.allowEnvFunction = allowEnvFunction;
-	}    
+	}
+
+	public ClassLoader getClassLoader() {
+	 	return this.classLoader;
+	}
+								    
+	public void setClassloader(ClassLoader classloader) {
+	 	this.classLoader = classloader;
+	}
 }
