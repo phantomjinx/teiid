@@ -482,16 +482,6 @@
 		<module>api</module>
 		<module>client</module>
 		<module>engine</module>
-		<module>connectors</module>
-		<module>console</module>
-		<module>metadata</module>
-		<module>runtime</module>
-		<module>adminshell</module>
-		<module>cache-jbosscache</module>
-		<module>hibernate-dialect</module>
-        <module>jboss-integration</module>
-		<module>test-integration</module>
-        <module>client-jdk15</module>
   </modules>
     <distributionManagement>
         <repository>
