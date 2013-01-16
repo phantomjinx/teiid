@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-
 import org.teiid.api.exception.query.QueryParserException;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.lang.CacheHint;
@@ -200,9 +199,6 @@ public class QueryParser {
     }
         
     public static String getMessage(ParseException pe, int maxTokenSequence, int maxExpansions) {
-		if (!pe.specialConstructor) {
-			return pe.getMessage();
-		}
 		StringBuffer expected = new StringBuffer();
 		int[][] expectedTokenSequences = pe.expectedTokenSequences;
 		String[] tokenImage = pe.tokenImage;

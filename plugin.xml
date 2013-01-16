@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.teiid.designer.spi.teiidRuntimeClient">
+      <runtimeFactory
+            class="org.teiid772.runtime.ExecutionAdminFactory">
+         <version
+               major="7"
+               minor="7"
+               micro="x">
+         </version>
+      </runtimeFactory>
+   </extension>
+
+</plugin>

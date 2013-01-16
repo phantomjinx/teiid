@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="engine/src/main/java"/>
+	<classpathentry kind="src" path="common-core/src/main/java"/>
+	<classpathentry kind="src" path="common-core/src/main/resources"/>
+	<classpathentry kind="src" path="client/src/main/java"/>
+	<classpathentry kind="src" path="api/src/main/resources"/>
+	<classpathentry kind="src" path="api/src/main/java"/>
+	<classpathentry kind="src" path="engine/src/main/resources"/>
+	<classpathentry kind="src" path="client/src/main/resources"/>
+	<classpathentry kind="src" path="designer"/>
+	<classpathentry kind="src" path="engine/src/main/javacc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/connector-api.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-managed.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-metatype.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-reflect.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-vfs.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple.jar"/>
+	<classpathentry kind="lib" path="lib/jta.jar"/>
+	<classpathentry kind="lib" path="lib/nux.jar"/>
+	<classpathentry kind="lib" path="lib/xom.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,498 +1,329 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jboss.teiid</groupId>
-	<artifactId>teiid-parent</artifactId>
-	<packaging>pom</packaging>
-	<name>Teiid</name>
-	<version>7.7.2</version>
-	<description>Federated SQL and XML query engine.</description>
-	<properties>
-		<ant.version>1.7.0</ant.version>
-		<site.url>http://www.jboss.org/teiid</site.url>
-	</properties>
-	<scm>
-        <connection>scm:svn:https://anonsvn.jboss.org/repos/teiid/branches/7.7.x</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/teiid/branches/7.7.x</developerConnection>
-		<url>http://anonsvn.jboss.org/repos/teiid/trunk</url>
-	</scm>
-	<licenses>
-		<license>
-			<name>GNU Lesser General Public License</name>
-			<url>http://www.gnu.org/licenses/lgpl.html</url>
-			<distribution>repo</distribution>
-			<comments>A business-friendly OSS license</comments>
-		</license>
-	</licenses>
-	<url>${site.url}</url>
-	<developers>
-		<developer>
-			<name>Steve Hawkins</name>
-			<id>steve</id>
-			<email>shawkins@redhat.com</email>
-			<organization>Red Hat</organization>
-			<roles>
-				<role>Project Lead</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-		<developer>
-			<name>Ramesh Reddy</name>
-			<id>ramesh</id>
-			<email>rareddy@redhat.com</email>
-			<organization>Red Hat</organization>
-			<roles>
-				<role>Project Lead</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-		<developer>
-			<name>Van Halbert</name>
-			<id>van</id>
-			<email>vhalbert@redhat.com</email>
-			<organization>Red Hat</organization>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-		<developer>
-			<name>Ted Jones</name>
-			<id>ted</id>
-			<email>tejones@redhat.com</email>
-			<organization>Red Hat</organization>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-	</developers>
-	<profiles>
-    <profile>
-      <!-- 
-          This profile is activated manually, as in "mvn ... -P release ..."
-		  -->
-      <id>release</id>
-      <properties>
-        <maven.javadoc.skip>true</maven.javadoc.skip>
-      </properties>
-      <modules>
-        <module>documentation</module>
-        <module>build</module>        
-      </modules>
-      <build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss.tools.teiid.plugins</groupId>
+        <artifactId>teiid</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </parent>
+    <groupId>org.jboss.tools.teiid.plugins.teiid</groupId>
+    <artifactId>org.teiid.7.7.x</artifactId>
+    <packaging>eclipse-plugin</packaging>
+    <name>teiid runtime client 7.7.x</name>
+    <version>8.1.0-SNAPSHOT</version>
+    <description>Federated SQL and XML query engine.</description>
+    <properties>
+        <site.url>http://www.jboss.org/teiid</site.url>
+    </properties>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License</name>
+            <url>http://www.gnu.org/licenses/lgpl.html</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <url>${site.url}</url>
+    <developers>
+        <developer>
+            <name>Steve Hawkins</name>
+            <id>steve</id>
+            <email>shawkins@redhat.com</email>
+            <organization>Red Hat</organization>
+            <roles>
+                <role>Project Lead</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+        <developer>
+            <name>Ramesh Reddy</name>
+            <id>ramesh</id>
+            <email>rareddy@redhat.com</email>
+            <organization>Red Hat</organization>
+            <roles>
+                <role>Project Lead</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+        <developer>
+            <name>Van Halbert</name>
+            <id>van</id>
+            <email>vhalbert@redhat.com</email>
+            <organization>Red Hat</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+        <developer>
+            <name>Ted Jones</name>
+            <id>ted</id>
+            <email>tejones@redhat.com</email>
+            <organization>Red Hat</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+    </developers>
+    <profiles>
+        <profile>
+            <!-- Generates the source files from the template for use in 
+                eclipse IDE. Profile called explicity from an eclipse auto builder -->
+            <id>generate-javacc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>javacc-maven-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <id>javacc</id>
+                                <goals>
+                                    <goal>javacc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/engine</sourceDirectory>
+                            <includes>
+                                <include>src/main/javacc/**/*.jj</include>
+                            </includes>
+                            <outputDirectory>${project.basedir}/engine/src/main/javacc</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <build>
         <plugins>
-       
-        </plugins>
-        
-      </build>
-    </profile>
-    
-     <profile>
-      <id>docs</id>
-      <modules>
-        <module>documentation</module>
-      </modules>
-      </profile>     
-    <profile>
-      <!--
-          This is to enable faster build for development time.
-          -->
-      <id>dev</id>
-      <modules>
-        <module>build</module>
-      </modules>
-    </profile>
-	</profiles>
-	<build>
-	<!-- This section defines the default plugin settings inherited by child projects. -->
-		<pluginManagement>
-			<plugins>
-		<!-- Fixes how test resources of a project can be used in projects dependent on it  -->
-		        <plugin>
-		          <groupId>org.apache.maven.plugins</groupId>
-		          <artifactId>maven-javadoc-plugin</artifactId>
-		          <version>2.8.1</version>
-		          <configuration>
-		            <maxmemory>512m</maxmemory>
-		            <excludePackageNames>*.internal,com.*,net.*,org.teiid.cache,org.teiid.common.*,org.teiid.core,org.teiid.deployers,org.teiid.dqp.*,org.teiid.jboss,org.teiid.netty.*,org.teiid.odbc,org.teiid.query,org.teiid.resource.*,org.teiid.rhq.*,org.teiid.runtime,org.teiid.security,org.teiid.services,org.teiid.templates,org.teiid.test.*,org.teiid.transport,org.teiid.vdb.*</excludePackageNames>
-		          </configuration>
-		          <executions>
-		            <execution>
-		              <goals>
-		                <goal>aggregate-jar</goal>
-		              </goals>
-		            </execution>
-		          </executions>
-		       </plugin>   
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.2</version>
-				</plugin>
-				<plugin>
-				  <artifactId>maven-assembly-plugin</artifactId>
-				  <version>2.2-beta-6-m1-jboss</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-	  <!-- Specify the compiler options and settings -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<showDeprecation>false</showDeprecation>
-					<showWarnings>false</showWarnings>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<includes>
-						<include>**/*TestCase.java</include>
-						<include>**/*Test.java</include>
-						<include>**/Test*.java</include>
-					</includes>
-					<excludes>
-						<exclude>**/Abstract*TestCase.java</exclude>
-			<!-- hack to prevent anonymous inner classes in Tests from being run as tests -->
-						<include>**/Test*$*.java</include>
-					</excludes>
-					<systemProperties>
-						<property>
-							<name>user.dir</name>
-							<value>${basedir}/target</value>
-						</property>
-						<property>
-							<name>java.io.tmpdir</name>
-							<value>${basedir}/target</value>
-						</property>
-					</systemProperties>
-				</configuration>
-			</plugin>
-      <!-- 
-      Build a test-jar for each project, so that src/test/* resources and classes can be used
-      in other projects.  Also customize how the jar files are assembled.
-      -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<archive>
-						<manifest>
-							<addDefaultSpecificationEntries> true</addDefaultSpecificationEntries>
-							<addDefaultImplementationEntries> true</addDefaultImplementationEntries>
-						</manifest>
-						<manifestEntries>
-							<Implementation-URL>${project.url}</Implementation-URL>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
+                        <id>copy-dependencies</id>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>copy</goal>
                         </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>javax.resource</groupId>
+                                    <artifactId>connector-api</artifactId>
+                                    <version>1.5</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.googlecode.json-simple</groupId>
+                                    <artifactId>json-simple</artifactId>
+                                    <version>1.1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>javax.transaction</groupId>
+                                    <artifactId>jta</artifactId>
+                                    <version>1.1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>nux</groupId>
+                                    <artifactId>nux</artifactId>
+                                    <version>1.6</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>xom</groupId>
+                                    <artifactId>xom</artifactId>
+                                    <version>1.2</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jboss</groupId>
+                                    <artifactId>jboss-reflect</artifactId>
+                                    <version>2.2.1.SP1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jboss.man</groupId>
+                                    <artifactId>jboss-managed</artifactId>
+                                    <version>2.1.1.GA</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jboss.man</groupId>
+                                    <artifactId>jboss-metatype</artifactId>
+                                    <version>2.1.1.GA</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jboss</groupId>
+                                    <artifactId>jboss-vfs</artifactId>
+                                    <version>2.1.2.GA</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <skip>false</skip>
+                            <stripVersion>true</stripVersion>
+                            <outputDirectory>${project.basedir}/lib</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-		</plugins>
-	</build>
-	<repositories>
-		<repository>
-			<id>jboss-public-repository</id>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tychoVersion}</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>javacc-maven-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>javacc</id>
+                        <goals>
+                            <goal>javacc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/engine</sourceDirectory>
+                        <includes>
+                            <include>src/main/javacc/**/*.jj</include>
+                        </includes>
+                    <outputDirectory>${project.basedir}/engine/src/main/javacc</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse 
+                    m2e settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.apache.maven.plugins
+                                        </groupId>
+                                        <artifactId>
+                                            maven-dependency-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [2.4,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>copy</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <repositories>
+        <repository>
+            <id>jboss-public-repository</id>
             <name>JBoss Public Maven Repository Group</name>
-			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.5</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-      <!--
-      Declare all dependency versions and default scopes here, but not optional.
-      Each module should declare it's direct dependency and possibily overwrite scope/optional.
-      -->
-      
-      <!-- Internal dependencies -->
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-common-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-common-core</artifactId>
-				<type>test-jar</type>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-api</artifactId>
-				<type>test-jar</type>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-console</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-console</artifactId>
-				<type>test-jar</type>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-client</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-client</artifactId>
-				<type>test-jar</type>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-engine</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-engine</artifactId>
-				<type>test-jar</type>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-metadata</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-metadata</artifactId>
-				<type>test-jar</type>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-txn-jbossts</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.teiid</groupId>
-				<artifactId>teiid-cache-jbosscache</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>javax.resource</groupId>
+            <artifactId>connector-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nux</groupId>
+            <artifactId>nux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>xom</groupId>
+            <artifactId>xom</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-reflect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.man</groupId>
+            <artifactId>jboss-managed</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.man</groupId>
+            <artifactId>jboss-metatype</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-vfs</artifactId>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
             <dependency>
-                <groupId>org.jboss.teiid</groupId>
-                <artifactId>teiid-jboss-integration</artifactId>
-                <version>${project.version}</version>
+                <groupId>javax.resource</groupId>
+                <artifactId>connector-api</artifactId>
+                <version>1.5</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.teiid</groupId>
-                <artifactId>teiid-runtime</artifactId>
-                <version>${project.version}</version>
-            </dependency>    
-      
-      <!-- External dependencies -->
-			<dependency>
-				<groupId>javax.resource</groupId>
-				<artifactId>connector-api</artifactId>
-				<version>1.5</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>javax.transaction</groupId>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.transaction</groupId>
                 <artifactId>jta</artifactId>
-				<version>1.1</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.14</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-logging</groupId>
-				<artifactId>commons-logging</artifactId>
-				<version>1.1</version>
-				<exclusions>
-					<exclusion>
-						<groupId>logkit</groupId>
-						<artifactId>logkit</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>avalon-framework</groupId>
-						<artifactId>avalon-framework</artifactId>
-					</exclusion>
-                    <exclusion>
-                        <groupId>javax.servlet</groupId>
-                        <artifactId>servlet-api</artifactId>
-                    </exclusion>       
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>jgroups</groupId>
-				<artifactId>jgroups</artifactId>
-				<version>2.6.15.GA</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.cache</groupId>
-				<artifactId>jbosscache-core</artifactId>
-				<version>3.2.5.GA</version>
-                <exclusions>
-                    <exclusion>
-                      <groupId>javax.transaction</groupId>
-                      <artifactId>jta</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>       
-                    <exclusion>
-                        <groupId>org.jboss</groupId>
-                        <artifactId>jboss-common-core</artifactId>
-                    </exclusion>                          
-                </exclusions>
-                <scope>provided</scope>                
-			</dependency>
-            <dependency>
-                <groupId>org.jboss.man</groupId>
-                <artifactId>jboss-managed</artifactId>
-                <version>2.1.0.SP1</version>
-                <scope>provided</scope>
-            </dependency>        
-            <dependency>
-              <groupId>org.jboss.man</groupId>
-              <artifactId>jboss-metatype</artifactId>
-              <version>2.1.0.SP1</version>
-              <scope>provided</scope>
-            </dependency>            
-            <dependency>
-                <groupId>org.jboss.integration</groupId>
-                <artifactId>jboss-profileservice-spi</artifactId>
-                <version>5.1.0.GA</version>
-                <scope>provided</scope>
-            </dependency>      
-            <dependency>    
-                <groupId>org.jboss</groupId>
-                <artifactId>jboss-vfs</artifactId>
-                <version>2.1.2.GA</version>
-                <scope>provided</scope>
+                <version>1.1</version>
             </dependency>
-            <dependency>    
-                <groupId>org.jboss.deployers</groupId>
-                <artifactId>jboss-deployers-vfs-spi</artifactId>
-                <version>2.0.7.GA</version>
-                <scope>provided</scope>
-            </dependency>      
-            <dependency>    
-                <groupId>org.jboss.deployers</groupId>
-                <artifactId>jboss-deployers-vfs</artifactId>
-                <version>2.0.7.GA</version>
-                <scope>provided</scope>
-            </dependency>              
             <dependency>
-              <groupId>org.jboss.jbossas</groupId>
-              <artifactId>jboss-as-connector</artifactId>
-              <version>5.1.0.GA</version>
-              <scope>provided</scope>
+                <groupId>nux</groupId>
+                <artifactId>nux</artifactId>
+                <version>1.6</version>
+            </dependency>
+            <dependency>
+                <groupId>xom</groupId>
+                <artifactId>xom</artifactId>
+                <version>1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss</groupId>
                 <artifactId>jboss-reflect</artifactId>
                 <version>2.0.2.GA</version>
-                <scope>provided</scope>
-            </dependency>             
+            </dependency>
             <dependency>
-              <groupId>org.jboss.remoting</groupId>
-              <artifactId>jboss-remoting</artifactId>
-              <version>2.5.1</version>
-              <scope>provided</scope>
-            </dependency>            
-			<dependency>
-				<groupId>net.sourceforge.saxon</groupId>
-				<artifactId>saxonhe</artifactId>
-				<version>9.2.1.5</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.netty</groupId>
-				<artifactId>netty</artifactId>
-				<version>3.2.3.Final</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.ant</groupId>
-				<artifactId>ant</artifactId>
-				<version>${ant.version}</version>
-			</dependency>
-			<dependency>
-  				<groupId>com.googlecode.json-simple</groupId>
-				<artifactId>json-simple</artifactId>
-  				<version>1.1</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<modules>
-		<module>common-core</module>
-		<module>api</module>
-		<module>client</module>
-		<module>engine</module>
-  </modules>
-    <distributionManagement>
-        <repository>
-            <id>jboss-releases-repository</id>
-            <name>JBoss Releases Repository</name>
-            <url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>jboss-snapshots-repository</id>
-            <name>JBoss Snapshots Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+                <groupId>org.jboss.man</groupId>
+                <artifactId>jboss-managed</artifactId>
+                <version>2.1.0.SP1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.man</groupId>
+                <artifactId>jboss-metatype</artifactId>
+                <version>2.1.0.SP1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jboss-vfs</artifactId>
+                <version>2.1.2.GA</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
