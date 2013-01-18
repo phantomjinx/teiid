@@ -33,11 +33,6 @@ public class FunctionImpl extends ExpressionImpl implements IFunction {
     }
     
     @Override
-    public boolean isFunction() {
-        return true;
-    }
-
-    @Override
     public void acceptVisitor(ILanguageVisitor visitor) {
         visitor.visit(this);
     }
