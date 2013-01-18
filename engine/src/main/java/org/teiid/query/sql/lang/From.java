@@ -153,7 +153,7 @@ public class From implements LanguageObject {
     /**
      * Return copy of this From clause.
      */
-    public Object clone() {
+    public From clone() {
 		return new From(LanguageObject.Util.deepClone(clauses, FromClause.class));
     }
 

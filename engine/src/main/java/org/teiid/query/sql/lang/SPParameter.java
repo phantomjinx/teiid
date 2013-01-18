@@ -327,7 +327,7 @@ public class SPParameter implements Cloneable {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public SPParameter clone() {
         SPParameter copy = new SPParameter();
         copy.index = this.index;
         copy.parameterType = this.parameterType;

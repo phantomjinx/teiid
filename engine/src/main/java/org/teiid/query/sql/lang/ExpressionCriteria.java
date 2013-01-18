@@ -33,7 +33,7 @@ public class ExpressionCriteria extends Criteria {
 		this.expression = expression;
 	}
 	
-	public Object clone() {
+	public ExpressionCriteria clone() {
 		return new ExpressionCriteria((Expression) expression.clone());
 	}
 

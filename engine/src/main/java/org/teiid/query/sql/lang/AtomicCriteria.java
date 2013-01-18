@@ -66,7 +66,7 @@ public abstract class AtomicCriteria extends LogicalCriteria {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public abstract Object clone();
+	public abstract AtomicCriteria clone();
 
 }
 

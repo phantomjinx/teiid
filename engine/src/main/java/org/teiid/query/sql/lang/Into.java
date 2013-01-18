@@ -104,7 +104,7 @@ public class Into implements LanguageObject {
      * Get deep clone of object
      * @return Deep copy of the object
      */
-    public Object clone() {
+    public Into clone() {
         GroupSymbol copyGroup = null;
         if(this.group != null) { 
             copyGroup = (GroupSymbol) this.group.clone();

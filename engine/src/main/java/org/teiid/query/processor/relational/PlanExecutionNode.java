@@ -162,7 +162,7 @@ public class PlanExecutionNode extends RelationalNode {
         return this.plan;
     }
 
-	public Object clone(){
+	public PlanExecutionNode clone(){
 		PlanExecutionNode clonedNode = new PlanExecutionNode();
 		copyTo(clonedNode);
         return clonedNode;

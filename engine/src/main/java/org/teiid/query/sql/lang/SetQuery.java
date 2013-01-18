@@ -158,7 +158,7 @@ public class SetQuery extends QueryCommand {
 	 * Deep clone this object to produce a new identical query.
 	 * @return Deep clone
 	 */
-	public Object clone() {
+	public SetQuery clone() {
         SetQuery copy = new SetQuery(this.operation);
 
         this.copyMetadataState(copy);

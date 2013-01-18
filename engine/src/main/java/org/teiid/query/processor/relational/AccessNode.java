@@ -447,7 +447,7 @@ public class AccessNode extends SubqueryAwareRelationalNode {
 		}
 	}
 
-	public Object clone(){
+	public AccessNode clone(){
 		AccessNode clonedNode = new AccessNode();
 		this.copyTo(clonedNode);
 		return clonedNode;

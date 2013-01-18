@@ -174,7 +174,7 @@ public class BetweenCriteria extends PredicateCriteria implements Negatable {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public BetweenCriteria clone() {
         Expression copy = null;
         Expression lowerCopy = null;
         Expression upperCopy = null;

@@ -86,5 +86,5 @@ public abstract class AbstractSetCriteria extends PredicateCriteria implements N
      * Deep copy of object
      * @return Deep copy of object
      */
-    public abstract Object clone();
+    public abstract AbstractSetCriteria clone();
 }

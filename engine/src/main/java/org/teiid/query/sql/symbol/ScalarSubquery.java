@@ -139,7 +139,7 @@ public class ScalarSubquery implements Expression, SubqueryContainer<QueryComman
      * Returns a safe clone
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public ScalarSubquery clone() {
     	QueryCommand copyCommand = null;
         if(getCommand() != null) {
             copyCommand = (QueryCommand) getCommand().clone();

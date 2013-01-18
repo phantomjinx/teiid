@@ -152,7 +152,7 @@ public class JoinNode extends SubqueryAwareRelationalNode {
      * @see org.teiid.query.processor.relational.RelationalNode#clone()
      * @since 4.2
      */
-    public Object clone() {
+    public JoinNode clone() {
         JoinNode clonedNode = new JoinNode(super.getID());
         super.copyTo(clonedNode);
         

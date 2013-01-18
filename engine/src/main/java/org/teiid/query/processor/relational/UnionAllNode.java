@@ -230,7 +230,7 @@ public class UnionAllNode extends RelationalNode {
     	}
     }
 
-	public Object clone(){
+	public UnionAllNode clone(){
 		UnionAllNode clonedNode = new UnionAllNode(super.getID());
 		super.copyTo(clonedNode);
 		return clonedNode;

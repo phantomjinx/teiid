@@ -126,7 +126,7 @@ public class IsNullCriteria extends PredicateCriteria implements Negatable {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public IsNullCriteria clone() {
 	    Expression copy = null;
 	    if(getExpression() != null) { 
 	        copy = (Expression) getExpression().clone();

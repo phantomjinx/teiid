@@ -47,7 +47,7 @@ public class NullNode extends RelationalNode {
     	return Collections.emptyList();
     }
         
-	public Object clone(){
+	public NullNode clone(){
 		NullNode clonedNode = new NullNode(super.getID());
 		super.copyTo(clonedNode);
 		return clonedNode;

@@ -92,7 +92,7 @@ public class BatchedUpdateCommand extends Command {
      * @see java.lang.Object#clone()
      * @since 4.2
      */
-    public Object clone() {
+    public BatchedUpdateCommand clone() {
         List<Command> clonedCommands = LanguageObject.Util.deepClone(this.commands, Command.class);
         BatchedUpdateCommand copy = new BatchedUpdateCommand(clonedCommands);
         copy.singleResult = this.singleResult;

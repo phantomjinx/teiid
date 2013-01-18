@@ -320,7 +320,7 @@ public class Query extends QueryCommand implements FilteredCommand {
 	 * Deep clone Query to produce a new identical query.
 	 * @return Deep clone
 	 */
-	public Object clone() {		
+	public Query clone() {		
 		Query copy = new Query();
 
 		if(select != null) {

@@ -165,7 +165,7 @@ public class LimitNode extends RelationalNode {
         return props;
     }
     
-    public Object clone() {
+    public LimitNode clone() {
         LimitNode node = new LimitNode(getID(), limitExpr, offsetExpr);
         node.implicit = this.implicit;
         copyTo(node);

@@ -49,7 +49,7 @@ public abstract class Criteria implements Expression {
 	 * Abstract clone method
 	 * @return Deep clone of this criteria
 	 */
-	public abstract Object clone();
+	public abstract Criteria clone();
 	
     /**
      * Return the parser string.

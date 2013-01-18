@@ -188,7 +188,7 @@ implements SubqueryContainer<QueryCommand>, ContextReference {
      * @return Deep copy of object
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public SubqueryCompareCriteria clone() {
         Expression leftCopy = null;
         if(getLeftExpression() != null) {
             leftCopy = (Expression) getLeftExpression().clone();
