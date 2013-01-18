@@ -50,6 +50,6 @@ public abstract class PredicateCriteria extends Criteria {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public abstract Object clone();
+	public abstract PredicateCriteria clone();
 
 }  // END CLASS

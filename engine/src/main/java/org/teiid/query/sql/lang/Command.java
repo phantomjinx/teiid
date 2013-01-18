@@ -207,7 +207,7 @@ public abstract class Command implements LanguageObject {
         this.isResolved = isResolved;
     }
         
-    public abstract Object clone();
+    public abstract Command clone();
     
     protected void copyMetadataState(Command copy) {
         if(this.getExternalGroupContexts() != null) {

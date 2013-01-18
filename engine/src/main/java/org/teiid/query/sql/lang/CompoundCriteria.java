@@ -269,7 +269,7 @@ public class CompoundCriteria extends LogicalCriteria {
 	 * Deep clone.  It returns a new LogicalCriteria with a new list of clones
 	 * of the criteria objects.
 	 */
-	public Object clone() {
+	public CompoundCriteria clone() {
 		CompoundCriteria copy = new CompoundCriteria();
 		copy.setOperator(getOperator());
 

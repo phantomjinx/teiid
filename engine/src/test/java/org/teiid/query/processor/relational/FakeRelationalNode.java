@@ -127,7 +127,7 @@ public class FakeRelationalNode extends RelationalNode {
         return super.getBatchSize();
     }
     
-	public Object clone(){
+	public FakeRelationalNode clone(){
 		throw new UnsupportedOperationException();
 	}
 }

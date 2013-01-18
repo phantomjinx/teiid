@@ -181,7 +181,7 @@ public class Option implements LanguageObject {
      * Return deep copy of this option object
      * @return Deep copy of the object
      */
-    public Object clone() {
+    public Option clone() {
         Option newOption = new Option();
         newOption.setNoCache(noCache);
         

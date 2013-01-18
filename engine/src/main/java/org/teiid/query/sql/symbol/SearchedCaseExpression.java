@@ -107,7 +107,7 @@ public class SearchedCaseExpression extends AbstractCaseExpression {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public SearchedCaseExpression clone() {
         int whenCount = getWhenCount();
         ArrayList whenCopy = new ArrayList(whenCount);
         ArrayList thenCopy = new ArrayList(whenCount);

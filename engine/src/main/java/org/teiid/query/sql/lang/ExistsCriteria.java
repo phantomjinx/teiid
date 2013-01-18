@@ -189,7 +189,7 @@ implements SubqueryContainer<QueryCommand>, ContextReference, Negatable {
      * @return Deep copy of object
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public ExistsCriteria clone() {
         ExistsCriteria ec = new ExistsCriteria((QueryCommand) this.command.clone());
         ec.subqueryHint = this.subqueryHint.clone();
         ec.setNegated(this.negated);

@@ -143,7 +143,7 @@ public class WindowFunctionProjectNode extends SubqueryAwareRelationalNode {
 		}
 	}
 	
-	public Object clone(){
+	public WindowFunctionProjectNode clone(){
 		WindowFunctionProjectNode clonedNode = new WindowFunctionProjectNode();
         this.copyTo(clonedNode);
         clonedNode.windows = windows;

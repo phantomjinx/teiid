@@ -135,7 +135,7 @@ public class JoinType implements LanguageObject {
  	 * Class is immutable, so clone can just return the same class
  	 * @return Same object - these objects are immutable
 	 */
-	public Object clone() { 
+	public JoinType clone() { 
 		return this;
 	}
 	

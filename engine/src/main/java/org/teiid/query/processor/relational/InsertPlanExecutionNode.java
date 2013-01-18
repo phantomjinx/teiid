@@ -90,7 +90,7 @@ public class InsertPlanExecutionNode extends PlanExecutionNode {
 		return true;
 	}
 	
-	public Object clone(){
+	public InsertPlanExecutionNode clone(){
 		InsertPlanExecutionNode clonedNode = new InsertPlanExecutionNode(super.getID(), this.metadata);
 		copyTo(clonedNode);
         return clonedNode;

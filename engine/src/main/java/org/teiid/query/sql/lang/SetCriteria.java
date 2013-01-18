@@ -144,7 +144,7 @@ public class SetCriteria extends AbstractSetCriteria {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public SetCriteria clone() {
 	    Expression copy = null;
 	    if(getExpression() != null) { 
 	        copy = (Expression) getExpression().clone();

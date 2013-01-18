@@ -205,7 +205,7 @@ public class StoredProcedure extends ProcedureContainer {
         visitor.visit(this);
     }
 
-    public Object clone() {
+    public StoredProcedure clone() {
         StoredProcedure copy = new StoredProcedure();
         copy.setModelID(getModelID());
         copy.setProcedureName(getProcedureName());

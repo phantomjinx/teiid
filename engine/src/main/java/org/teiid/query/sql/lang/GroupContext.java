@@ -25,7 +25,6 @@ package org.teiid.query.sql.lang;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.teiid.core.TeiidRuntimeException;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.symbol.GroupSymbol;

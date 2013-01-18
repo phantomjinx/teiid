@@ -132,7 +132,7 @@ public abstract class AbstractCaseExpression implements Expression {
         return hash;
     }
     
-    public abstract Object clone();
+    public abstract AbstractCaseExpression clone();
 
     /**
      * Return a String representation of this object using SQLStringVisitor.

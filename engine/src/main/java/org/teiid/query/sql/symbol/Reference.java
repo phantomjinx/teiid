@@ -112,7 +112,7 @@ public class Reference implements Expression, ContextReference {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public Reference clone() {
         return new Reference(this);
     }
 

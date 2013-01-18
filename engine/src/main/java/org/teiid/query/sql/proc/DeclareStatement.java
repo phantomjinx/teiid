@@ -109,7 +109,7 @@ public class DeclareStatement extends AssignmentStatement {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {		
+	public DeclareStatement clone() {		
         if (getValue() == null) {
             return new DeclareStatement(this.getVariable().clone(), this.varType);
         }

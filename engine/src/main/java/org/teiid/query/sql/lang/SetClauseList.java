@@ -65,7 +65,7 @@ public class SetClauseList implements LanguageObject {
 	}
 	
 	@Override
-	public Object clone() {
+	public SetClauseList clone() {
 		SetClauseList copy = new SetClauseList();
 		for (SetClause clause : this.setClauses) {
 			copy.addClause((SetClause)clause.clone());

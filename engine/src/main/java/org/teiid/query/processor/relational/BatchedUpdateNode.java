@@ -174,7 +174,7 @@ public class BatchedUpdateNode extends SubqueryAwareRelationalNode {
      * @see java.lang.Object#clone()
      * @since 4.2
      */
-    public Object clone() {
+    public BatchedUpdateNode clone() {
         BatchedUpdateNode clonedNode = new BatchedUpdateNode(getID(), updateCommands, contexts, shouldEvaluate, modelName);
         super.copyTo(clonedNode);
         return clonedNode;

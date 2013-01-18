@@ -152,7 +152,7 @@ public class AssignmentStatement extends Statement implements ExpressionStatemen
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {
+	public AssignmentStatement clone() {
 		AssignmentStatement clone = new AssignmentStatement(this.variable.clone(), (Expression) this.value.clone());
 		return clone;
 	}

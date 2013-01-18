@@ -55,7 +55,7 @@ public class DependentProcedureAccessNode extends AccessNode {
     /**
      * @see org.teiid.query.processor.relational.PlanExecutionNode#clone()
      */
-    public Object clone() {
+    public DependentProcedureAccessNode clone() {
         DependentProcedureAccessNode copy = new DependentProcedureAccessNode(getID(), inputCriteria,
                                                                                    inputReferences,
                                                                                    inputDefaults);
