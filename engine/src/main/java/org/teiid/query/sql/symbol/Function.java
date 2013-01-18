@@ -224,7 +224,7 @@ public class Function implements Expression {
 	 * Return a deep copy of this object.
 	 * @return Deep copy of the object
 	 */
-	public Object clone() {	
+	public Function clone() {	
 		Expression[] copyArgs = LanguageObject.Util.deepClone(this.args);
 		Function copy = new Function(getName(), copyArgs);
 		copy.setType(getType());

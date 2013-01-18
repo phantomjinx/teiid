@@ -262,7 +262,7 @@ public class AggregateSymbol extends Function implements DerivedExpression {
 	/**
 	 * Return a deep copy of this object
 	 */
-	public Object clone() {
+	public AggregateSymbol clone() {
 		AggregateSymbol copy = new AggregateSymbol(getName(), getAggregateFunction(), isDistinct(), LanguageObject.Util.deepClone(getArgs()));
 		if (orderBy != null) {
 			copy.setOrderBy(orderBy.clone());

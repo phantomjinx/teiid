@@ -95,7 +95,7 @@ public class DependentAccessNode extends AccessNode {
     	return super.nextCommand();
     }
 
-    public Object clone() {
+    public DependentAccessNode clone() {
         DependentAccessNode clonedNode = new DependentAccessNode(super.getID());
         clonedNode.maxSetSize = this.maxSetSize;
         clonedNode.maxPredicates = this.maxPredicates;

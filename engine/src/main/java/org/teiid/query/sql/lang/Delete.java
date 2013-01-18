@@ -165,7 +165,7 @@ public class Delete extends TranslatableProcedureContainer implements FilteredCo
 	/**
 	 * Return a copy of this Delete.
 	 */
-	public Object clone() {
+	public Delete clone() {
 	    GroupSymbol copyGroup = null;
 	    if(group != null) { 
 	    	copyGroup = group.clone();    

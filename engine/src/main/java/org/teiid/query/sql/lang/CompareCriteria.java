@@ -162,7 +162,7 @@ public class CompareCriteria extends AbstractCompareCriteria {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public CompareCriteria clone() {
 	    Expression leftCopy = null;
 	    if(getLeftExpression() != null) { 
 	        leftCopy = (Expression) getLeftExpression().clone();

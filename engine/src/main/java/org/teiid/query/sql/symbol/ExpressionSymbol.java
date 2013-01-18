@@ -67,7 +67,7 @@ public class ExpressionSymbol extends Symbol implements DerivedExpression {
 	 * Return a deep copy of this object
 	 * @return Deep copy of this object
 	 */
-	public Object clone() {
+	public ExpressionSymbol clone() {
 	    Expression clonedExpr = null;
 	    if(getExpression() != null) { 
 			clonedExpr = (Expression) getExpression().clone();		

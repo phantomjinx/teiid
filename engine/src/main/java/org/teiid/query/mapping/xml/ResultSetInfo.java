@@ -145,7 +145,7 @@ public class ResultSetInfo {
         this.criteriaRaised = criteriaRaised;
     }    
     
-    public Object clone() {
+    public ResultSetInfo clone() {
         ResultSetInfo clone = new ResultSetInfo(this.resultSetName);
         clone.rsPlan = this.rsPlan;
         clone.userRowLimit = this.userRowLimit;

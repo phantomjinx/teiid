@@ -214,7 +214,7 @@ public class Insert extends ProcedureContainer {
 	 * Return a deep copy of this Insert.
 	 * @return Deep copy of Insert
 	 */
-	public Object clone() {
+	public Insert clone() {
 	    GroupSymbol copyGroup = null;
 	    if(group != null) { 
 	    	copyGroup = group.clone();    

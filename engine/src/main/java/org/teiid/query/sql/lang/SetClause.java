@@ -71,7 +71,7 @@ public class SetClause implements LanguageObject {
 	}
 	
 	@Override
-	public Object clone() {
+	public SetClause clone() {
 		return new SetClause((ElementSymbol)symbol.clone(), (Expression)value.clone());
 	}
 	

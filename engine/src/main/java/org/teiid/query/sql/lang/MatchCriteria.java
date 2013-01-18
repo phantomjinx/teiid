@@ -226,7 +226,7 @@ public class MatchCriteria extends PredicateCriteria implements Negatable {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public MatchCriteria clone() {
 	    Expression leftCopy = null;
 	    if(getLeftExpression() != null) { 
 	        leftCopy = (Expression) getLeftExpression().clone();

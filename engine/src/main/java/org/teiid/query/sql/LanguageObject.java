@@ -44,7 +44,7 @@ public interface LanguageObject extends Cloneable {
 	 * Implement clone to make objects cloneable.
 	 * @return Deep clone of this object
 	 */
-    Object clone();
+    LanguageObject clone();
     
     public static class Util {
 

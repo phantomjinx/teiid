@@ -283,7 +283,7 @@ public class Constant implements Expression, Comparable<Constant> {
 	 * Return a shallow copy of this object - value is NOT cloned!
 	 * @return Shallow copy of object
 	 */
-	public Object clone() {
+	public Constant clone() {
         Constant copy =  new Constant(getValue(), getType());
         copy.multiValued = multiValued;
         copy.bindEligible = bindEligible;

@@ -56,7 +56,7 @@ public class ReturnStatement extends AssignmentStatement {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {
+	public ReturnStatement clone() {
 		ReturnStatement clone = new ReturnStatement(null);
 		if (this.getExpression() != null) {
 			clone.setExpression((Expression) this.getExpression().clone());

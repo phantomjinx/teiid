@@ -248,7 +248,7 @@ public class ProjectIntoNode extends RelationalNode {
         str.append(intoGroup);
     }
     
-    public Object clone(){
+    public ProjectIntoNode clone(){
         ProjectIntoNode clonedNode = new ProjectIntoNode();
         super.copyTo(clonedNode);
 

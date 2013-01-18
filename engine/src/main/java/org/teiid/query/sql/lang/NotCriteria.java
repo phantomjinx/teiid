@@ -82,7 +82,7 @@ public class NotCriteria extends AtomicCriteria {
 	 * Deep copy of object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public NotCriteria clone() {
 		return new NotCriteria( (Criteria) getCriteria().clone() );  
 	}
 	

@@ -99,7 +99,7 @@ public class Create extends Command implements TargetedCommand {
      * @see org.teiid.query.sql.lang.Command#clone()
      * @since 5.5
      */
-    public Object clone() {  
+    public Create clone() {  
         Create copy = new Create();      
         GroupSymbol copyTable = table.clone();    
         copy.setTable(copyTable);

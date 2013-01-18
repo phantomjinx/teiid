@@ -93,7 +93,7 @@ public class AliasSymbol extends Symbol implements DerivedExpression {
 	/**
 	 * Return a copy of this object.
 	 */
-	public Object clone() {
+	public AliasSymbol clone() {
 		Expression symbolCopy = (Expression) this.symbol.clone();
 		AliasSymbol result = new AliasSymbol(getName(), getShortName(), symbolCopy);
 		result.setOutputName(this.getOutputName());

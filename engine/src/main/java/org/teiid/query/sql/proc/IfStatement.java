@@ -150,7 +150,7 @@ public class IfStatement extends Statement  {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {
+	public IfStatement clone() {
 		Block otherIf = this.ifBlock.clone();
 		Criteria otherCrit = (Criteria) this.condition.clone();		
 		Block otherElse = null;

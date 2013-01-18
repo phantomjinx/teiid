@@ -455,7 +455,7 @@ public class GroupingNode extends SubqueryAwareRelationalNode {
 		}
 	}
 
-	public Object clone(){
+	public GroupingNode clone(){
 		GroupingNode clonedNode = new GroupingNode(super.getID());
 		super.copyTo(clonedNode);
 		clonedNode.removeDuplicates = removeDuplicates;

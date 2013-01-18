@@ -139,7 +139,7 @@ public abstract class Symbol implements LanguageObject {
 	/**
 	 * Return a copy of this object.
 	 */
-	public abstract Object clone();
+	public abstract Symbol clone();
     
     public String getOutputName() {
         return this.outputName == null ? getName() : this.outputName;
