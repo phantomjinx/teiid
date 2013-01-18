@@ -118,7 +118,7 @@ public class TestSelectNode {
     		int i = 0;
     		
 			@Override
-			public Object clone() {
+			public TestSelectNode clone() {
 				return null;
 			}
 

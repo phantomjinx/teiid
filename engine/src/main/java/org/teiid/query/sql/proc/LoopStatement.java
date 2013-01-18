@@ -131,7 +131,7 @@ public class LoopStatement extends Statement implements SubqueryContainer, Label
      * Deep clone statement to produce a new identical statement.
      * @return Deep clone 
      */
-    public Object clone() {
+    public LoopStatement clone() {
         Block otherBlock = this.loopBlock.clone();    
         Query otherQuery = (Query)this.query.clone();
 

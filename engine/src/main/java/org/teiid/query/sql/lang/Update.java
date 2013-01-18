@@ -216,7 +216,7 @@ public class Update extends TranslatableProcedureContainer {
 	 * Return a copy of this Update.
 	 * @return Deep clone
 	 */
-	public Object clone() {
+	public Update clone() {
 		Update copy = new Update();
 		
 	    if(group != null) { 

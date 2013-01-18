@@ -160,7 +160,7 @@ public class TestNameInSourceResolverVisitor extends TestCase {
             return false;
         }
 
-        public Object clone() {
+        public TestNameInSourceResolverVisitor clone() {
             return null;
         }
 

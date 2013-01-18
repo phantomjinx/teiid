@@ -55,7 +55,7 @@ public class FakeXMLProcessorEnvironment extends XMLProcessorEnvironment {
     /**
      * @see ProcessorEnvironment#clone()
      */
-    public Object clone() {
+    public FakeXMLProcessorEnvironment clone() {
         FakeXMLProcessorEnvironment clone = new FakeXMLProcessorEnvironment();
         super.copyIntoClone(clone);
         clone.dataMap = this.dataMap;

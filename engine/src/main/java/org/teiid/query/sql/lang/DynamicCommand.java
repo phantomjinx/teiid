@@ -65,7 +65,7 @@ public class DynamicCommand extends Command {
     /** 
      * @see org.teiid.query.sql.lang.QueryCommand#clone()
      */
-    public Object clone() {
+    public DynamicCommand clone() {
         DynamicCommand clone = new DynamicCommand();
         
         clone.setSql((Expression)getSql().clone());

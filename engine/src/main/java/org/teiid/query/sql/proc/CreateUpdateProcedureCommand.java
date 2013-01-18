@@ -151,7 +151,7 @@ public class CreateUpdateProcedureCommand extends Command {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {		
+	public CreateUpdateProcedureCommand clone() {		
 		CreateUpdateProcedureCommand copy = new CreateUpdateProcedureCommand();
 
         //Clone this class state

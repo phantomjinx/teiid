@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.query.processor.ProcessorPlan;
@@ -213,7 +212,7 @@ public abstract class Command implements LanguageObject {
         this.isResolved = isResolved;
     }
         
-    public abstract Object clone();
+    public abstract Command clone();
     
     protected void copyMetadataState(Command copy) {
         if(this.getExternalGroupContexts() != null) {

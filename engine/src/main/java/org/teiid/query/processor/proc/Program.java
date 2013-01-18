@@ -149,7 +149,7 @@ public class Program implements Cloneable, Labeled {
     /**
      * Produces a deep clone.
      */
-    public Object clone(){
+    public Program clone(){
         Program program = new Program(atomic);
         program.counter = this.counter;
         

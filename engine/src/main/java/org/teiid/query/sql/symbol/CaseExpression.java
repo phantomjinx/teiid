@@ -145,7 +145,7 @@ public class CaseExpression extends AbstractCaseExpression {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public CaseExpression clone() {
         Expression expr = (Expression)expression.clone();
         int whenCount = getWhenCount();
         ArrayList whenCopy = new ArrayList(whenCount);

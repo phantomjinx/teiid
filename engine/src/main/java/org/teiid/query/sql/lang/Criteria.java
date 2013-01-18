@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -49,7 +48,7 @@ public abstract class Criteria implements Expression {
 	 * Abstract clone method
 	 * @return Deep clone of this criteria
 	 */
-	public abstract Object clone();
+	public abstract Criteria clone();
 	
     /**
      * Return the parser string.

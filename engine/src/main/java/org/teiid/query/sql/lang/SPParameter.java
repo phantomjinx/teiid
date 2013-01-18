@@ -324,7 +324,7 @@ public class SPParameter implements Serializable, Cloneable {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
+    public SPParameter clone() {
         SPParameter copy = new SPParameter(this.index, this.parameterType, this.name);
         copy.setClassType(this.classType);
         if(this.expression != null) {

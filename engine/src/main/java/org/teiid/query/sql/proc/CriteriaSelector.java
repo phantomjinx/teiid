@@ -161,7 +161,7 @@ public class CriteriaSelector implements LanguageObject {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {		
+	public CriteriaSelector clone() {		
 		CriteriaSelector copy = new CriteriaSelector();
 		
 		copy.setSelectorType(this.selectorType);		

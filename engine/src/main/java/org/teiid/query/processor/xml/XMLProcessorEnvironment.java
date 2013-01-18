@@ -262,7 +262,7 @@ public class XMLProcessorEnvironment {
         return this.commandContext;
     }
     
-    public Object clone() {
+    public XMLProcessorEnvironment clone() {
         XMLProcessorEnvironment clone = new XMLProcessorEnvironment();
         copyIntoClone(clone);
         return clone;

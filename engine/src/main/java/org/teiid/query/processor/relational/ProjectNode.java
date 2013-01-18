@@ -205,7 +205,7 @@ public class ProjectNode extends SubqueryAwareRelationalNode {
 		str.append(selectSymbols);
 	}
 
-	public Object clone(){
+	public ProjectNode clone(){
 		ProjectNode clonedNode = new ProjectNode();
         this.copy(this, clonedNode);
 		return clonedNode;

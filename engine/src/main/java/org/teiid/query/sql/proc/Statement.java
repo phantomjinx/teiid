@@ -107,7 +107,7 @@ public abstract class Statement implements LanguageObject {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public abstract Object clone();
+	public abstract Statement clone();
 	
 	@Override
 	public String toString() {

@@ -231,7 +231,7 @@ public class AggregateSymbol extends ExpressionSymbol {
 	/**
 	 * Return a deep copy of this object
 	 */
-	public Object clone() {
+	public AggregateSymbol clone() {
 		AggregateSymbol copy = null;
 		if(getExpression() != null) {
 			copy = new AggregateSymbol(getName(), getCanonical(), getAggregateFunction(), isDistinct(), (Expression) getExpression().clone());

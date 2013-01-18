@@ -155,7 +155,7 @@ public class SortNode extends RelationalNode {
 		target.mode = source.mode;
 	}
 
-	public Object clone(){
+	public SortNode clone(){
 		SortNode clonedNode = new SortNode(super.getID());
 		this.copy(this, clonedNode);
 

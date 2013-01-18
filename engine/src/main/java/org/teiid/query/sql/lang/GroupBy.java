@@ -106,7 +106,7 @@ public class GroupBy implements LanguageObject {
 	 * Return a deep copy of this object
 	 * @return Deep copy of object
 	 */
-	public Object clone() {
+	public GroupBy clone() {
 		return new GroupBy(LanguageObject.Util.deepClone(this.symbols, Expression.class));
 	}
 

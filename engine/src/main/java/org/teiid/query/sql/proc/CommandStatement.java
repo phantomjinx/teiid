@@ -86,7 +86,7 @@ public class CommandStatement extends Statement implements SubqueryContainer {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {		
+	public CommandStatement clone() {		
 		return new CommandStatement((Command)this.command.clone());
 	}
 	

@@ -93,7 +93,7 @@ public class MultipleElementSymbol implements SelectSymbol {
 	 * Return a deep copy of this object
 	 * @return Deep copy of this object
 	 */
-	public Object clone() {
+	public MultipleElementSymbol clone() {
 		MultipleElementSymbol copy = new MultipleElementSymbol();
 		if (group != null) {
 			copy.group = group.clone();

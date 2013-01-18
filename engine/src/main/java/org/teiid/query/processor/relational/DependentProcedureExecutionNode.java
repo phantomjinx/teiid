@@ -54,7 +54,7 @@ public class DependentProcedureExecutionNode extends PlanExecutionNode {
     /**
      * @see org.teiid.query.processor.relational.PlanExecutionNode#clone()
      */
-    public Object clone() {
+    public DependentProcedureExecutionNode clone() {
         DependentProcedureExecutionNode copy = new DependentProcedureExecutionNode(getID(), (Criteria)inputCriteria.clone(),
                                                                                    inputReferences,
                                                                                    inputDefaults);

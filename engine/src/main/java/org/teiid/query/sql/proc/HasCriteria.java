@@ -81,7 +81,7 @@ public class HasCriteria extends PredicateCriteria {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {		
+	public HasCriteria clone() {		
 		HasCriteria copy = new HasCriteria();
 		copy.setSelector((CriteriaSelector)this.criteriaSelector.clone());
 		return copy;

@@ -120,7 +120,7 @@ public class SelectNode extends SubqueryAwareRelationalNode {
 		str.append(criteria);
 	}
 	
-	public Object clone(){
+	public SelectNode clone(){
 		SelectNode clonedNode = new SelectNode();
 		this.copy(this, clonedNode);
 		return clonedNode;

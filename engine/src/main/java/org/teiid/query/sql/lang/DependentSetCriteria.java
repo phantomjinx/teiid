@@ -142,7 +142,7 @@ public class DependentSetCriteria extends AbstractSetCriteria implements Context
      * the original object, just like Reference.
      * @return Deep copy of object
      */
-    public Object clone() {
+    public DependentSetCriteria clone() {
         Expression copy = null;
         if(getExpression() != null) {
             copy = (Expression) getExpression().clone();

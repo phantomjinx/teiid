@@ -234,7 +234,7 @@ public class Function implements Expression {
 	 * Return a deep copy of this object.
 	 * @return Deep copy of the object
 	 */
-	public Object clone() {	
+	public Function clone() {	
 		Expression[] args = getArgs();
 		Expression[] copyArgs = new Expression[args.length];
 		for(int i=0; i<args.length; i++) { 

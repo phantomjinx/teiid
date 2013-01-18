@@ -64,7 +64,7 @@ public class Drop extends Command implements TargetedCommand {
      * @see org.teiid.query.sql.lang.Command#clone()
      * @since 5.5
      */
-    public Object clone() {
+    public Drop clone() {
         Drop drop =  new Drop();
         GroupSymbol copyTable = (GroupSymbol) table.clone();
         drop.setTable(copyTable);

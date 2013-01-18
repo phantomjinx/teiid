@@ -56,7 +56,7 @@ public class AlterTempTable extends Command {
 	}
 
 	@Override
-	public Object clone() {
+	public AlterTempTable clone() {
 		return this;
 	}
 

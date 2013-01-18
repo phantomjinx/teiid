@@ -174,7 +174,7 @@ public abstract class Symbol implements LanguageObject {
 	/**
 	 * Return a copy of this object.
 	 */
-	public abstract Object clone();
+	public abstract Symbol clone();
     
     protected final String getCanonical() {
         return canonicalShortName;

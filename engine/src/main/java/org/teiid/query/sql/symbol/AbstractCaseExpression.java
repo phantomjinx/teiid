@@ -24,7 +24,6 @@ package org.teiid.query.sql.symbol;
 
 import java.util.Collections;
 import java.util.List;
-
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -132,7 +131,7 @@ public abstract class AbstractCaseExpression implements Expression {
         return hash;
     }
     
-    public abstract Object clone();
+    public abstract AbstractCaseExpression clone();
 
     /**
      * Return a String representation of this object using SQLStringVisitor.

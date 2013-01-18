@@ -508,7 +508,7 @@ public abstract class RelationalNode implements Cloneable, BatchProducer {
 	 * in other words, it's only safe to call clone() on a plan after nextTuple() returns null,
 	 * meaning the plan has finished processing.
 	 */
-	public abstract Object clone();
+	public abstract RelationalNode clone();
 
 	protected void copy(RelationalNode source, RelationalNode target){
 		target.data = source.data;

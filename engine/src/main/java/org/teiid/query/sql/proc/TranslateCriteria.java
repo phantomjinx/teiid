@@ -138,7 +138,7 @@ public class TranslateCriteria extends PredicateCriteria {
 	 * Deep clone statement to produce a new identical statement.
 	 * @return Deep clone 
 	 */
-	public Object clone() {		
+	public TranslateCriteria clone() {		
 		TranslateCriteria copy = new TranslateCriteria();
 		copy.setSelector((CriteriaSelector)this.criteriaSelector.clone());
 		if(this.hasTranslations()) {

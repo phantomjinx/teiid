@@ -106,7 +106,7 @@ public class AliasSymbol extends SingleElementSymbol {
 	/**
 	 * Return a copy of this object.
 	 */
-	public Object clone() {
+	public AliasSymbol clone() {
 		SingleElementSymbol symbolCopy = (SingleElementSymbol) this.symbol.clone();
 		AliasSymbol result = new AliasSymbol(getName(), getCanonical(), symbolCopy);
 		result.setOutputName(this.getOutputName());
