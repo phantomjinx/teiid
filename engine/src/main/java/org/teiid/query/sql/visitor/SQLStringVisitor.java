@@ -33,6 +33,7 @@ import java.util.Map;
 import org.teiid.core.types.ArrayImpl;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.ISQLStringVisitor;
 import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
 import org.teiid.language.SQLConstants;
 import org.teiid.language.SQLConstants.NonReserved;
@@ -59,7 +60,7 @@ import org.teiid.translator.SourceSystemFunctions;
  * The SQLStringVisitor will visit a set of language objects and return the corresponding SQL string representation.
  * </p>
  */
-public class SQLStringVisitor extends LanguageVisitor {
+public class SQLStringVisitor extends LanguageVisitor implements ISQLStringVisitor<LanguageObject> {
 
     public static final String UNDEFINED = "<undefined>"; //$NON-NLS-1$
     private static final String SPACE = " "; //$NON-NLS-1$
@@ -79,6 +80,7 @@ public class SQLStringVisitor extends LanguageVisitor {
         return visitor.returnSQLString(obj);
     }
 
+    @Override
     public String returnSQLString(LanguageObject languageObject) {
         if (languageObject == null) {
             return UNDEFINED;

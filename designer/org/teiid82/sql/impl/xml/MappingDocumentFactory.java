@@ -15,13 +15,18 @@ import org.teiid.designer.xml.IMappingCriteriaNode;
 import org.teiid.designer.xml.IMappingDocument;
 import org.teiid.designer.xml.IMappingDocumentFactory;
 import org.teiid.designer.xml.IMappingElement;
-import org.teiid.designer.xml.IMappingNode;
 import org.teiid.designer.xml.IMappingRecursiveElement;
 import org.teiid.designer.xml.IMappingSequenceNode;
+import org.teiid.query.mapping.xml.MappingAllNode;
+import org.teiid.query.mapping.xml.MappingAttribute;
+import org.teiid.query.mapping.xml.MappingChoiceNode;
+import org.teiid.query.mapping.xml.MappingCriteriaNode;
 import org.teiid.query.mapping.xml.MappingDocument;
+import org.teiid.query.mapping.xml.MappingElement;
 import org.teiid.query.mapping.xml.MappingLoader;
-import org.teiid.query.mapping.xml.MappingNode;
 import org.teiid.query.mapping.xml.MappingNodeConstants;
+import org.teiid.query.mapping.xml.MappingRecursiveElement;
+import org.teiid.query.mapping.xml.MappingSequenceNode;
 import org.teiid.query.mapping.xml.Namespace;
 
 /**
@@ -36,12 +41,12 @@ public class MappingDocumentFactory implements IMappingDocumentFactory {
         mappingDoc = reader.loadDocument(inputStream);
         mappingDoc.setName(documentName);
         
-        return new MappingDocumentImpl(mappingDoc);
+        return mappingDoc;
     }
     
     @Override
     public IMappingDocument createMappingDocument(String encoding, boolean formatted) {
-        return new MappingDocumentImpl(encoding, formatted);
+        return new MappingDocument(encoding, formatted);
     }
     
     private Namespace getNamespace(final String prefix) {
@@ -58,14 +63,13 @@ public class MappingDocumentFactory implements IMappingDocumentFactory {
     @Override
     public void addNamespace(IMappingElement element, String prefix, String uri) {
         Namespace namespace = getNamespace(prefix, uri);
-        MappingElementImpl elementImpl = (MappingElementImpl) element;
-        elementImpl.getMappingNode().addNamespace(namespace);
+        ((MappingElement) element).addNamespace(namespace);
     }
 
     @Override
     public IMappingElement createMappingElement(String name, String nsPrefix) {
         Namespace namespace = getNamespace(nsPrefix);
-        return new MappingElementImpl(name, namespace);
+        return new MappingElement(name, namespace);
     }
 
     @Override
@@ -73,43 +77,33 @@ public class MappingDocumentFactory implements IMappingDocumentFactory {
                                                                   String nsPrefix,
                                                                   String recursionMappingClass) {
         Namespace namespace = getNamespace(nsPrefix);
-        return new MappingRecursiveElementImpl(name, namespace, recursionMappingClass);
+        return new MappingRecursiveElement(name, namespace, recursionMappingClass);
     }
 
     @Override
     public IMappingAttribute createMappingAttribute(String name, String nsPrefix) {
         Namespace namespace = getNamespace(nsPrefix);
-        return new MappingAttributeImpl(name, namespace);
+        return new MappingAttribute(name, namespace);
     }
 
     @Override
     public IMappingCriteriaNode createMappingCriteriaNode(String criteria, boolean isDefault) {
-        return new MappingCriteriaNodeImpl(criteria, isDefault); 
+        return new MappingCriteriaNode(criteria, isDefault); 
     }
 
     @Override
     public IMappingChoiceNode createMappingChoiceNode(boolean exceptionOnDefault) {
-        return new MappingChoiceNodeImpl(exceptionOnDefault);
+        return new MappingChoiceNode(exceptionOnDefault);
     }
     
     @Override
     public IMappingAllNode createMappingAllNode() {
-        return new MappingAllNodeImpl();
+        return new MappingAllNode();
     }
     
     @Override
     public IMappingSequenceNode createMappingSequenceNode() {
-        return new MappingSequenceNodeImpl();
-    }
-
-    /**
-     * Unwrap the mapping node from the wrapper class
-     * 
-     * @param mappingNode
-     * @return delegate mapping node
-     */
-    public MappingNode convert(IMappingNode mappingNode) {
-        return ((MappingNodeImpl) mappingNode).getMappingNode();
+        return new MappingSequenceNode();
     }
   
 }

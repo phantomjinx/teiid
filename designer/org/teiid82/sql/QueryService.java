@@ -46,31 +46,32 @@ import org.teiid.metadata.FunctionMethod;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.metadata.FunctionParameter;
 import org.teiid.query.function.FunctionDescriptor;
+import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.function.FunctionTree;
+import org.teiid.query.function.SystemFunctionManager;
 import org.teiid.query.function.UDFSource;
+import org.teiid.query.parser.QueryParser;
 import org.teiid.query.resolver.util.ResolverUtil;
 import org.teiid.query.sql.ProcedureReservedWords;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.symbol.GroupSymbol;
+import org.teiid.query.sql.visitor.CommandCollectorVisitor;
+import org.teiid.query.sql.visitor.ElementCollectorVisitor;
+import org.teiid.query.sql.visitor.FunctionCollectorVisitor;
+import org.teiid.query.sql.visitor.GroupCollectorVisitor;
+import org.teiid.query.sql.visitor.GroupsUsedByElementsVisitor;
+import org.teiid.query.sql.visitor.PredicateCollectorVisitor;
+import org.teiid.query.sql.visitor.ReferenceCollectorVisitor;
+import org.teiid.query.sql.visitor.SQLStringVisitor;
+import org.teiid.query.sql.visitor.ValueIteratorProviderCollectorVisitor;
 import org.teiid.query.validator.UpdateValidator.UpdateType;
 import org.teiid82.sql.impl.CrossQueryMetadata;
-import org.teiid82.sql.impl.FunctionLibraryImpl;
-import org.teiid82.sql.impl.QueryParserImpl;
 import org.teiid82.sql.impl.SyntaxFactory;
-import org.teiid82.sql.impl.validator.QueryResolverImpl;
-import org.teiid82.sql.impl.validator.UpdateValidatorImpl;
-import org.teiid82.sql.impl.validator.ValidatorImpl;
-import org.teiid82.sql.impl.visitor.CallbackSQLStringVisitorImpl;
-import org.teiid82.sql.impl.visitor.CommandCollectorVisitorImpl;
-import org.teiid82.sql.impl.visitor.ElementCollectorVisitorImpl;
-import org.teiid82.sql.impl.visitor.FunctionCollectorVisitorImpl;
-import org.teiid82.sql.impl.visitor.GroupCollectorVisitorImpl;
-import org.teiid82.sql.impl.visitor.GroupsUsedByElementsVisitorImpl;
-import org.teiid82.sql.impl.visitor.PredicateCollectorVisitorImpl;
-import org.teiid82.sql.impl.visitor.ReferenceCollectorVisitorImpl;
-import org.teiid82.sql.impl.visitor.ResolverVisitorImpl;
-import org.teiid82.sql.impl.visitor.SQLStringVisitorImpl;
-import org.teiid82.sql.impl.visitor.ValueIteratorProviderCollectorVisitorImpl;
+import org.teiid82.sql.impl.validator.WrappedQueryResolver;
+import org.teiid82.sql.impl.validator.WrappedUpdateValidator;
+import org.teiid82.sql.impl.validator.WrappedValidator;
+import org.teiid82.sql.impl.visitor.CallbackSQLStringVisitor;
+import org.teiid82.sql.impl.visitor.WrappedResolverVisitor;
 import org.teiid82.sql.impl.xml.MappingDocumentFactory;
 
 /**
@@ -79,13 +80,15 @@ import org.teiid82.sql.impl.xml.MappingDocumentFactory;
 public class QueryService implements IQueryService {
 
     private IQueryParser queryParser;
+
+    private final SystemFunctionManager systemFunctionManager = new SystemFunctionManager();
     
     private final SyntaxFactory factory = new SyntaxFactory();
 
     @Override
     public IQueryParser getQueryParser() {
         if (queryParser == null) {
-            queryParser = new QueryParserImpl();
+            queryParser = new QueryParser();
         }
         
         return queryParser;
@@ -118,7 +121,15 @@ public class QueryService implements IQueryService {
 
     @Override
     public IFunctionLibrary createFunctionLibrary() {
-        return new FunctionLibraryImpl();
+        /*
+         * System function manager needs this classloader since it uses reflection to instantiate classes, 
+         * such as FunctionMethods. The default classloader is taken from the thread, which in turn takes
+         * a random plugin. Since no plugin depends on this plugin, ClassNotFound exceptions result.
+         * 
+         * So set the class loader to the one belonging to this plugin.
+         */
+        systemFunctionManager.setClassloader(getClass().getClassLoader());
+        return new FunctionLibrary(systemFunctionManager.getSystemFunctions(), new FunctionTree[0]);
     }
 
     @Override
@@ -159,7 +170,16 @@ public class QueryService implements IQueryService {
             fd.setMetadataID(descriptor.getMetadataID());
         }
 
-        return new FunctionLibraryImpl(functionTrees.values());
+        /*
+         * System function manager needs this classloader since it uses reflection to instantiate classes, 
+         * such as FunctionMethods. The default classloader is taken from the thread, which in turn takes
+         * a random plugin. Since no plugin depends on this plugin, ClassNotFound exceptions result.
+         * 
+         * So set the class loader to the one belonging to this plugin.
+         */
+        systemFunctionManager.setClassloader(getClass().getClassLoader());
+        return new FunctionLibrary(systemFunctionManager.getSystemFunctions(), 
+                                                      functionTrees.values().toArray(new FunctionTree[0]));
     }
 
     @Override
@@ -200,62 +220,62 @@ public class QueryService implements IQueryService {
 
     @Override
     public ISQLStringVisitor getSQLStringVisitor() {
-        return new SQLStringVisitorImpl();
+        return new SQLStringVisitor();
     }
 
     @Override
     public ISQLStringVisitor getCallbackSQLStringVisitor(ISQLStringVisitorCallback visitorCallback) {
-        return new CallbackSQLStringVisitorImpl(visitorCallback);
+        return new CallbackSQLStringVisitor(visitorCallback);
     }
 
     @Override
-    public IGroupCollectorVisitor getGroupCollectorVisitor() {
-        return new GroupCollectorVisitorImpl();
+    public IGroupCollectorVisitor getGroupCollectorVisitor(boolean removeDuplicates) {
+        return new GroupCollectorVisitor(removeDuplicates);
     }
 
     @Override
     public IGroupsUsedByElementsVisitor getGroupsUsedByElementsVisitor() {
-        return new GroupsUsedByElementsVisitorImpl();
+        return new GroupsUsedByElementsVisitor();
     }
 
     @Override
-    public IElementCollectorVisitor getElementCollectorVisitor() {
-        return new ElementCollectorVisitorImpl();
+    public IElementCollectorVisitor getElementCollectorVisitor(boolean removeDuplicates) {
+        return new ElementCollectorVisitor(removeDuplicates);
     }
 
     @Override
     public ICommandCollectorVisitor getCommandCollectorVisitor() {
-        return new CommandCollectorVisitorImpl();
+        return new CommandCollectorVisitor();
     }
 
     @Override
-    public IFunctionCollectorVisitor getFunctionCollectorVisitor() {
-        return new FunctionCollectorVisitorImpl();
+    public IFunctionCollectorVisitor getFunctionCollectorVisitor(boolean removeDuplicates) {
+        return new FunctionCollectorVisitor(removeDuplicates);
     }
 
     @Override
     public IPredicateCollectorVisitor getPredicateCollectorVisitor() {
-        return new PredicateCollectorVisitorImpl();
+        return new PredicateCollectorVisitor();
     }
 
     @Override
     public IReferenceCollectorVisitor getReferenceCollectorVisitor() {
-        return new ReferenceCollectorVisitorImpl();
+        return new ReferenceCollectorVisitor();
     }
 
     @Override
     public IValueIteratorProviderCollectorVisitor getValueIteratorProviderCollectorVisitor() {
-        return new ValueIteratorProviderCollectorVisitorImpl();
+        return new ValueIteratorProviderCollectorVisitor();
     }
 
     @Override
     public IResolverVisitor getResolverVisitor() {
-        return new ResolverVisitorImpl();
+        return new WrappedResolverVisitor();
     }
 
     @Override
     public IValidator getValidator() {
-        return new ValidatorImpl();
+        return new WrappedValidator();
     }
 
     @Override
@@ -269,27 +289,24 @@ public class QueryService implements IQueryService {
         UpdateType updateType = UpdateType.valueOf(tUpdateType.name());
         UpdateType deleteType = UpdateType.valueOf(tDeleteType.name());
         
-        return new UpdateValidatorImpl(crossMetadata, insertType, updateType, deleteType);
+        return new WrappedUpdateValidator(crossMetadata, insertType, updateType, deleteType);
     }
 
     @Override
     public void resolveGroup(IGroupSymbol groupSymbol,
                              IQueryMetadataInterface metadata) throws Exception {
-        GroupSymbol groupSymbolImpl = factory.convert(groupSymbol);
         CrossQueryMetadata crossMetadata = new CrossQueryMetadata(metadata);
-        
-        ResolverUtil.resolveGroup(groupSymbolImpl, crossMetadata);
+        ResolverUtil.resolveGroup((GroupSymbol) groupSymbol, crossMetadata);
     }
 
     @Override
     public void fullyQualifyElements(ICommand command) {
-        Command dCommand = factory.convert(command);
-        ResolverUtil.fullyQualifyElements(dCommand);
+        ResolverUtil.fullyQualifyElements((Command) command);
     }
 
     @Override
     public IQueryResolver getQueryResolver() {
-        return new QueryResolverImpl();
+        return new WrappedQueryResolver();
     }
 
 }

@@ -36,6 +36,8 @@ import org.teiid.core.types.BinaryType;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.types.TransformationException;
 import org.teiid.core.util.PropertiesUtils;
+import org.teiid.designer.udf.IFunctionDescriptor;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.metadata.AbstractMetadataRecord;
 import org.teiid.metadata.FunctionMethod;
 import org.teiid.metadata.FunctionMethod.Determinism;
@@ -48,7 +50,7 @@ import org.teiid.query.util.CommandContext;
  * The FunctionDescriptor describes a particular function instance enough
  * to invoke the function.
  */
-public class FunctionDescriptor implements Serializable, Cloneable {
+public class FunctionDescriptor implements Serializable, Cloneable, IFunctionDescriptor {
 	private static final long serialVersionUID = 5374103983118037242L;
 
 	private static final boolean ALLOW_NAN_INFINITY = PropertiesUtils.getBooleanProperty(System.getProperties(), "org.teiid.allowNanInfinity", false); //$NON-NLS-1$
@@ -329,5 +331,9 @@ public class FunctionDescriptor implements Serializable, Cloneable {
 	public boolean isSystemFunction(String name) {
 		return this.getName().equalsIgnoreCase(name) && CoreConstants.SYSTEM_MODEL.equals(this.getSchema());
 	}
+	
+	public boolean isSystemFunction(IFunctionLibrary.FunctionName name) {
+        return name.equalsIgnoreCase(getName()) && CoreConstants.SYSTEM_MODEL.equals(this.getSchema());
+    }
 	
 }

@@ -22,6 +22,7 @@
 
 package org.teiid.query.mapping.xml;
 
+import org.teiid.designer.xml.IMappingCriteriaNode;
 import org.teiid.query.sql.lang.Criteria;
 
 
@@ -30,7 +31,7 @@ import org.teiid.query.sql.lang.Criteria;
  * Represents a Criteria Node under a Choice Node, which defines the criteria
  * on the selection of child elements.
  */
-public class MappingCriteriaNode extends MappingBaseNode{
+public class MappingCriteriaNode extends MappingBaseNode implements IMappingCriteriaNode<MappingNode> {
     boolean defalt;
     Criteria criteriaNode;
     

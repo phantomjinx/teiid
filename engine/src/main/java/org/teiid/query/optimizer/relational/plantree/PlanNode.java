@@ -327,7 +327,7 @@ public class PlanNode {
     }
     
     public List<SymbolMap> getCorrelatedReferences() {
-    	List<SubqueryContainer<?>> containers = getSubqueryContainers();
+    	List<SubqueryContainer> containers = getSubqueryContainers();
     	if (containers.isEmpty()) {
     		return Collections.emptyList();
     	}
@@ -388,7 +388,7 @@ public class PlanNode {
         return result;
     }
     
-	public List<SubqueryContainer<?>> getSubqueryContainers() {
+	public List<SubqueryContainer> getSubqueryContainers() {
 		Collection<? extends LanguageObject> toSearch = Collections.emptyList();
 		switch (this.getType()) {
 			case NodeConstants.Types.SELECT: {

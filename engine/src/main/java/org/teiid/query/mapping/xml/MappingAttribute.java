@@ -22,13 +22,14 @@
 
 package org.teiid.query.mapping.xml;
 
+import org.teiid.designer.xml.IMappingAttribute;
 import org.teiid.query.sql.symbol.ElementSymbol;
 
 
 /** 
  * A Mapping node which denotes a attribute node.
  */
-public class MappingAttribute extends MappingNode {
+public class MappingAttribute extends MappingNode implements IMappingAttribute<MappingNode> {
     // Element symbol in the resultset source
     ElementSymbol symbol;
     
@@ -191,5 +192,13 @@ public class MappingAttribute extends MappingNode {
             setProperty(MappingNodeConstants.Properties.BUILT_IN_TYPE, type);
         }
         return this;
+    }
+    
+    public void setSource(String source) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public void addStagingTable(String stagingTable) {
+        throw new UnsupportedOperationException();
     }
 }

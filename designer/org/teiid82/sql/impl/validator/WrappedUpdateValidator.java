@@ -8,8 +8,6 @@
 package org.teiid82.sql.impl.validator;
 
 import java.util.List;
-import org.teiid.designer.query.sql.lang.ICommand;
-import org.teiid.designer.query.sql.symbol.IElementSymbol;
 import org.teiid.designer.validator.IUpdateValidator;
 import org.teiid.designer.validator.IValidator.IValidatorReport;
 import org.teiid.query.sql.lang.Command;
@@ -23,7 +21,8 @@ import org.teiid82.sql.impl.SyntaxFactory;
 /**
  *
  */
-public class UpdateValidatorImpl implements IUpdateValidator {
+public class WrappedUpdateValidator
+    implements IUpdateValidator<Command, ElementSymbol> {
 
     private final UpdateValidator delegateVisitor;
     
@@ -35,7 +34,7 @@ public class UpdateValidatorImpl implements IUpdateValidator {
      * @param updateType
      * @param deleteType
      */
-    public UpdateValidatorImpl(CrossQueryMetadata crossMetadata,
+    public WrappedUpdateValidator(CrossQueryMetadata crossMetadata,
                                UpdateType insertType,
                                UpdateType updateType,
                                UpdateType deleteType) {
@@ -43,35 +42,32 @@ public class UpdateValidatorImpl implements IUpdateValidator {
     }
 
     @Override
-    public void validate(ICommand command, List<IElementSymbol> elemSymbols) throws Exception {
-        Command dCommand = factory.convert(command);
-        List<ElementSymbol> dSymbols = factory.unwrap(elemSymbols);
-        
-        delegateVisitor.validate(dCommand, dSymbols);
+    public void validate(Command command, List<ElementSymbol> elemSymbols) throws Exception {
+        delegateVisitor.validate(command, elemSymbols);
     }
 
     @Override
     public IValidatorReport getInsertReport() {
         ValidatorReport report = delegateVisitor.getInsertReport();
-        return new ValidatorReportImpl(report);
+        return new WrappedValidatorReport(report);
     }
 
     @Override
     public IValidatorReport getUpdateReport() {
         ValidatorReport report = delegateVisitor.getUpdateReport();
-        return new ValidatorReportImpl(report);
+        return new WrappedValidatorReport(report);
     }
 
     @Override
     public IValidatorReport getDeleteReport() {
         ValidatorReport report = delegateVisitor.getDeleteReport();
-        return new ValidatorReportImpl(report);
+        return new WrappedValidatorReport(report);
     }
 
     @Override
     public IValidatorReport getReport() {
         ValidatorReport report = delegateVisitor.getReport();
-        return new ValidatorReportImpl(report);
+        return new WrappedValidatorReport(report);
     }
 
 }

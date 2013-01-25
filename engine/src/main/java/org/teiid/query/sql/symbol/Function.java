@@ -25,6 +25,7 @@ package org.teiid.query.sql.symbol;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IFunction;
 import org.teiid.query.function.FunctionDescriptor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
@@ -37,7 +38,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * an expression.  After resolution, a function should have a type and a function
  * descriptor.
  */
-public class Function implements Expression {
+public class Function implements Expression, IFunction<FunctionDescriptor, LanguageVisitor> {
 
 	private String name;
 	private Expression[] args;

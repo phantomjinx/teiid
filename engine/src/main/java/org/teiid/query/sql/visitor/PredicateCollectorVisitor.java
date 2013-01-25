@@ -25,6 +25,7 @@ package org.teiid.query.sql.visitor;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.teiid.designer.query.sql.IPredicateCollectorVisitor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.*;
@@ -43,7 +44,8 @@ import org.teiid.query.sql.navigator.PreOrderNavigator;
  * <li>{@link org.teiid.query.sql.lang.IsNullCriteria} IsNullCriteria</li>
  * </ul>
  */
-public class PredicateCollectorVisitor extends LanguageVisitor {
+public class PredicateCollectorVisitor extends LanguageVisitor
+    implements IPredicateCollectorVisitor<LanguageObject, Criteria> {
 
     private Collection<Criteria> predicates;
 
@@ -140,6 +142,7 @@ public class PredicateCollectorVisitor extends LanguageVisitor {
         return this.predicates;
     }
 
+    @Override
     public Collection<Criteria> findPredicates(LanguageObject obj) {
         if(obj != null) {
             PreOrderNavigator.doVisit(obj, this);

@@ -24,6 +24,7 @@ package org.teiid.query.sql.proc;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.proc.IIfStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Criteria;
 
@@ -34,7 +35,7 @@ import org.teiid.query.sql.lang.Criteria;
  * an IF block and an optional ELSE block, it also holds reference to the criteria that
  * determines which block should be executed..</p>
  */
-public class IfStatement extends Statement  {
+public class IfStatement extends Statement  implements IIfStatement<LanguageVisitor> {
 
 	// the IF block
 	private Block ifBlock;

@@ -22,12 +22,13 @@
 
 package org.teiid.query.mapping.xml;
 
+import org.teiid.designer.xml.IMappingSequenceNode;
 
 
 /** 
  * A node that describes a <b>Sequence</b> in XML Schema Mapping document
  */
-public class MappingSequenceNode extends MappingBaseNode {
+public class MappingSequenceNode extends MappingBaseNode implements IMappingSequenceNode<MappingNode> {
     
     public MappingSequenceNode() {
         //setProperty(MappingNodeConstants.Properties.NAME, "{SequenceNode}"); //$NON-NLS-1$

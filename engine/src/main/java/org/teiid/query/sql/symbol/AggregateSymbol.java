@@ -45,7 +45,7 @@ import org.teiid.query.sql.lang.OrderBy;
  * expression.  The type of a COUNT function is ALWAYS integer.  MIN and MAX functions take the
  * type of their contained expression.</p>
  */
-public class AggregateSymbol extends Function implements DerivedExpression {
+public class AggregateSymbol extends Function implements DerivedExpression, IAggregateSymbol<LanguageVisitor> {
 	
 	private static final Expression[] EMPTY_ARGS = new Expression[0];
 	

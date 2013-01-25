@@ -26,13 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.IArrayTable;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 
 /**
  * Represents the ArrayTable table function.
  */
-public class ArrayTable extends TableFunctionReference {
+public class ArrayTable extends TableFunctionReference implements IArrayTable<LanguageVisitor> {
 	
     private Expression arrayValue;
     private List<ProjectedColumn> columns = new ArrayList<ProjectedColumn>();

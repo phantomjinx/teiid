@@ -26,7 +26,9 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IDrop;
 import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -35,7 +37,8 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 /** 
  * @since 5.5
  */
-public class Drop extends Command implements TargetedCommand {
+public class Drop extends Command
+    implements TargetedCommand, IDrop<Expression, LanguageVisitor> {
     /** Identifies the table to be dropped. */
     private GroupSymbol table;
     

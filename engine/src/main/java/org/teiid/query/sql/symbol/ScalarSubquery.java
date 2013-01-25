@@ -24,6 +24,7 @@ package org.teiid.query.sql.symbol;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.teiid.designer.query.sql.symbol.IScalarSubquery;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.QueryCommand;
 import org.teiid.query.sql.lang.SubqueryContainer;
@@ -38,7 +39,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * of this could be used wherever an Expression is legal, but it is
  * specifically needed for the SELECT clause.
  */
-public class ScalarSubquery implements Expression, SubqueryContainer<QueryCommand>, ContextReference {
+public class ScalarSubquery implements Expression, SubqueryContainer<QueryCommand>, ContextReference, IScalarSubquery<LanguageVisitor, QueryCommand> {
 
 	private static AtomicInteger ID = new AtomicInteger();
 	

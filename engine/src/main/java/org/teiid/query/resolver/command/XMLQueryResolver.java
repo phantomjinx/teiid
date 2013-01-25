@@ -238,7 +238,7 @@ public class XMLQueryResolver implements CommandResolver {
 		OrderBy orderBy = query.getOrderBy();
 		
 		if(crit != null) {
-	        List<SubqueryContainer<?>> commands = ValueIteratorProviderCollectorVisitor.getValueIteratorProviders(crit);
+	        List<SubqueryContainer> commands = ValueIteratorProviderCollectorVisitor.getValueIteratorProviders(crit);
 	        if (!commands.isEmpty()) {
 	        	TempMetadataAdapter tma = new TempMetadataAdapter(metadata, new TempMetadataStore());
 	        	if (!subQuery) {

@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IMultipleElementSymbol;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -34,7 +35,9 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 /**
  * <p>This is a subclass of Symbol representing multiple output columns.</p>
  */
-public class MultipleElementSymbol implements Expression {
+public class MultipleElementSymbol 
+    implements Expression, IMultipleElementSymbol<ElementSymbol, LanguageVisitor> {
+    
     private List<ElementSymbol> elementSymbols;
     private GroupSymbol group;
 

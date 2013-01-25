@@ -24,6 +24,7 @@ package org.teiid.query.sql.symbol;
 
 import java.util.List;
 
+import org.teiid.designer.query.sql.symbol.IXMLAttributes;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -32,7 +33,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 /**
  * Represents XMLATTRIBUTES name value pairs
  */
-public class XMLAttributes implements LanguageObject {
+public class XMLAttributes implements LanguageObject, IXMLAttributes<LanguageVisitor> {
 
 	private static final long serialVersionUID = -3348922701950966494L;
 	private List<DerivedColumn> args;

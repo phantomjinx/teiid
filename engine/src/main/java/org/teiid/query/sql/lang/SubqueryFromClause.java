@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import java.util.Collection;
 
+import org.teiid.designer.query.sql.lang.ISubqueryFromClause;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.GroupSymbol;
 
@@ -32,7 +33,8 @@ import org.teiid.query.sql.symbol.GroupSymbol;
  * A FROM subpart that represents a subquery.  For example, the FROM clause: 
  * "FROM (SELECT a FROM b)" will have a SubqueryFromClause referencing the subquery.
  */
-public class SubqueryFromClause extends FromClause implements SubqueryContainer{
+public class SubqueryFromClause extends FromClause
+    implements SubqueryContainer<Command>, ISubqueryFromClause<LanguageVisitor, Command> {
 
     private GroupSymbol symbol;
     private Command command;

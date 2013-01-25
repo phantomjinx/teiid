@@ -7,37 +7,28 @@
 */
 package org.teiid82.sql.impl;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import org.teiid.designer.query.IQueryFactory;
 import org.teiid.designer.query.metadata.IMetadataID;
 import org.teiid.designer.query.metadata.IQueryNode;
 import org.teiid.designer.query.metadata.IStoredProcedureInfo;
 import org.teiid.designer.query.sql.lang.IBetweenCriteria;
-import org.teiid.designer.query.sql.lang.ICommand;
 import org.teiid.designer.query.sql.lang.ICompareCriteria;
 import org.teiid.designer.query.sql.lang.ICompoundCriteria;
-import org.teiid.designer.query.sql.lang.ICompoundCriteria.LogicalOperator;
-import org.teiid.designer.query.sql.lang.ICriteria;
 import org.teiid.designer.query.sql.lang.IDelete;
 import org.teiid.designer.query.sql.lang.IExistsCriteria;
-import org.teiid.designer.query.sql.lang.IExpression;
 import org.teiid.designer.query.sql.lang.IFrom;
-import org.teiid.designer.query.sql.lang.IFromClause;
 import org.teiid.designer.query.sql.lang.IGroupBy;
 import org.teiid.designer.query.sql.lang.IInsert;
 import org.teiid.designer.query.sql.lang.IIsNullCriteria;
 import org.teiid.designer.query.sql.lang.IJoinPredicate;
-import org.teiid.designer.query.sql.lang.ILanguageObject;
+import org.teiid.designer.query.sql.lang.IJoinType;
 import org.teiid.designer.query.sql.lang.IMatchCriteria;
 import org.teiid.designer.query.sql.lang.INotCriteria;
 import org.teiid.designer.query.sql.lang.IOption;
 import org.teiid.designer.query.sql.lang.IOrderBy;
 import org.teiid.designer.query.sql.lang.IQuery;
-import org.teiid.designer.query.sql.lang.IQueryCommand;
 import org.teiid.designer.query.sql.lang.ISPParameter;
 import org.teiid.designer.query.sql.lang.ISPParameter.ParameterInfo;
 import org.teiid.designer.query.sql.lang.ISelect;
@@ -60,20 +51,14 @@ import org.teiid.designer.query.sql.symbol.IAggregateSymbol;
 import org.teiid.designer.query.sql.symbol.IAliasSymbol;
 import org.teiid.designer.query.sql.symbol.IConstant;
 import org.teiid.designer.query.sql.symbol.IElementSymbol;
-import org.teiid.designer.query.sql.symbol.IExpressionSymbol;
 import org.teiid.designer.query.sql.symbol.IFunction;
 import org.teiid.designer.query.sql.symbol.IGroupSymbol;
 import org.teiid.designer.query.sql.symbol.IMultipleElementSymbol;
 import org.teiid.designer.query.sql.symbol.IReference;
 import org.teiid.designer.query.sql.symbol.IScalarSubquery;
-import org.teiid.designer.udf.IFunctionDescriptor;
-import org.teiid.designer.udf.IFunctionForm;
-import org.teiid.query.function.FunctionDescriptor;
-import org.teiid.query.function.FunctionForm;
 import org.teiid.query.mapping.relational.QueryNode;
 import org.teiid.query.metadata.StoredProcedureInfo;
 import org.teiid.query.metadata.TempMetadataID;
-import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.lang.BetweenCriteria;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.lang.CompareCriteria;
@@ -125,598 +110,358 @@ import org.teiid.query.sql.symbol.ScalarSubquery;
 /**
  *
  */
-public class SyntaxFactory implements IQueryFactory {
-
-    private Object createObject(Object object) {
-        String className = object.getClass().getSimpleName();
-        String classImplName = className + "Impl"; //$NON-NLS-1$
-        String qualifiedName = this.getClass().getPackage().getName() + "." + classImplName; //$NON-NLS-1$
-        
-        try {
-            Class<?> objectClass = this.getClass().getClassLoader().loadClass(qualifiedName);
-            Constructor<?> constructor = objectClass.getConstructor(object.getClass());
-            return constructor.newInstance(object);
-        } catch (Exception ex) {
-            
-            // No specific class so try and wrap in a generic expression or language object
-            if (object instanceof Expression) {
-                return new ExpressionImpl((Expression) object);
-            }
-            else if (object instanceof LanguageObject) {
-                return new LanguageObjectImpl((LanguageObject) object);
-            } 
-            else {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-    
-    /**
-     * Create implementation wrapper object around the
-     * given language object
-     * 
-     * @param languageObject
-     * 
-     * @return instance of {@link ILanguageObject}
-     */
-    public ILanguageObject createLanguageObject(LanguageObject languageObject) {
-        if (languageObject == null)
-            return null;
-        
-        return (ILanguageObject) createObject(languageObject);
-    }
-    
-    /**
-     * Create implementation wrapper object around the
-     * given expression
-     * 
-     * @param expression
-     * 
-     * @return instance of {@link IExpression}
-     */
-    public IExpression createExpression(Expression expression) {
-        if (expression == null)
-            return null;
-        
-        return (IExpression) createObject(expression);
-    }
-    
-    /**
-     * Create implementation wrapper object around the
-     * given function form
-     * 
-     * @param functionForm
-     * 
-     * @return instance of {@link IFunctionForm}
-     */
-    public IFunctionForm createFunctionForm(FunctionForm functionForm) {
-        if (functionForm == null)
-            return null;
-        
-        return (IFunctionForm) createObject(functionForm);
-    }
-    
-    /**
-     * Create implementation wrapper object around the
-     * given function descriptor
-     *
-     * @param functionDescriptor
-     * 
-     * @return instance of {@link IFunctionDescriptor}
-     */
-    public IFunctionDescriptor createFunctionDescriptor(FunctionDescriptor functionDescriptor) {
-        if (functionDescriptor == null)
-            return null;
-        
-        return (IFunctionDescriptor) createObject(functionDescriptor);
-    }
-    
-    /**
-     * Convert the language wrapper object to its delegate
-     * 
-     * @param languageObject
-     * 
-     * @return the delegate object
-     */
-    public <T extends LanguageObject> T convert(ILanguageObject languageObject) {
-        if (languageObject == null)
-            return null;
-        
-        LanguageObjectImpl languageObjectImpl = (LanguageObjectImpl) languageObject;
-        return (T) languageObjectImpl.getDelegate();
-    }
-    
-    /**
-     * Convert the delegate object by wrapping it
-     * 
-     * @param languageObject
-     * 
-     * @return the getFactory().wrapped object
-     */
-    public <T extends ILanguageObject> T convert(LanguageObject languageObject) {
-        return (T) createLanguageObject(languageObject);
-    }
-    
-    /**
-     * Convert the delegate object by getFactory().wrapping it
-     * 
-     * @param expression
-     * 
-     * @return the getFactory().wrapped expression
-     */
-    public <T extends ILanguageObject> T convert(Expression expression) {
-        if (expression == null)
-            return null;
-        
-        return (T) createExpression(expression);
-    }
-    
-    /**
-     * UngetFactory().wrap the collection of getFactory().wrapper object for its delegates
-     * 
-     * @param objects
-     * 
-     * @return collection of delegate objects
-     */
-    public <T extends ILanguageObject, S extends LanguageObject> List<S> unwrap(Collection<T> objects) {
-        List<S> languageObjects = new ArrayList<S>();
-        
-        if (objects != null) {
-            for (T languageObject : objects) {
-                languageObjects.add((S) convert(languageObject));
-            }
-        }
-        
-        return languageObjects;
-    }
-    
-    /**
-     * Wrap the collection of delegate object
-     * 
-     * @param delegateList
-     * 
-     * @return collection of getFactory().wrapped objects
-     */
-    public <T extends ILanguageObject, S extends LanguageObject> List<T> wrap(Collection<S> delegateList) {
-        List<T> wrapList = new ArrayList<T>();
-        
-        if (delegateList != null) {
-            for (S delegateItem : delegateList) {
-                wrapList.add((T) createLanguageObject(delegateItem));
-            }
-        }
-        
-        return wrapList;
-    }
-    
-    /**
-     * Convert the enumeration join type to the teiid 8 class {@link JoinType}
-     * 
-     * @param joinType
-     * 
-     * @return instance of {@link JoinType}
-     */
-    public JoinType convert(IJoinPredicate.JoinType joinType) {
-        JoinType dJoinType = null;
-        switch (joinType) {
-            case JOIN_INNER:
-                dJoinType = JoinType.JOIN_INNER;
-                break;
-            case JOIN_RIGHT_OUTER:
-                dJoinType = JoinType.JOIN_RIGHT_OUTER;
-                break;
-            case JOIN_LEFT_OUTER:
-                dJoinType = JoinType.JOIN_LEFT_OUTER;
-                break;
-            case JOIN_FULL_OUTER:
-                dJoinType = JoinType.JOIN_FULL_OUTER;
-                break;
-            case JOIN_CROSS:
-                dJoinType = JoinType.JOIN_CROSS;
-                break;
-            case JOIN_UNION:
-                dJoinType = JoinType.JOIN_UNION;
-                break;
-            case JOIN_SEMI:
-                dJoinType = JoinType.JOIN_SEMI;
-                break;
-            case JOIN_ANTI_SEMI:
-                dJoinType = JoinType.JOIN_ANTI_SEMI;
-                break;
-        }
-        return dJoinType;
-    }
-    
-    /**
-     * Convert the stored procedure info wrapper object to its delegate
-     * 
-     * @param storedProcedureInfo
-     * 
-     * @return the delegate object
-     */
-    public StoredProcedureInfo convert(IStoredProcedureInfo storedProcedureInfo) {
-        StoredProcedureInfoImpl storedProcedureInfoImpl = (StoredProcedureInfoImpl) storedProcedureInfo;
-        return storedProcedureInfoImpl.getDelegate();
-    }
+public class SyntaxFactory implements IQueryFactory<Expression, 
+                                                                                            Expression, 
+                                                                                            FromClause, 
+                                                                                            ElementSymbol, 
+                                                                                            Command, 
+                                                                                            QueryCommand, 
+                                                                                            Criteria, 
+                                                                                            Constant, 
+                                                                                            Block, 
+                                                                                            Expression, 
+                                                                                            GroupSymbol, 
+                                                                                            JoinType> {
 
     @Override
-    public IFunction createFunction(String name,
-                                    IExpression[] arguments) {
-        List<IExpression> argsList;
+    public IFunction createFunction(String name, List<? extends Expression> arguments) {
         if (arguments == null) {
-            argsList = new ArrayList<IExpression>();
-        } else {
-            argsList = Arrays.asList(arguments);
+            arguments = new ArrayList<Expression>();
         }
         
-        List<Expression> dargs = unwrap(argsList);
-        Function function = new Function(name, dargs.toArray(new Expression[0]));
-        return new FunctionImpl(function);
+        return new Function(name, arguments.toArray(new Expression[0]));
     }
 
     @Override
     public IAggregateSymbol createAggregateSymbol(String functionName,
-                                                  IAggregateSymbol.AggregateType functionType,
+                                                  IAggregateSymbol.Type functionType,
                                                   boolean isDistinct,
-                                                  IExpression expression) {
-        Expression dExpression = convert(expression);
-        AggregateSymbol aggregateSymbol = new AggregateSymbol(functionName, isDistinct, dExpression);
-        aggregateSymbol.setAggregateFunction(AggregateSymbol.Type.valueOf(functionType.name()));
-        return convert(aggregateSymbol);
+                                                  Expression expression) {
+        
+        AggregateSymbol aggregateSymbol = new AggregateSymbol(functionName, isDistinct, expression);
+        aggregateSymbol.setAggregateFunction(functionType);
+        return aggregateSymbol;
     }
 
     @Override
     public IElementSymbol createElementSymbol(String name) {
-        return convert(new ElementSymbol(name));
+        return new ElementSymbol(name);
     }
 
     @Override
     public IElementSymbol createElementSymbol(String name,
                                               boolean displayFullyQualified) {
-        return convert(new ElementSymbol(name, displayFullyQualified));
+        return new ElementSymbol(name, displayFullyQualified);
     }
 
     @Override
     public IAliasSymbol createAliasSymbol(String name,
-                                          IExpression expression) {
-        Expression dExpression = convert(expression);
-        return convert(new AliasSymbol(name, dExpression));
+                                          Expression symbol) {
+        return new AliasSymbol(name, symbol);
     }
 
     @Override
     public IGroupSymbol createGroupSymbol(String name) {
-        return convert(new GroupSymbol(name));
+        return new GroupSymbol(name);
     }
 
     @Override
     public IGroupSymbol createGroupSymbol(String name,
                                           String definition) {
-        return convert(new GroupSymbol(name, definition));
+        return new GroupSymbol(name, definition);
     }
 
     @Override
-    public IExpressionSymbol createExpressionSymbol(String name,
-                                                    IExpression expression) {
-        Expression dExpression = convert(expression);
-        return convert(new ExpressionSymbol(name, dExpression));
+    public ExpressionSymbol createExpressionSymbol(String name,
+                                                   Expression expression) {
+        return new ExpressionSymbol(name, expression);
     }
 
     @Override
     public IMultipleElementSymbol createMultipleElementSymbol() {
-        return convert(new MultipleElementSymbol());
+        return new MultipleElementSymbol();
     }
 
     @Override
     public IConstant createConstant(Object value) {
-        return convert(new Constant(value));
+        return new Constant(value);
     }
 
     @Override
-    public IDeclareStatement createDeclareStatement(IElementSymbol variable,
+    public IDeclareStatement createDeclareStatement(ElementSymbol variable,
                                                     String valueType) {
-        ElementSymbol symbol = convert(variable);
-        return convert(new DeclareStatement(symbol, valueType));
+        return new DeclareStatement(variable, valueType);
     }
 
     @Override
-    public ICommandStatement createCommandStatement(ICommand command) {
-        Command dCommand = convert(command);
-        return convert(new CommandStatement(dCommand));
+    public ICommandStatement createCommandStatement(Command command) {
+        return new CommandStatement(command);
     }
 
     @Override
-    public IRaiseStatement createRaiseStatement(IExpression expression) {
-        Expression dExpression = convert(expression);
-        return convert(new RaiseStatement(dExpression));
+    public IRaiseStatement createRaiseStatement(Expression expression) {
+        return new RaiseStatement(expression);
     }
 
     @Override
     public IQuery createQuery() {
-        return convert(new Query());
+        return new Query();
     }
 
     @Override
     public ISetQuery createSetQuery(Operation operation,
                                     boolean all,
-                                    IQueryCommand leftQuery,
-                                    IQueryCommand rightQuery) {
-        QueryCommand dLCommand = convert(leftQuery);
-        QueryCommand dRCommand = convert(rightQuery);
-        
-        SetQuery.Operation dOperation = SetQuery.Operation.valueOf(operation.name());
-        SetQuery setQuery = new SetQuery(dOperation, all, dLCommand, dRCommand);
-        return convert(setQuery);
+                                    QueryCommand leftQuery,
+                                    QueryCommand rightQuery) {
+        return new SetQuery(operation, all, leftQuery, rightQuery);
     }
 
     @Override
     public ISetQuery createSetQuery(Operation operation) {
-        SetQuery.Operation dOperation = SetQuery.Operation.valueOf(operation.name());
-        return convert(new SetQuery(dOperation));
+        return new SetQuery(operation);
     }
 
     @Override
     public ICompareCriteria createCompareCriteria() {
-        return convert(new CompareCriteria());
+        return new CompareCriteria();
     }
 
     @Override
-    public ICompareCriteria createCompareCriteria(IExpression expression1,
+    public ICompareCriteria createCompareCriteria(Expression expression1,
                                                   int operator,
-                                                  IExpression expression2) {
-        Expression dExpression1 = convert(expression1);
-        Expression dExpression2 = convert(expression2);
-        return convert(new CompareCriteria(dExpression1, operator, dExpression2));
+                                                  Expression expression2) {
+        return new CompareCriteria(expression1, operator, expression2);
     }
 
     @Override
     public IIsNullCriteria createIsNullCriteria() {
-        return convert(new IsNullCriteria());
+        return new IsNullCriteria();
     }
 
     @Override
-    public IIsNullCriteria createIsNullCriteria(IExpression expression) {
-        Expression dExpression = convert(expression);
-        return convert(new IsNullCriteria(dExpression));
+    public IIsNullCriteria createIsNullCriteria(Expression expression) {
+        return new IsNullCriteria(expression);
     }
 
     @Override
     public INotCriteria createNotCriteria() {
-        return convert(new NotCriteria());
+        return new NotCriteria();
     }
 
     @Override
-    public INotCriteria createNotCriteria(ICriteria criteria) {
-        Criteria dCriteria = convert(criteria);
-        return convert(new NotCriteria(dCriteria));
+    public INotCriteria createNotCriteria(Criteria criteria) {
+        return new NotCriteria(criteria);
     }
 
     @Override
     public IMatchCriteria createMatchCriteria() {
-        return convert(new MatchCriteria());
+        return new MatchCriteria();
     }
 
     @Override
     public ISetCriteria createSetCriteria() {
-        return convert(new SetCriteria());
+        return new SetCriteria();
     }
 
     @Override
     public ISubquerySetCriteria createSubquerySetCriteria() {
-        return convert(new SubquerySetCriteria());
+        return new SubquerySetCriteria();
     }
 
     @Override
-    public ISubquerySetCriteria createSubquerySetCriteria(IExpression expression,
-                                                          IQueryCommand command) {
-        Expression dExpression = convert(expression);
-        QueryCommand dCommand = convert(command);
-        return convert(new SubquerySetCriteria(dExpression, dCommand));
+    public ISubquerySetCriteria createSubquerySetCriteria(Expression expression,
+                                                          QueryCommand command) {
+        return new SubquerySetCriteria(expression, command);
     }
 
     @Override
-    public ISubqueryCompareCriteria createSubqueryCompareCriteria(IExpression leftExpression,
-                                                                  IQueryCommand command,
+    public ISubqueryCompareCriteria createSubqueryCompareCriteria(Expression leftExpression,
+                                                                  QueryCommand command,
                                                                   int operator,
                                                                   int predicateQuantifier) {
-        Expression dLeftExpression = convert(leftExpression);
-        QueryCommand dCommand = convert(command);
-        return convert(new SubqueryCompareCriteria(dLeftExpression, dCommand, operator, predicateQuantifier));
+        return new SubqueryCompareCriteria(leftExpression, command, operator, predicateQuantifier);
     }
 
     @Override
-    public IScalarSubquery createScalarSubquery(IQueryCommand queryCommand) {
-        QueryCommand dCommand = convert(queryCommand);
-        return convert(new ScalarSubquery(dCommand));
+    public IScalarSubquery createScalarSubquery(QueryCommand queryCommand) {
+        return new ScalarSubquery(queryCommand);
     }
 
     @Override
-    public IBetweenCriteria createBetweenCriteria(IElementSymbol elementSymbol,
-                                                  IConstant constant1,
-                                                  IConstant constant2) {
-        ElementSymbol dSymbol = convert(elementSymbol);
-        Constant dConstant1 = convert(constant1);
-        Constant dConstant2 = convert(constant2);
-        return convert(new BetweenCriteria(dSymbol, dConstant1, dConstant2));
+    public IBetweenCriteria createBetweenCriteria(ElementSymbol elementSymbol,
+                                                  Constant constant1,
+                                                  Constant constant2) {
+        return new BetweenCriteria(elementSymbol, constant1, constant2);
     }
 
     @Override
-    public ICompoundCriteria createCompoundCriteria(LogicalOperator operator,
-                                                    ICriteria... criteria) {
-        List<Criteria> criteriaList = new ArrayList<Criteria>();
-        if (criteria != null) {
-            for (ICriteria c : criteria) {
-                criteriaList.add((Criteria) convert(c));
-            }
-        }
-        
-        return convert(new CompoundCriteria(operator.index(), criteriaList));
+    public ICompoundCriteria createCompoundCriteria(int operator, List<? extends Criteria> criteria) {
+        return new CompoundCriteria(operator, criteria);
     }
 
     @Override
-    public IExistsCriteria createExistsCriteria(IQueryCommand queryCommand) {
-        QueryCommand dCommand = convert(queryCommand);
-        return convert(new ExistsCriteria(dCommand));
+    public IExistsCriteria createExistsCriteria(QueryCommand queryCommand) {
+        return new ExistsCriteria(queryCommand);
     }
 
     @Override
     public IBlock createBlock() {
-        return convert(new Block());
+        return new Block();
     }
 
     @Override
-    public ICreateProcedureCommand createCreateProcedureCommand(IBlock block) {
-        Block dBlock = convert(block);
-        return convert(new CreateProcedureCommand(dBlock));
+    public ICreateProcedureCommand createCreateProcedureCommand(Block block) {
+        return new CreateProcedureCommand(block);
     }
 
     @Override
-    public IAssignmentStatement createAssignmentStatement(IElementSymbol elementSymbol,
-                                                          IExpression expression) {
-        ElementSymbol dSymbol = convert(elementSymbol);
-        Expression dExpression = convert(expression);
-        return convert(new AssignmentStatement(dSymbol, dExpression));
+    public IAssignmentStatement createAssignmentStatement(ElementSymbol elementSymbol,
+                                                          Expression expression) {
+        return new AssignmentStatement(elementSymbol, expression);
     }
 
     @Override
-    public IAssignmentStatement createAssignmentStatement(IElementSymbol elementSymbol,
-                                                          IQueryCommand queryCommand) {
-        ElementSymbol dSymbol = convert(elementSymbol);
-        QueryCommand dCommand = convert(queryCommand);
-        return convert(new AssignmentStatement(dSymbol, dCommand));
+    public IAssignmentStatement createAssignmentStatement(ElementSymbol elementSymbol,
+                                                          QueryCommand queryCommand) {
+        return new AssignmentStatement(elementSymbol, queryCommand);
     }
 
     @Override
     public ISelect createSelect() {
-        return convert(new Select());
+        return new Select();
     }
 
     @Override
-    public ISelect createSelect(List<? extends IExpression> symbols) {
-        List<Expression> dSymbols = unwrap(symbols);
-        return convert(new Select(dSymbols));
+    public ISelect createSelect(List<? extends Expression> symbols) {
+        return new Select(symbols);
     }
 
     @Override
     public IFrom createFrom() {
-        return convert(new From());
+        return new From();
     }
 
     @Override
-    public IFrom createFrom(List<? extends IFromClause> fromClauses) {
-        List<FromClause> dFromClauses = unwrap(fromClauses);
-        return convert(new From(dFromClauses));
+    public IFrom createFrom(List<? extends FromClause> fromClauses) {
+        return new From(fromClauses);
     }
 
     @Override
-    public IUnaryFromClause createUnaryFromClause(IGroupSymbol symbol) {
-        GroupSymbol dSymbol = convert(symbol);
-        return convert(new UnaryFromClause(dSymbol));
+    public IUnaryFromClause createUnaryFromClause(GroupSymbol symbol) {
+        return new UnaryFromClause(symbol);
     }
 
     @Override
     public ISubqueryFromClause createSubqueryFromClause(String name,
-                                                        ICommand command) {
-        QueryCommand dCommand = convert(command);
-        return convert(new SubqueryFromClause(name, dCommand));
+                                                        QueryCommand command) {
+        return new SubqueryFromClause(name, command);
     }
 
     @Override
-    public IJoinPredicate createJoinPredicate(IFromClause leftClause,
-                                              IFromClause rightClause,
-                                              IJoinPredicate.JoinType joinType) {
-        FromClause dLeftClause = convert(leftClause);
-        FromClause dRightClause = convert(rightClause);
-        JoinType dJoinType = convert(joinType);
-        
-        JoinPredicate joinPredicate = new JoinPredicate(dLeftClause, dRightClause, dJoinType);
-        return convert(joinPredicate);
+    public IJoinType getJoinType(IJoinType.Types joinType) {
+        switch (joinType) {
+            case JOIN_INNER:
+                return JoinType.JOIN_INNER;
+            case JOIN_RIGHT_OUTER:
+                return JoinType.JOIN_RIGHT_OUTER;
+            case JOIN_LEFT_OUTER:
+                return JoinType.JOIN_LEFT_OUTER;
+            case JOIN_FULL_OUTER:
+                return JoinType.JOIN_FULL_OUTER;
+            case JOIN_CROSS:
+                return JoinType.JOIN_CROSS;
+            case JOIN_UNION:
+                return JoinType.JOIN_UNION;
+            case JOIN_SEMI:
+                return JoinType.JOIN_SEMI;
+            case JOIN_ANTI_SEMI:
+                return JoinType.JOIN_ANTI_SEMI;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
     @Override
-    public IJoinPredicate createJoinPredicate(IFromClause leftClause,
-                                              IFromClause rightClause,
-                                              IJoinPredicate.JoinType joinType,
-                                              List<ICriteria> criteria) {
-        
-        FromClause dLeftClause = convert(leftClause);
-        FromClause dRightClause = convert(rightClause);
-        JoinType dJoinType = convert(joinType);
-        List<Criteria> criteriaList = unwrap(criteria);
-        
-        JoinPredicate joinPredicate = new JoinPredicate(dLeftClause, dRightClause, dJoinType, criteriaList);
-        return convert(joinPredicate);
+    public IJoinPredicate createJoinPredicate(FromClause leftClause,
+                                              FromClause rightClause,
+                                              JoinType joinType) {
+        return new JoinPredicate(leftClause, rightClause, joinType);
+    }
+
+    @Override
+    public IJoinPredicate createJoinPredicate(FromClause leftClause,
+                                              FromClause rightClause,
+                                              JoinType joinType,
+                                              List<Criteria> criteria) {
+        return new JoinPredicate(leftClause, rightClause, joinType, criteria);
     }
 
     @Override
     public IGroupBy createGroupBy() {
-        return convert(new GroupBy());
+        return new GroupBy();
     }
 
     @Override
     public IOrderBy createOrderBy() {
-        return convert(new OrderBy());
+        return new OrderBy();
     }
 
     @Override
     public IOption createOption() {
-        return convert(new Option());
+        return new Option();
     }
 
     @Override
     public IUpdate createUpdate() {
-        return new UpdateImpl(new Update());
+        return new Update();
     }
 
     @Override
     public IDelete createDelete() {
-        return new DeleteImpl(new Delete());
+        return new Delete();
     }
 
     @Override
     public IInsert createInsert() {
-        return new InsertImpl(new Insert());
+        return new Insert();
     }
 
     @Override
     public IStoredProcedure createStoredProcedure() {
-        return new StoredProcedureImpl(new StoredProcedure());
+        return new StoredProcedure();
     }
 
     @Override
     public ISPParameter createSPParameter(int index,
-                                          IExpression expression) {
-        Expression dExpression = convert(expression);
-        SPParameter spParameter = new SPParameter(index, dExpression);
-        return new SPParameterImpl(spParameter);
+                                          Expression expression) {
+        return new SPParameter(index, expression);
     }
 
     @Override
     public ISPParameter createSPParameter(int index,
                                           ParameterInfo parameterType,
                                           String name) {
-        
-        SPParameter spParameter = new SPParameter(index, parameterType.index(), name);
-        return new SPParameterImpl(spParameter);
+        return new SPParameter(index, parameterType.index(), name);
     }
 
     @Override
     public IReference createReference(int index) {
-        return convert(new Reference(index));
+        return new Reference(index);
     }
 
     @Override
-    public IMetadataID createMetadataID(String id, Class<?> clazz) {
-        return new MetadataIDImpl(new TempMetadataID(id, clazz));
+    public IMetadataID createMetadataID(String id,
+                                        Class clazz) {
+        return new TempMetadataID(id, clazz);
     }
 
     @Override
     public IStoredProcedureInfo createStoredProcedureInfo() {
-        return new StoredProcedureInfoImpl(new StoredProcedureInfo());
-    }
-    
-    @Override
-    public IQueryNode createQueryNode(String queryPlan) {
-        return new QueryNodeImpl(new QueryNode(queryPlan));
+        return new StoredProcedureInfo();
     }
 
+    @Override
+    public IQueryNode createQueryNode(String queryPlan) {
+        return new QueryNode(queryPlan);
+    }
 }

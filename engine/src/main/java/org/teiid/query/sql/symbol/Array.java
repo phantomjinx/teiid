@@ -28,11 +28,12 @@ import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.Assertion;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IArray;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class Array implements Expression {
+public class Array implements Expression, IArray<LanguageVisitor> {
 
 	private Class<?> type;
 	private List<Expression> expressions;

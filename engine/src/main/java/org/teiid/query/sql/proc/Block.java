@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.proc.IBlock;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.ProcedureReservedWords;
@@ -41,7 +42,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * <p> This class represents a group of <code>Statement</code> objects. The
  * statements are stored on this object in the order in which they are added.</p>
  */
-public class Block extends Statement implements Labeled {
+public class Block extends Statement implements Labeled, IBlock<Statement, LanguageVisitor> {
 
 	// list of statements on this block
 	private List<Statement> statements;

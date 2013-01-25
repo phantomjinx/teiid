@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.teiid.designer.query.sql.IElementCollectorVisitor;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
@@ -47,7 +48,8 @@ import org.teiid.query.sql.symbol.MultipleElementSymbol;
  * the visitor (and possibly the collection), run the visitor, and return the collection.
  * The public visit() methods should NOT be called directly.</p>
  */
-public class ElementCollectorVisitor extends LanguageVisitor {
+public class ElementCollectorVisitor extends LanguageVisitor
+    implements IElementCollectorVisitor<LanguageObject, ElementSymbol> {
 
     private Collection<? super ElementSymbol> elements;
     private boolean aggsOnly;
@@ -173,14 +175,17 @@ public class ElementCollectorVisitor extends LanguageVisitor {
     	return getElements(obj, removeDuplicates, false, true);
     }
     
+    @Override
     public Collection<? super ElementSymbol> findElements(LanguageObject obj) {
         return findElements(obj, false);
     }
 
+    @Override
     public Collection<? super ElementSymbol> findElements(LanguageObject obj, boolean useDeepIteration) {
         return findElements(obj, useDeepIteration, false);
     }
     
+    @Override
     public Collection<? super ElementSymbol>  findElements(LanguageObject obj, boolean useDeepIteration, boolean aggsOnly) {
         this.aggsOnly = aggsOnly;
         if (useDeepIteration){

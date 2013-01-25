@@ -25,13 +25,14 @@ package org.teiid.query.sql;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import org.teiid.designer.query.sql.lang.ILanguageObject;
 
 /**
  * This is the primary interface for all language objects.  It extends a few 
  * key interfaces and adds some additional methods to allow the {@link LanguageVisitor}
  * to work.
  */
-public interface LanguageObject extends Cloneable {
+public interface LanguageObject extends Cloneable, ILanguageObject<LanguageVisitor> {
 
     /**
      * Method for accepting a visitor.  It is the responsibility of the 

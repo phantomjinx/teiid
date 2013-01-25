@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 import org.teiid.core.util.Assertion;
 import org.teiid.core.util.PropertiesUtils;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.language.SQLConstants;
 import org.teiid.metadata.*;
 import org.teiid.metadata.Column.SearchType;
@@ -307,7 +308,7 @@ public class SQLParserUtil {
         return 0;
     }
     
-    SetQuery addQueryToSetOperation(QueryCommand query, QueryCommand rightQuery, SetQuery.Operation type, boolean all) {
+    SetQuery addQueryToSetOperation(QueryCommand query, QueryCommand rightQuery, ISetQuery.Operation type, boolean all) {
         SetQuery setQuery = new SetQuery(type, all, query, rightQuery);
         return setQuery;
     }

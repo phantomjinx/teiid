@@ -23,6 +23,9 @@
 package org.teiid.query.sql.lang;
 
 import java.util.List;
+import org.teiid.designer.query.sql.lang.IQueryCommand;
+import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.Expression;
 
 
 
@@ -31,7 +34,8 @@ import java.util.List;
  * This class provides some useful commonalities when the type of query command 
  * is not known.   
  */
-public abstract class QueryCommand extends Command {
+public abstract class QueryCommand extends Command
+    implements IQueryCommand<OrderBy, Query, Expression, LanguageVisitor> {
 
 	/** The order in which to sort the results */
 	private OrderBy orderBy;

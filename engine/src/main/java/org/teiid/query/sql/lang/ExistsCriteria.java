@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IExistsCriteria;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.PredicateCriteria.Negatable;
 import org.teiid.query.sql.symbol.ContextReference;
@@ -37,7 +38,7 @@ import org.teiid.query.sql.symbol.ContextReference;
  * "EXISTS (Select EmployeeID FROM Employees WHERE EmployeeName = 'Smith')".
  */
 public class ExistsCriteria extends PredicateCriteria
-implements SubqueryContainer<QueryCommand>, ContextReference, Negatable {
+    implements SubqueryContainer<QueryCommand>, ContextReference, Negatable, IExistsCriteria<LanguageVisitor, QueryCommand> {
 	
 	public static class SubqueryHint {
 		public static String MJ = "MJ"; //$NON-NLS-1$

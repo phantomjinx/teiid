@@ -27,6 +27,7 @@ package org.teiid.query.sql.proc;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.proc.IWhileStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Criteria;
 import org.teiid.query.sql.proc.Statement.Labeled;
@@ -38,7 +39,8 @@ import org.teiid.query.sql.proc.Statement.Labeled;
  * a block and a criteria that
  * determines when to exit the while loop.</p>
  */
-public class WhileStatement extends Statement implements Labeled {
+public class WhileStatement extends Statement
+    implements Labeled, IWhileStatement<LanguageVisitor> {
 
     private Block whileBlock;
     private String label;

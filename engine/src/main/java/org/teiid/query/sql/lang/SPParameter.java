@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.teiid.client.metadata.ParameterInfo;
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.ISPParameter;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
@@ -41,25 +41,25 @@ import org.teiid.query.sql.symbol.Expression;
 * The connector will utilize this class to set the appropriate values at the
 * datasource layer.
 */
-public class SPParameter implements Cloneable {
+public class SPParameter implements Cloneable, ISPParameter {
 
     /** Constant identifying an IN parameter */
-    public static final int IN = ParameterInfo.IN;
+    public static final int IN = ParameterInfo.IN.index();
 
     /** Constant identifying an OUT parameter */
-    public static final int OUT = ParameterInfo.OUT;
+    public static final int OUT = ParameterInfo.OUT.index();
 
     /** Constant identifying an INOUT parameter */
-    public static final int INOUT = ParameterInfo.INOUT;
+    public static final int INOUT = ParameterInfo.INOUT.index();
 
     /** Constant identifying a RETURN parameter */
-    public static final int RETURN_VALUE = ParameterInfo.RETURN_VALUE;
+    public static final int RETURN_VALUE = ParameterInfo.RETURN_VALUE.index();
 
     /** Constant identifying a RESULT SET parameter */
-    public static final int RESULT_SET = ParameterInfo.RESULT_SET;
+    public static final int RESULT_SET = ParameterInfo.RESULT_SET.index();
 
     // Basic state
-    private int parameterType = ParameterInfo.IN;
+    private int parameterType = ParameterInfo.IN.index();
     private Expression expression;
     private int index;
     private List<ElementSymbol> resultSetColumns;      //contains List of columns if it is result set
@@ -119,6 +119,10 @@ public class SPParameter implements Cloneable {
         this.parameterSymbol = es;
     }
 
+    public void setParameterType(ParameterInfo parameterInfo) {
+        this.parameterType = parameterInfo.index();
+    }
+    
     /**
      * Set parameter type according to class constants.
      * @param parameterType Type to set
@@ -130,7 +134,7 @@ public class SPParameter implements Cloneable {
      */
     public void setParameterType(int parameterType){
         // validate against above types
-        if(parameterType < ParameterInfo.IN || parameterType > ParameterInfo.RESULT_SET) {
+        if(parameterType < ParameterInfo.IN.index() || parameterType > ParameterInfo.RESULT_SET.index()) {
             throw new IllegalArgumentException(QueryPlugin.Util.getString("ERR.015.010.0006", parameterType)); //$NON-NLS-1$
         }
         this.parameterType = parameterType;
@@ -282,7 +286,7 @@ public class SPParameter implements Cloneable {
      * @return True if parameter is a return value, false otherwise
      */
     public boolean isInternal() {
-        return (this.parameterType == ParameterInfo.RETURN_VALUE || this.parameterType == ParameterInfo.RESULT_SET);
+        return (this.parameterType == ParameterInfo.RETURN_VALUE.index() || this.parameterType == ParameterInfo.RESULT_SET.index());
     }
 
     /**

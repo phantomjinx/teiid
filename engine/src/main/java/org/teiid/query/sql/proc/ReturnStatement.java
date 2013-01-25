@@ -23,13 +23,14 @@
 package org.teiid.query.sql.proc;
 
 import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.designer.query.sql.proc.IReturnStatement;
 import org.teiid.query.sql.symbol.Expression;
 
 
 /**
  * <p> This class represents a return statement</p>
  */
-public class ReturnStatement extends AssignmentStatement {
+public class ReturnStatement extends AssignmentStatement implements IReturnStatement {
 
 	public ReturnStatement(Expression value) {
 		super(null, value);

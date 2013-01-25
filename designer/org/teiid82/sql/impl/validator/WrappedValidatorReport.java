@@ -19,14 +19,14 @@ import org.teiid.query.validator.ValidatorReport;
 /**
  *
  */
-public class ValidatorReportImpl implements IValidatorReport {
+public class WrappedValidatorReport implements IValidatorReport {
 
     private ValidatorReport validateReport;
 
     /**
      * @param validateReport
      */
-    public ValidatorReportImpl(ValidatorReport validateReport) {
+    public WrappedValidatorReport(ValidatorReport validateReport) {
         this.validateReport = validateReport;
     }
 
@@ -44,7 +44,7 @@ public class ValidatorReportImpl implements IValidatorReport {
         
         List<IValidatorFailure> failures = new ArrayList<IValidatorFailure>();
         for (ValidatorFailure failure : items) {
-            failures.add(new ValidatorFailureImpl(failure));
+            failures.add(new WrappedValidatorFailure(failure));
         }
         
         return failures;

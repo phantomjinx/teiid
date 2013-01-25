@@ -22,13 +22,14 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.ISubqueryContainer;
 import org.teiid.query.sql.LanguageObject;
 
 /**
  * This interface defines a common interface for all SQL objects 
  * that contain subqueries. 
  */
-public interface SubqueryContainer<T extends Command> extends LanguageObject {
+public interface SubqueryContainer<T extends Command> extends LanguageObject, ISubqueryContainer<T> {
 
     /**
      * Returns the subquery Command object

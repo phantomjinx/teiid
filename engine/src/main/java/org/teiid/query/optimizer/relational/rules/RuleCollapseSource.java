@@ -418,8 +418,8 @@ public final class RuleCollapseSource implements OptimizerRule {
         }        
     }
 
-	private void prepareSubqueries(List<SubqueryContainer<?>> containers) {
-		for (SubqueryContainer<?> container : containers) {
+	private void prepareSubqueries(List<SubqueryContainer> containers) {
+		for (SubqueryContainer container : containers) {
 		    prepareSubquery(container);
 		}
 	}

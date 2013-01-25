@@ -24,13 +24,14 @@ package org.teiid.query.sql.proc;
 
 import java.util.List;
 
+import org.teiid.designer.query.sql.proc.ITriggerAction;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Command;
-import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.symbol.Expression;
+import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class TriggerAction extends Command {
+public class TriggerAction extends Command implements ITriggerAction<Expression, LanguageVisitor> {
 	
 	private GroupSymbol view;
 	private Block block;
