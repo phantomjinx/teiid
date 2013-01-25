@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IJoinPredicate;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.GroupSymbol;
 
@@ -43,7 +44,7 @@ import org.teiid.query.sql.symbol.GroupSymbol;
  * <LI>GroupA RIGHT OUTER JOIN (GroupB JOIN GroupC ON GroupB.E1=GroupC.E1) ON GroupA.E1=GroupB.E1</LI>
  * </OL>
  */
-public class JoinPredicate extends FromClause {
+public class JoinPredicate extends FromClause implements IJoinPredicate<FromClause, LanguageVisitor> {
 
 	private FromClause leftClause;
 	private FromClause rightClause;

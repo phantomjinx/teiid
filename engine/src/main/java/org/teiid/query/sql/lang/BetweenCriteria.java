@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IBetweenCriteria;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.PredicateCriteria.Negatable;
 import org.teiid.query.sql.symbol.Expression;
@@ -32,7 +33,8 @@ import org.teiid.query.sql.symbol.Expression;
 /**
  * Represents criteria such as:  "<expression> [NOT] BETWEEN <lowerExpression> AND <upperExpression>".
  */
-public class BetweenCriteria extends PredicateCriteria implements Negatable {
+public class BetweenCriteria extends PredicateCriteria
+    implements Negatable, IBetweenCriteria<LanguageVisitor> {
 
 	private Expression expression;
     private Expression lowerExpression;

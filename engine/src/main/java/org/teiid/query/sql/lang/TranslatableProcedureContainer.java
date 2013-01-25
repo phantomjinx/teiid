@@ -24,11 +24,15 @@ package org.teiid.query.sql.lang;
 
 import java.util.Map;
 
+import org.teiid.designer.query.sql.lang.ITranslatableProcedureContainer;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Reference;
+import org.teiid.query.sql.symbol.SingleElementSymbol;
 
 
-public abstract class TranslatableProcedureContainer extends ProcedureContainer {
+public abstract class TranslatableProcedureContainer extends ProcedureContainer
+    implements ITranslatableProcedureContainer<SingleElementSymbol, LanguageVisitor> {
 	
 	private Map<ElementSymbol, Reference> implicitParams;
 	

@@ -24,10 +24,12 @@
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IWindowFunction;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class WindowFunction extends SingleElementSymbol {
+public class WindowFunction extends SingleElementSymbol
+    implements IWindowFunction<LanguageVisitor> {
 	
 	private AggregateSymbol function;
 	private WindowSpecification windowSpecification;

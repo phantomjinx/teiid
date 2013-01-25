@@ -25,8 +25,10 @@ package org.teiid.query.sql.lang;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.teiid.designer.query.sql.lang.IBatchedUpdateCommand;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.SingleElementSymbol;
 import org.teiid.query.sql.util.VariableContext;
 
 
@@ -35,7 +37,8 @@ import org.teiid.query.sql.util.VariableContext;
  * Represents a batch of INSERT, UPDATE, DELETE, and SELECT INTO commands
  * @since 4.2
  */
-public class BatchedUpdateCommand extends Command {
+public class BatchedUpdateCommand extends Command
+    implements IBatchedUpdateCommand<Command, SingleElementSymbol, LanguageVisitor> {
     
     protected List<Command> commands;
     private List<VariableContext> variableContexts; //processing state

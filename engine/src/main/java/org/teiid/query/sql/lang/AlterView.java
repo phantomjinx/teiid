@@ -21,9 +21,11 @@
  */
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IAlterView;
 import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.SingleElementSymbol;
 
-public class AlterView extends Alter<QueryCommand> {
+public class AlterView extends Alter<QueryCommand> implements IAlterView<SingleElementSymbol, LanguageVisitor> {
 	
 	@Override
 	public void acceptVisitor(LanguageVisitor visitor) {

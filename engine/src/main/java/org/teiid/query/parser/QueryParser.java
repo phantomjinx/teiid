@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import org.teiid.api.exception.query.QueryParserException;
+import org.teiid.designer.query.IQueryParser;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.lang.CacheHint;
 import org.teiid.query.sql.lang.Command;
@@ -42,7 +43,7 @@ import org.teiid.query.sql.symbol.SingleElementSymbol;
  * input stream.  Putting multiple queries into the same stream will result
  * in unpredictable and most likely incorrect behavior.</p>
  */
-public class QueryParser {
+public class QueryParser implements IQueryParser {
     
     private static ThreadLocal<QueryParser> QUERY_PARSER = new ThreadLocal<QueryParser>() {
         /** 

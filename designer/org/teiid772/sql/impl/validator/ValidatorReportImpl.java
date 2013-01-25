@@ -44,7 +44,7 @@ public class ValidatorReportImpl implements IValidatorReport {
         
         List<IValidatorFailure> failures = new ArrayList<IValidatorFailure>();
         for (ValidatorFailure failure : items) {
-            failures.add(new ValidatorFailureImpl(failure));
+            failures.add(new WrappedValidatorFailure(failure));
         }
         
         return failures;

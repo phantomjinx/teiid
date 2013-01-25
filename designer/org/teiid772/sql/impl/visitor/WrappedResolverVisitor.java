@@ -10,21 +10,17 @@ package org.teiid772.sql.impl.visitor;
 import java.util.Collection;
 import org.teiid.designer.query.metadata.IQueryMetadataInterface;
 import org.teiid.designer.query.sql.IResolverVisitor;
-import org.teiid.designer.query.sql.lang.ILanguageObject;
-import org.teiid.designer.query.sql.symbol.IGroupSymbol;
 import org.teiid.query.resolver.util.ResolverVisitor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid772.sql.impl.CrossQueryMetadata;
-import org.teiid772.sql.impl.SyntaxFactory;
 
 /**
  *
  */
-public class ResolverVisitorImpl implements IResolverVisitor {
+public class WrappedResolverVisitor
+    implements IResolverVisitor<LanguageObject, GroupSymbol> {
 
-    private final SyntaxFactory factory = new SyntaxFactory();
-    
     @Override
     public void setProperty(String propertyName, Object value) {
         if (SHORT_NAME.equals(propertyName) && value instanceof Boolean)
@@ -32,21 +28,17 @@ public class ResolverVisitorImpl implements IResolverVisitor {
     }
 
     @Override
-    public void resolveLanguageObject(ILanguageObject obj,
-                                      IQueryMetadataInterface metadata) throws Exception {
-        LanguageObject languageObject = factory.convert(obj);
+    public void resolveLanguageObject(LanguageObject obj, IQueryMetadataInterface metadata) throws Exception {
         CrossQueryMetadata dMetadata = new CrossQueryMetadata(metadata);
-        ResolverVisitor.resolveLanguageObject(languageObject, dMetadata);
+        ResolverVisitor.resolveLanguageObject(obj, dMetadata);
     }
 
     @Override
-    public void resolveLanguageObject(ILanguageObject obj,
-                                      Collection<IGroupSymbol> groups,
-                                      IQueryMetadataInterface metadata) throws Exception {
-        LanguageObject languageObject = factory.convert(obj);
-        Collection<GroupSymbol> groupImpls = factory.unwrap(groups);
+    public void resolveLanguageObject(LanguageObject obj, Collection<GroupSymbol> groups, IQueryMetadataInterface metadata)
+        throws Exception {
+        
         CrossQueryMetadata dMetadata = new CrossQueryMetadata(metadata);
-        ResolverVisitor.resolveLanguageObject(languageObject, groupImpls, dMetadata);
+        ResolverVisitor.resolveLanguageObject(obj, groups, dMetadata);
     }
 
 }

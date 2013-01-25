@@ -8,8 +8,6 @@
 package org.teiid772.sql.impl.validator;
 
 import java.util.List;
-import org.teiid.designer.query.sql.lang.ICommand;
-import org.teiid.designer.query.sql.symbol.IElementSymbol;
 import org.teiid.designer.validator.IUpdateValidator;
 import org.teiid.designer.validator.IValidator.IValidatorReport;
 import org.teiid.query.sql.lang.Command;
@@ -18,16 +16,14 @@ import org.teiid.query.validator.UpdateValidator;
 import org.teiid.query.validator.UpdateValidator.UpdateType;
 import org.teiid.query.validator.ValidatorReport;
 import org.teiid772.sql.impl.CrossQueryMetadata;
-import org.teiid772.sql.impl.SyntaxFactory;
 
 /**
  *
  */
-public class UpdateValidatorImpl implements IUpdateValidator {
+public class WrappedUpdateValidator
+    implements IUpdateValidator<Command, ElementSymbol> {
 
     private final UpdateValidator delegateVisitor;
-    
-    private final SyntaxFactory factory = new SyntaxFactory();
     
     /**
      * @param crossMetadata
@@ -35,7 +31,7 @@ public class UpdateValidatorImpl implements IUpdateValidator {
      * @param updateType
      * @param deleteType
      */
-    public UpdateValidatorImpl(CrossQueryMetadata crossMetadata,
+    public WrappedUpdateValidator(CrossQueryMetadata crossMetadata,
                                UpdateType insertType,
                                UpdateType updateType,
                                UpdateType deleteType) {
@@ -43,11 +39,8 @@ public class UpdateValidatorImpl implements IUpdateValidator {
     }
 
     @Override
-    public void validate(ICommand command, List<IElementSymbol> elemSymbols) throws Exception {
-        Command dCommand = factory.convert(command);
-        List<ElementSymbol> dSymbols = factory.unwrap(elemSymbols);
-        
-        delegateVisitor.validate(dCommand, dSymbols);
+    public void validate(Command command, List<ElementSymbol> elemSymbols) throws Exception {
+        delegateVisitor.validate(command, elemSymbols);
     }
 
     @Override

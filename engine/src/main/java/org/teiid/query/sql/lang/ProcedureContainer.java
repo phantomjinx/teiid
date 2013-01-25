@@ -24,12 +24,16 @@ package org.teiid.query.sql.lang;
 
 import java.util.LinkedHashMap;
 
+import org.teiid.designer.query.sql.lang.IProcedureContainer;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
+import org.teiid.query.sql.symbol.SingleElementSymbol;
 import org.teiid.query.validator.UpdateValidator.UpdateInfo;
 
 
-public abstract class ProcedureContainer extends Command implements TargetedCommand {
+public abstract class ProcedureContainer extends Command 
+    implements TargetedCommand, IProcedureContainer<SingleElementSymbol, LanguageVisitor> {
 
     private int updateCount = -1;
     private UpdateInfo updateInfo;

@@ -25,9 +25,9 @@ package org.teiid.query.sql.lang;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IOrderBy;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.SingleElementSymbol;
@@ -41,7 +41,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * The optional keywords ASC and DESC can be put after each element to
  * specify whether the sort is ascending or descending.
  */
-public class OrderBy implements LanguageObject {
+public class OrderBy implements LanguageObject, IOrderBy<SingleElementSymbol, OrderByItem, LanguageVisitor> {
 
 	/** Constant for the ascending value */
     public static final boolean ASC = true;

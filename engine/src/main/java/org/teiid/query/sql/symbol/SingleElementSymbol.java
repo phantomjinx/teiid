@@ -55,5 +55,7 @@ public abstract class SingleElementSymbol extends Symbol implements Expression, 
         }
         return name;
     }
+    
+    public abstract SingleElementSymbol clone();
 
 }

@@ -15,14 +15,14 @@ import org.teiid.query.validator.ValidatorFailure;
 /**
  *
  */
-public class ValidatorFailureImpl implements IValidatorFailure {
+public class WrappedValidatorFailure implements IValidatorFailure {
 
     private ValidatorFailure failure;
 
     /**
      * @param failure
      */
-    public ValidatorFailureImpl(ValidatorFailure failure) {
+    public WrappedValidatorFailure(ValidatorFailure failure) {
         this.failure = failure;
     }
 

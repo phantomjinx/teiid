@@ -28,6 +28,7 @@ import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.query.sql.*;
 import org.teiid.query.sql.lang.*;
+import org.teiid.designer.query.sql.proc.ITranslateCriteria;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
@@ -38,7 +39,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * the user's criteria using the element-expressions pairs represented as a list of
  * comapreCriteria on this this object.</p>
  */
-public class TranslateCriteria extends PredicateCriteria {
+public class TranslateCriteria extends PredicateCriteria implements ITranslateCriteria<LanguageVisitor> {
 
 	// the selector object used to determine if a type of criteria is specified 
 	// on the user's query	

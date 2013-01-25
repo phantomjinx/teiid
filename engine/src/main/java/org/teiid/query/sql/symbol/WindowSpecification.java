@@ -26,12 +26,13 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IWindowSpecification;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.OrderBy;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class WindowSpecification implements LanguageObject {
+public class WindowSpecification implements LanguageObject, IWindowSpecification<LanguageVisitor> {
 	
 	private List<Expression> partition;
 	private OrderBy orderBy;

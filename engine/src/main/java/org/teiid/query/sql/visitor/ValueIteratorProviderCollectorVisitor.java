@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.teiid.designer.query.sql.IValueIteratorProviderCollectorVisitor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.ExistsCriteria;
@@ -49,7 +50,8 @@ import org.teiid.query.sql.symbol.ScalarSubquery;
  * the visitor, run the visitor, and get the collection. 
  * The public visit() methods should NOT be called directly.</p>
  */
-public class ValueIteratorProviderCollectorVisitor extends LanguageVisitor {
+public class ValueIteratorProviderCollectorVisitor extends LanguageVisitor 
+    implements IValueIteratorProviderCollectorVisitor<LanguageObject, SubqueryContainer> {
 
     private List<SubqueryContainer> valueIteratorProviders;
     
@@ -121,6 +123,7 @@ public class ValueIteratorProviderCollectorVisitor extends LanguageVisitor {
     	this.valueIteratorProviders.add(obj);
     }
     
+    @Override
     public List<SubqueryContainer> findValueIteratorProviders(LanguageObject obj) {
         PreOrderNavigator.doVisit(obj, this);
         return getValueIteratorProviders();

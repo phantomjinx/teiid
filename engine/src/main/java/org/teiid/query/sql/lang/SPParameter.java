@@ -28,8 +28,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.teiid.client.metadata.ParameterInfo;
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.ISPParameter;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
@@ -42,26 +42,26 @@ import org.teiid.query.sql.symbol.Expression;
 * The connector will utilize this class to set the appropriate values at the
 * datasource layer.
 */
-public class SPParameter implements Serializable, Cloneable {
+public class SPParameter implements Serializable, Cloneable, ISPParameter {
 
     /** Constant identifying an IN parameter */
-    public static final int IN = ParameterInfo.IN;
+    public static final int IN = ParameterInfo.IN.ordinal();
 
     /** Constant identifying an OUT parameter */
-    public static final int OUT = ParameterInfo.OUT;
+    public static final int OUT = ParameterInfo.OUT.ordinal();
 
     /** Constant identifying an INOUT parameter */
-    public static final int INOUT = ParameterInfo.INOUT;
+    public static final int INOUT = ParameterInfo.INOUT.ordinal();
 
     /** Constant identifying a RETURN parameter */
-    public static final int RETURN_VALUE = ParameterInfo.RETURN_VALUE;
+    public static final int RETURN_VALUE = ParameterInfo.RETURN_VALUE.ordinal();
 
     /** Constant identifying a RESULT SET parameter */
-    public static final int RESULT_SET = ParameterInfo.RESULT_SET;
+    public static final int RESULT_SET = ParameterInfo.RESULT_SET.ordinal();
 
     // Basic state
     private String name;        // Param name, qualified by full procedure name
-    private int parameterType = ParameterInfo.IN;
+    private int parameterType = ParameterInfo.IN.ordinal();
     private Class classType;
     private Expression expression;
     private int index;
@@ -124,10 +124,15 @@ public class SPParameter implements Serializable, Cloneable {
      */
     public void setParameterType(int parameterType){
         // validate against above types
-        if(parameterType < ParameterInfo.IN || parameterType > ParameterInfo.RESULT_SET) {
+        if(parameterType < ParameterInfo.IN.ordinal() || parameterType > ParameterInfo.RESULT_SET.ordinal()) {
             throw new IllegalArgumentException(QueryPlugin.Util.getString("ERR.015.010.0006", parameterType)); //$NON-NLS-1$
         }
         this.parameterType = parameterType;
+    }
+    
+    @Override
+    public void setParameterType(ParameterInfo parameterInfo) {
+        this.parameterType = parameterInfo.ordinal();
     }
 
     /**
@@ -276,7 +281,7 @@ public class SPParameter implements Serializable, Cloneable {
      * @return True if parameter is a return value, false otherwise
      */
     public boolean isInternal() {
-        return (this.parameterType == ParameterInfo.RETURN_VALUE || this.parameterType == ParameterInfo.RESULT_SET);
+        return (this.parameterType == ParameterInfo.RETURN_VALUE.ordinal() || this.parameterType == ParameterInfo.RESULT_SET.ordinal());
     }
 
     /**

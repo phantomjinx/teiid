@@ -32,6 +32,7 @@ import org.teiid.core.TeiidRuntimeException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.query.metadata.QueryMetadataInterface;
 import org.teiid.query.resolver.util.ResolverUtil;
 import org.teiid.query.sql.LanguageObject;
@@ -47,6 +48,7 @@ import org.teiid.query.sql.symbol.SingleElementSymbol;
  * INTERSECT, and EXCEPT can be implemented with this Class
  */
 public class SetQuery extends QueryCommand
+    implements ISetQuery<QueryCommand, OrderBy, Query, SingleElementSymbol, LanguageVisitor> {
 
 	private boolean all = true;
     private Operation operation;                     

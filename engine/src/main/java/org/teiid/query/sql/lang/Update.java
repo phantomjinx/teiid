@@ -28,11 +28,13 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IUpdate;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.ProcedureReservedWords;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.GroupSymbol;
+import org.teiid.query.sql.symbol.SingleElementSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
@@ -40,7 +42,8 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * Represents a SQL Update statement of the form:
  * "UPDATE <group> SET <element> = <expression>, ... [WHERE <criteria>]".
  */
-public class Update extends TranslatableProcedureContainer {
+public class Update extends TranslatableProcedureContainer
+    implements IUpdate<SingleElementSymbol, LanguageVisitor> {
 
     /** Identifies the group to be updated. */
     private GroupSymbol group;

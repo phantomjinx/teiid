@@ -29,6 +29,7 @@ import java.util.Map;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IAggregateSymbol;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.OrderBy;
 
@@ -46,6 +47,7 @@ import org.teiid.query.sql.lang.OrderBy;
  * bigdecimal.</p>
  */
 public class AggregateSymbol extends ExpressionSymbol
+    implements IAggregateSymbol<LanguageVisitor> {
 
 	private Type aggregate;
 	private boolean distinct;

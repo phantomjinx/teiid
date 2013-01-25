@@ -28,6 +28,7 @@ import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.query.sql.*;
 import org.teiid.designer.query.sql.lang.ICompareCriteria;
+import org.teiid.designer.query.sql.proc.ICriteriaSelector;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -39,7 +40,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * objects to determine if a particular type of criteria is present on one or more
  * elements on a user's query</p>
  */
-public class CriteriaSelector implements LanguageObject {
+public class CriteriaSelector implements LanguageObject, ICriteriaSelector<LanguageVisitor> {
 	
 	// constant for "=" criteria 
 	public static final int COMPARE_EQ = ICompareCriteria.EQ;

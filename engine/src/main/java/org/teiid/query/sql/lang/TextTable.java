@@ -26,13 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.ITextTable;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 
 /**
  * Represents the TEXTTABLE table function.
  */
-public class TextTable extends TableFunctionReference {
+public class TextTable extends TableFunctionReference implements ITextTable<LanguageVisitor> {
 	
 	public static class TextColumn extends ProjectedColumn {
 		private Integer width;

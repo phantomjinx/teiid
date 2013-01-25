@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.query.sql.*;
+import org.teiid.designer.query.sql.lang.IIsNullCriteria;
 import org.teiid.query.sql.lang.PredicateCriteria.Negatable;
 import org.teiid.query.sql.symbol.Expression;
 
@@ -31,7 +32,8 @@ import org.teiid.query.sql.symbol.Expression;
 /**
  * Represents criteria such as:  "<expression> IS NULL".
  */
-public class IsNullCriteria extends PredicateCriteria implements Negatable {
+public class IsNullCriteria extends PredicateCriteria
+    implements Negatable, IIsNullCriteria<Expression, LanguageVisitor> {
 
 	private Expression expression;
     /** Negation flag. Indicates whether the criteria expression contains a NOT. */

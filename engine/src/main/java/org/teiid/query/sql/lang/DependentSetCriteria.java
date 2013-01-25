@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IDependentSetCriteria;
 import org.teiid.query.optimizer.relational.rules.NewCalculateCostUtil;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ContextReference;
@@ -37,7 +38,8 @@ import org.teiid.query.sql.symbol.Expression;
  * by a separate processing node.
  * @since 5.0.1
  */
-public class DependentSetCriteria extends AbstractSetCriteria implements ContextReference {
+public class DependentSetCriteria extends AbstractSetCriteria
+    implements ContextReference, IDependentSetCriteria<LanguageVisitor> {
 	
     /**
      * Specifies the expression whose values we want to return in the iterator

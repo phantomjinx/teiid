@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.teiid.core.types.ClobType;
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.symbol.IConstant;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -38,7 +39,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * value, but that is not true if the value is null.  In that case, the type is unknown
  * and is set to the null type until the type is resolved at a later point.
  */
-public class Constant implements Expression, Comparable<Constant> {
+public class Constant implements Expression, Comparable<Constant>, IConstant<LanguageVisitor> {
 
 	public static final Constant NULL_CONSTANT = new Constant(null);
 	

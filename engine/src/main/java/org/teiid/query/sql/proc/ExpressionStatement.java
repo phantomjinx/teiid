@@ -22,9 +22,10 @@
 
 package org.teiid.query.sql.proc;
 
+import org.teiid.designer.query.sql.proc.IExpressionStatement;
 import org.teiid.query.sql.symbol.Expression;
 
-public interface ExpressionStatement {
+public interface ExpressionStatement extends IExpressionStatement<Expression> {
 	
 	Expression getExpression();
 	

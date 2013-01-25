@@ -26,8 +26,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.ISourceHint;
 
-public class SourceHint {
+public class SourceHint implements ISourceHint {
 	
 	private String generalHint;
 	private Map<String, String> sourceHints;

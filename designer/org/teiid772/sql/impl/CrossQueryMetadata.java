@@ -19,7 +19,6 @@ import org.teiid.query.mapping.relational.QueryNode;
 import org.teiid.query.mapping.xml.MappingNode;
 import org.teiid.query.metadata.BasicQueryMetadata;
 import org.teiid.query.metadata.StoredProcedureInfo;
-import org.teiid772.sql.impl.xml.MappingDocumentFactory;
 
 /**
  *
@@ -27,10 +26,6 @@ import org.teiid772.sql.impl.xml.MappingDocumentFactory;
 public class CrossQueryMetadata extends BasicQueryMetadata {
 
     private final IQueryMetadataInterface spi;
-
-    private final SyntaxFactory factory = new SyntaxFactory();
-    
-    private final MappingDocumentFactory mappingFactory = new MappingDocumentFactory();
 
     /**
      * @param spi
@@ -115,8 +110,7 @@ public class CrossQueryMetadata extends BasicQueryMetadata {
     public StoredProcedureInfo getStoredProcedureInfoForProcedure(String fullyQualifiedProcedureName)
         throws QueryMetadataException {
         try {
-            StoredProcedureInfo storedProcedureInfo = factory.convert(spi.getStoredProcedureInfoForProcedure(fullyQualifiedProcedureName));
-            return storedProcedureInfo;
+            return (StoredProcedureInfo) spi.getStoredProcedureInfoForProcedure(fullyQualifiedProcedureName);
         } catch (Exception ex) {
             throw new QueryMetadataException(ex.getMessage());
         }
@@ -243,7 +237,7 @@ public class CrossQueryMetadata extends BasicQueryMetadata {
     public QueryNode getVirtualPlan(Object groupID) throws QueryMetadataException {
         try {
             IQueryNode queryNode = spi.getVirtualPlan(groupID);
-            return ((QueryNodeImpl) queryNode).getDelegate();
+            return (QueryNode) queryNode;
         } catch (Exception ex) {
             throw new QueryMetadataException(ex.getMessage());
         }
@@ -405,7 +399,7 @@ public class CrossQueryMetadata extends BasicQueryMetadata {
     @Override
     public MappingNode getMappingNode(Object groupID) throws QueryMetadataException {
         try {
-            return mappingFactory.convert(spi.getMappingNode(groupID));
+            return (MappingNode) spi.getMappingNode(groupID);
         } catch (Exception ex) {
             throw new QueryMetadataException(ex.getMessage());
         }
@@ -511,8 +505,12 @@ public class CrossQueryMetadata extends BasicQueryMetadata {
     }
 
     @Override
-    public boolean hasProcedure(String procedureName) {
-        return spi.hasProcedure(procedureName);
+    public boolean hasProcedure(String procedureName) throws QueryMetadataException {
+        try {
+            return spi.hasProcedure(procedureName);
+        } catch (Exception ex) {
+            throw new QueryMetadataException(ex.getMessage());
+        }
     }
 
     @Override
@@ -577,8 +575,7 @@ public class CrossQueryMetadata extends BasicQueryMetadata {
     @Override
     public FunctionLibrary getFunctionLibrary() {
         IFunctionLibrary functionLibrary = spi.getFunctionLibrary();
-        FunctionLibraryImpl functionLibraryImpl = (FunctionLibraryImpl)functionLibrary;
-        return functionLibraryImpl.getDelegate();
+        return (FunctionLibrary) functionLibrary;        
     }
 
 }

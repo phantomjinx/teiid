@@ -27,8 +27,9 @@ import java.io.Serializable;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
+import org.teiid.designer.query.sql.lang.ICacheHint;
 
-public class CacheHint implements Serializable {
+public class CacheHint implements Serializable, ICacheHint {
 
 	private static final long serialVersionUID = -4119606289701982511L;
 	

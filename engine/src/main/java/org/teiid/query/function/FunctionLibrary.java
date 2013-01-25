@@ -45,7 +45,7 @@ import org.teiid.query.sql.symbol.Function;
  * functions are available, resolve function signatures, and invoke system
  * and user-defined functions.
  */
-public class FunctionLibrary {
+public class FunctionLibrary implements IFunctionLibrary<FunctionForm, FunctionDescriptor> {
 	
     // Function tree for system functions (never reloaded)
     private FunctionTree systemFunctions;
@@ -117,6 +117,11 @@ public class FunctionLibrary {
         }
         return form;
     }
+    
+    @Override
+    public FunctionDescriptor findFunction(FunctionName name, Class[] types) {
+        return findFunction(name.text(), types);
+    }
 
 	/**
 	 * Find a function descriptor given a name and the types of the arguments.
@@ -126,7 +131,8 @@ public class FunctionLibrary {
      * @param types Array of classes representing the types
      * @return Descriptor if found, null if not found
 	 */
-	public FunctionDescriptor findFunction(String name, Class<?>[] types) {
+    @Override
+	public FunctionDescriptor findFunction(String name, Class[] types) {
         // First look in system functions
         FunctionDescriptor descriptor = systemFunctions.getFunction(name, types);
 
@@ -307,5 +313,13 @@ public class FunctionLibrary {
         Expression[] args = function.getArgs();
         String funcName = function.getName();
         return args.length == 2 && (FunctionName.CONVERT.equalsIgnoreCase(funcName) || FunctionName.CAST.equalsIgnoreCase(funcName));
+    }
+    
+    @Override
+    public String getFunctionName(FunctionName functionName) {
+        if (functionName == null)
+            throw new IllegalArgumentException();
+        
+        return functionName.text();
     }
 }

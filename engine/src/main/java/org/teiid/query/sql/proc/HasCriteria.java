@@ -25,6 +25,7 @@ package org.teiid.query.sql.proc;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.query.sql.*;
+import org.teiid.designer.query.sql.proc.IHasCriteria;
 import org.teiid.query.sql.lang.PredicateCriteria;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -33,7 +34,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * <p>This object represents the criteria used in the stored procedure language
  * to determine if a type of criteria is specified on a user's query.</p>
  */
-public class HasCriteria extends PredicateCriteria {
+public class HasCriteria extends PredicateCriteria implements IHasCriteria<LanguageVisitor> {
 
 	// the selector object used to determine if a type of criteria is specified 
 	// on the user's query

@@ -26,11 +26,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.teiid.designer.query.sql.symbol.ICaseExpression;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 
 
-public class CaseExpression extends AbstractCaseExpression {
+public class CaseExpression extends AbstractCaseExpression
+    implements ICaseExpression<LanguageVisitor> {
 
     /**
      * The expression whose evaluation is being tested in this case expression.

@@ -46,4 +46,12 @@ public class MappingCommentNode extends MappingNode {
     public String getComment() {
         return (String)getProperty(MappingNodeConstants.Properties.COMMENT_TEXT);
     }
+    
+    public void setSource(String source) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public void addStagingTable(String stagingTable) {
+        throw new UnsupportedOperationException();
+    }
 }

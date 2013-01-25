@@ -23,6 +23,7 @@
 package org.teiid.query.sql.symbol;
 
 import org.teiid.query.sql.*;
+import org.teiid.designer.query.sql.symbol.IExpressionSymbol;
 
 /**
  * <p>This is a subclass of Symbol representing an expression in the SELECT clause.  The
@@ -32,7 +33,9 @@ import org.teiid.query.sql.*;
  * symbol is the functional expression.  Resolution will produce a list of groups and 
  * elements used by the expression.</p>
  */
-public class ExpressionSymbol extends SingleElementSymbol {
+public class ExpressionSymbol extends SingleElementSymbol
+    implements IExpressionSymbol<Expression, LanguageVisitor> {
+    
 	private Expression expression;
 
     /**

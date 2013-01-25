@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.teiid.designer.query.sql.lang.ISetClauseList;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -33,7 +34,7 @@ import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
-public class SetClauseList implements LanguageObject {
+public class SetClauseList implements LanguageObject, ISetClauseList<LanguageVisitor> {
 	
 	private static final long serialVersionUID = 8174681510498719451L;
 	

@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.teiid.core.util.Assertion;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.udf.IFunctionForm;
 import org.teiid.designer.udf.IFunctionLibrary.FunctionName;
 import org.teiid.language.SQLConstants.Reserved;
 import org.teiid.metadata.FunctionMethod;
@@ -41,7 +42,7 @@ import org.teiid.metadata.FunctionParameter;
  * information and instead differentiates function signatures based on their
  * function name and the names of the arguments.
  */
-public class FunctionForm implements Serializable, Comparable<FunctionForm> {
+public class FunctionForm implements Serializable, Comparable<FunctionForm>, IFunctionForm {
 	private static final long serialVersionUID = 2411783099304320334L;
 	
 	private String name;

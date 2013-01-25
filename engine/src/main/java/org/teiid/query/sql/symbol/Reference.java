@@ -24,6 +24,7 @@ package org.teiid.query.sql.symbol;
 
 import org.teiid.api.exception.query.QueryValidatorException;
 import org.teiid.core.util.Assertion;
+import org.teiid.designer.query.sql.symbol.IReference;
 import org.teiid.query.metadata.TempMetadataID;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -34,7 +35,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * to an element from another scope).  This reference may resolve to many different values
  * during evaluation.  For any particular bound value, it is treated as a constant.
  */
-public class Reference implements Expression, ContextReference {
+public class Reference implements Expression, ContextReference, IReference<LanguageVisitor> {
 
 	public interface Constraint {
 		public void validate(Object value) throws QueryValidatorException;

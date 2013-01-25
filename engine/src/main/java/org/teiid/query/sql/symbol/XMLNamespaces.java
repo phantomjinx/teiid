@@ -27,12 +27,13 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IXMLNamespaces;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
-public class XMLNamespaces implements LanguageObject {
+public class XMLNamespaces implements LanguageObject, IXMLNamespaces<LanguageVisitor> {
 	
 	private static final long serialVersionUID = 681076404921001047L;
 

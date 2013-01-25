@@ -22,22 +22,24 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.ISubqueryContainer;
+
 /**
  * This interface defines a common interface for all MetaMatrix SQL objects 
  * that contain subqueries. 
  */
-public interface SubqueryContainer<T extends Command> {
+public interface SubqueryContainer<C extends Command> extends ISubqueryContainer<C> {
 
     /**
      * Returns the subquery Command object
      * @return the subquery Command object
      */
-    T getCommand();
+    C getCommand();
     
     /**
      * Sets the subquery Command object
      * @param command the subquery Command object
      */
-    void setCommand(T command);
+    void setCommand(C command);
     
 }

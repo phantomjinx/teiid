@@ -23,10 +23,11 @@
 package org.teiid.query.sql.symbol;
 
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.symbol.IXMLSerialize;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class XMLSerialize implements Expression {
+public class XMLSerialize implements Expression, IXMLSerialize<LanguageVisitor> {
 
 	private static final long serialVersionUID = -6574662238317329252L;
 	

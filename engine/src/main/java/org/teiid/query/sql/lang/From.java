@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IFrom;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.GroupSymbol;
@@ -39,7 +40,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * FROM subclauses.  Each FROM subclause can be either a single group 
  * ({@link UnaryFromClause}) or a join predicate ({@link JoinPredicate}).
  */
-public class From implements LanguageObject {
+public class From implements LanguageObject, IFrom<FromClause, GroupSymbol, LanguageVisitor> {
 
     private List<FromClause> clauses;
 

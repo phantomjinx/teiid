@@ -25,6 +25,7 @@ package org.teiid.query.sql.symbol;
 import java.util.List;
 
 import org.teiid.core.types.DataTypeManager.DefaultDataClasses;
+import org.teiid.designer.query.sql.symbol.IQueryString;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -32,7 +33,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 /**
  * Represents query string name value pairs
  */
-public class QueryString implements Expression {
+public class QueryString implements Expression, IQueryString<LanguageVisitor> {
 
 	private static final long serialVersionUID = -3348922701950966494L;
 	private List<DerivedColumn> args;

@@ -6,12 +6,13 @@ import java.util.List;
 import org.teiid.api.exception.query.QueryResolverException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.symbol.IXMLQuery;
 import org.teiid.query.analysis.AnalysisRecord;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 import org.teiid.query.xquery.saxon.SaxonXQueryExpression;
 
-public class XMLQuery implements Expression {
+public class XMLQuery implements Expression, IXMLQuery<LanguageVisitor> {
 	
     private XMLNamespaces namespaces;
     private String xquery;

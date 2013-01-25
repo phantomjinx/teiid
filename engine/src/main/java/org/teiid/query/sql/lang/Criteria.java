@@ -27,6 +27,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.lang.ICriteria;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -36,7 +38,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * constraints on the data values to be retrieved for each parameter in the
  * select clause. <p>
  */
-public abstract class Criteria implements Expression {
+public abstract class Criteria implements Expression, ICriteria<LanguageVisitor> {
     
     /**
      * Constructs a default instance of this class.

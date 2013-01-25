@@ -25,6 +25,7 @@ package org.teiid.query.mapping.xml;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.teiid.designer.xml.IMappingSourceNode;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.GroupSymbol;
 
@@ -33,7 +34,7 @@ import org.teiid.query.sql.symbol.GroupSymbol;
  * This represents a source node. A source node is which produces results from
  * executing a relational query.
  */
-public class MappingSourceNode extends MappingBaseNode {
+public class MappingSourceNode extends MappingBaseNode implements IMappingSourceNode<MappingNode>{
     
     private transient ResultSetInfo resultSetInfo;
     private Map symbolMap = new HashMap();

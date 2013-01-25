@@ -22,6 +22,7 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IJoinType;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -33,52 +34,50 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * a JoinType, you should not (and cannot) construct the object - rather you 
  * should use the provided static constants.
  */
-public class JoinType implements LanguageObject {
+public class JoinType implements LanguageObject, IJoinType<LanguageVisitor> {
 	// Constants defining join type - users will construct these
 	
 	/** Represents an inner join:  a INNER JOIN b */
-	public static final JoinType JOIN_INNER 		= new JoinType(0, false);
+	public static final JoinType JOIN_INNER 		= new JoinType(Types.JOIN_INNER);
 
 	/** Represents a right outer join:  a RIGHT OUTER JOIN b */
-	public static final JoinType JOIN_RIGHT_OUTER 	= new JoinType(1, true);
+	public static final JoinType JOIN_RIGHT_OUTER 	= new JoinType(Types.JOIN_RIGHT_OUTER);
 
 	/** Represents a left outer join:  a LEFT OUTER JOIN b */
-	public static final JoinType JOIN_LEFT_OUTER 	= new JoinType(2, true);
+	public static final JoinType JOIN_LEFT_OUTER 	= new JoinType(Types.JOIN_LEFT_OUTER);
 
 	/** Represents a full outer join:  a FULL OUTER JOIN b */
-	public static final JoinType JOIN_FULL_OUTER 	= new JoinType(3, true);
+	public static final JoinType JOIN_FULL_OUTER 	= new JoinType(Types.JOIN_FULL_OUTER);
 
 	/** Represents a cross join:  a CROSS JOIN b */
-	public static final JoinType JOIN_CROSS 		= new JoinType(4, false);
+	public static final JoinType JOIN_CROSS 		= new JoinType(Types.JOIN_CROSS);
     
     /** Represents a union join:  a UNION JOIN b - not used after rewrite */
-    public static final JoinType JOIN_UNION         = new JoinType(5, true);
+    public static final JoinType JOIN_UNION         = new JoinType(Types.JOIN_UNION);
     
     /** internal SEMI Join type */
-    public static final JoinType JOIN_SEMI          = new JoinType(6, false);
+    public static final JoinType JOIN_SEMI          = new JoinType(Types.JOIN_SEMI);
     
     /** internal ANTI SEMI Join type */
-    public static final JoinType JOIN_ANTI_SEMI          = new JoinType(7, true);
+    public static final JoinType JOIN_ANTI_SEMI          = new JoinType(Types.JOIN_ANTI_SEMI);
 
-	private int type;
-	private boolean outer;
-
+    private Types joinType;
+    
 	/**
 	 * Construct a join type object.  This is private and is only called by
 	 * the static constant objects in this class.
 	 * @param type Type code for object
 	 */
-	private JoinType(int type, boolean outer) { 
-		this.type = type;
-		this.outer = outer;
+	private JoinType(Types joinType) { 
+		this.joinType = joinType;
 	}
 
 	/**
 	 * Used only for comparison during equals, not by users of this class
 	 * @return Type code for object
 	 */
-	int getTypeCode() { 
-		return this.type;
+	public int getTypeCode() { 
+		return joinType.getTypeCode();
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class JoinType implements LanguageObject {
 	 * @return True if left/right/full outer, false if inner/cross
 	 */
 	public boolean isOuter() { 
-		return outer; 	
+		return joinType.isOuter();
 	}
 	
 	/**
@@ -116,7 +115,7 @@ public class JoinType implements LanguageObject {
 			return false;
 		}
 
-		return ((JoinType)other).getTypeCode() == this.type;
+		return this.joinType.equals(((JoinType) other).joinType);
 	}
 
     public void acceptVisitor(LanguageVisitor visitor) {
@@ -128,7 +127,7 @@ public class JoinType implements LanguageObject {
 	 * @return Hash code
 	 */
 	public int hashCode() { 
-		return this.type;
+		return getTypeCode();
 	}
 
 	/**
@@ -146,5 +145,4 @@ public class JoinType implements LanguageObject {
     public String toString() {
     	return SQLStringVisitor.getSQLString(this);
     }
-	
 }

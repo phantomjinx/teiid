@@ -31,6 +31,7 @@ import org.teiid.core.TeiidRuntimeException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.types.TransformationException;
 import org.teiid.core.util.PropertiesUtils;
+import org.teiid.designer.udf.IFunctionDescriptor;
 import org.teiid.metadata.FunctionMethod;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.metadata.FunctionMethod.PushDown;
@@ -41,7 +42,7 @@ import org.teiid.query.QueryPlugin;
  * The FunctionDescriptor describes a particular function instance enough
  * to invoke the function.
  */
-public class FunctionDescriptor implements Serializable, Cloneable {
+public class FunctionDescriptor implements Serializable, Cloneable, IFunctionDescriptor {
 	private static final long serialVersionUID = 5374103983118037242L;
 
 	private static final boolean ALLOW_NAN_INFINITY = PropertiesUtils.getBooleanProperty(System.getProperties(), "org.teiid.allowNanInfinity", false); //$NON-NLS-1$

@@ -28,18 +28,20 @@ import java.util.List;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.metadata.Column;
+import org.teiid.designer.query.sql.lang.ICreate;
 import org.teiid.metadata.BaseColumn.NullType;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.GroupSymbol;
+import org.teiid.query.sql.symbol.SingleElementSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
 /** 
  * @since 5.5
  */
-public class Create extends Command implements TargetedCommand {
+public class Create extends Command implements TargetedCommand, ICreate<SingleElementSymbol, LanguageVisitor> {
     /** Identifies the table to be created. */
     private GroupSymbol table;
     private List<ElementSymbol> primaryKey = new ArrayList<ElementSymbol>();

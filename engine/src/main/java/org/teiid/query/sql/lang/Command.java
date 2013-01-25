@@ -31,8 +31,10 @@ import java.util.List;
 import java.util.Map;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.ICommand;
 import org.teiid.query.processor.ProcessorPlan;
 import org.teiid.query.sql.LanguageObject;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.symbol.SingleElementSymbol;
@@ -47,67 +49,9 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * Query command represents a SQL select query, an Update command represents a 
  * SQL update statement, etc.
  */
-public abstract class Command implements LanguageObject {
+public abstract class Command 
+    implements LanguageObject, ICommand<SingleElementSymbol, LanguageVisitor> {
 	
-	/** 
-	 * Represents an unknown type of command 
-	 */
-	public static final int TYPE_UNKNOWN = 0;
-	
-	/**
-	 * Represents a SQL SELECT statement
-	 */
-	public static final int TYPE_QUERY = 1;
-	
-	/**
-	 * Represents a SQL INSERT statement
-	 */
-	public static final int TYPE_INSERT = 2;
-
-	/**
-	 * Represents a SQL UPDATE statement
-	 */
-	public static final int TYPE_UPDATE = 3;
-
-	/**
-	 * Represents a SQL DELETE statement
-	 */
-	public static final int TYPE_DELETE = 4;
-
-	/**
-	 * Represents any SQL statement, wrapped as a string
-	 */
-	public static final int TYPE_SQL = 5;
-
-	/**
-	 * Represents a stored procedure command
-	 */
-    public static final int TYPE_STORED_PROCEDURE = 6;
-    
-	/**
-	 * Represents a update stored procedure command
-	 */
-    public static final int TYPE_UPDATE_PROCEDURE = 7;
-
-    /**
-     * Represents a batched sequence of UPDATE statements
-     */
-    public static final int TYPE_BATCHED_UPDATE = 9;
-    
-    public static final int TYPE_DYNAMIC = 10;
-    
-    public static final int TYPE_CREATE = 11;
-    
-    public static final int TYPE_DROP = 12;
-    
-    public static final int TYPE_TRIGGER_ACTION = 13;
-    
-    public static final int TYPE_ALTER_VIEW = 14;
-    
-    public static final int TYPE_ALTER_PROC = 15;
-    
-    public static final int TYPE_ALTER_TRIGGER = 16;
-
     private static List<SingleElementSymbol> updateCommandSymbol;
     
     /**

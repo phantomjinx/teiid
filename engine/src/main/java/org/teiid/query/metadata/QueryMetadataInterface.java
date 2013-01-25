@@ -28,6 +28,7 @@ import java.util.Properties;
 
 import org.teiid.api.exception.query.QueryMetadataException;
 import org.teiid.core.TeiidComponentException;
+import org.teiid.designer.query.metadata.IQueryMetadataInterface;
 import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.mapping.relational.QueryNode;
 import org.teiid.query.mapping.xml.MappingNode;
@@ -39,7 +40,8 @@ import org.teiid.query.mapping.xml.MappingNode;
  * of these methods take or return things of type "Object".  Typically, these 
  * objects represent a metadata-implementation-specific metadata ID.  
  */
-public interface QueryMetadataInterface {
+public interface QueryMetadataInterface 
+    extends IQueryMetadataInterface<FunctionLibrary, StoredProcedureInfo, QueryNode, MappingNode> {
 	
 	/**
 	 * Unknown cardinality.
@@ -470,7 +472,7 @@ public interface QueryMetadataInterface {
      * @param groupID XML virtual document groupID 
      * @return List of all the temp groups used in this document.
      */
-    Collection getXMLTempGroups(Object groupID) 
+    <T> Collection<T> getXMLTempGroups(Object groupID) 
         throws TeiidComponentException, QueryMetadataException;
        
    /**

@@ -27,11 +27,12 @@ import java.util.List;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IXMLForest;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class XMLForest implements Expression {
+public class XMLForest implements Expression, IXMLForest<LanguageVisitor> {
 
 	private static final long serialVersionUID = -3348922701950966494L;
 	private List<DerivedColumn> args;

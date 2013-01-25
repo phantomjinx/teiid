@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.teiid.designer.xml.IMappingElement;
 import org.teiid.query.sql.symbol.ElementSymbol;
 
 
@@ -34,7 +35,8 @@ import org.teiid.query.sql.symbol.ElementSymbol;
 /** 
  * A Mapping Node which defines a Element in XML Schema Mapping document
  */
-public class MappingElement extends MappingBaseNode {
+public class MappingElement extends MappingBaseNode
+    implements IMappingElement<MappingAttribute, MappingNode> {
 
     // Element symbol in the resultset source
     ElementSymbol symbol;
@@ -116,6 +118,11 @@ public class MappingElement extends MappingBaseNode {
      */
     public void addCommentNode(MappingCommentNode elem) {
         addChild(elem);
+    }
+    
+    @Override
+    public void addCommentNode(String text) {
+        addChild(new MappingCommentNode(text));
     }
     
     /**

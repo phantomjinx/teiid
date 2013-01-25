@@ -15,8 +15,9 @@ import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.XMLNamespaces;
 import org.teiid.query.xquery.saxon.SaxonXQueryExpression;
+import org.teiid.designer.query.sql.lang.IXMLTable;
 
-public class XMLTable extends TableFunctionReference {
+public class XMLTable extends TableFunctionReference implements IXMLTable<LanguageVisitor> {
 	
 	public static class XMLColumn extends ProjectedColumn {
 		private boolean ordinal;

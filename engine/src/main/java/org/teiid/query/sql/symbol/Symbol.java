@@ -24,8 +24,10 @@ package org.teiid.query.sql.symbol;
 
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.symbol.ISymbol;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageObject;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
@@ -38,7 +40,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * user's query.  In the context of a single query, a symbol's name has
  * a unique meaning although it may be used more than once in some circumstances.
  */
-public abstract class Symbol implements LanguageObject {
+public abstract class Symbol implements LanguageObject, ISymbol<LanguageVisitor> {
 
 	/** 
 	 * Name of the symbol
