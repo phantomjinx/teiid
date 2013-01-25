@@ -123,33 +123,31 @@ public class MappingDocument extends MappingBaseNode {
         root.setMinOccurrs(1);
     }     
     
-    public MappingAllNode addAllNode(MappingAllNode elem) {
+    public void addAllNode(MappingAllNode elem) {
         throw new TeiidRuntimeException(QueryPlugin.Util.getString("WrongTypeChild")); //$NON-NLS-1$
     }
 
-    public MappingChoiceNode addChoiceNode(MappingChoiceNode elem) {
+    public void addChoiceNode(MappingChoiceNode elem) {
         throw new TeiidRuntimeException(QueryPlugin.Util.getString("WrongTypeChild")); //$NON-NLS-1$
     }
 
-    public MappingSequenceNode addSequenceNode(MappingSequenceNode elem) {
+    public void addSequenceNode(MappingSequenceNode elem) {
         throw new TeiidRuntimeException(QueryPlugin.Util.getString("WrongTypeChild")); //$NON-NLS-1$
     }
     
-    public MappingElement addChildElement(MappingElement elem) {
+    public void addChildElement(MappingElement elem) {
         if (elem == null) {
             throw new TeiidRuntimeException(QueryPlugin.Util.getString("root_cannotbe_null")); //$NON-NLS-1$
         }        
         fixCardinality(elem);
         setRoot(elem);
-        return elem;
     }    
     
-    public MappingSourceNode addSourceNode(MappingSourceNode elem) {
+    public void addSourceNode(MappingSourceNode elem) {
         if (elem == null) {
             throw new TeiidRuntimeException(QueryPlugin.Util.getString("root_cannotbe_null")); //$NON-NLS-1$
         }
         setRoot(elem);
-        return elem;
     }
     
     /** 
