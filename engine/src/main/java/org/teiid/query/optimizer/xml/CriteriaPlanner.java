@@ -30,8 +30,8 @@ import java.util.Set;
 import org.teiid.api.exception.query.QueryMetadataException;
 import org.teiid.api.exception.query.QueryPlannerException;
 import org.teiid.core.TeiidComponentException;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.query.QueryPlugin;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.mapping.xml.MappingDocument;
 import org.teiid.query.mapping.xml.MappingNode;
 import org.teiid.query.mapping.xml.MappingSourceNode;
@@ -228,10 +228,10 @@ public class CriteriaPlanner {
             CompareCriteria crit = (CompareCriteria)conjunct;
             if (crit.getLeftExpression() instanceof Function) {
                 Function function = (Function)crit.getLeftExpression();
-                if (function.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMIT)) {
+                if (IFunctionLibrary.FunctionName.ROWLIMIT.equalsIgnoreCase(function.getName())) {
                     rowLimitFunction = function;
                     rowLimitConstant = (Constant)crit.getRightExpression();
-                } else if (function.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMITEXCEPTION)) {
+                } else if (IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.equalsIgnoreCase(function.getName())) {
                     rowLimitFunction = function;
                     rowLimitConstant = (Constant)crit.getRightExpression();
                     exceptionOnRowLimit = true;
@@ -239,10 +239,10 @@ public class CriteriaPlanner {
             }
             if (rowLimitFunction == null && crit.getRightExpression() instanceof Function) {
                 Function function = (Function)crit.getRightExpression();
-                if (function.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMIT)) {
+                if (IFunctionLibrary.FunctionName.ROWLIMIT.equalsIgnoreCase(function.getName())) {
                     rowLimitFunction = function;
                     rowLimitConstant = (Constant)crit.getLeftExpression();
-                } else if (function.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMITEXCEPTION)) {
+                } else if (IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.equalsIgnoreCase(function.getName())) {
                     rowLimitFunction = function;
                     rowLimitConstant = (Constant)crit.getLeftExpression();
                     exceptionOnRowLimit = true;

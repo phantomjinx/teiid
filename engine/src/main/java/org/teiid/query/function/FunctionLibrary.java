@@ -33,6 +33,7 @@ import org.teiid.api.exception.query.InvalidFunctionException;
 import org.teiid.api.exception.query.QueryResolverException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.types.Transform;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.metadata.FunctionMethod;
 import org.teiid.metadata.FunctionParameter;
 import org.teiid.query.QueryPlugin;
@@ -49,51 +50,6 @@ import org.teiid.query.sql.symbol.Function;
  * and user-defined functions.
  */
 public class FunctionLibrary {
-
-	// Special type conversion functions
-	public static final String CONVERT = "convert"; //$NON-NLS-1$
-	public static final String CAST = "cast"; //$NON-NLS-1$
-
-    // Special lookup function
-    public static final String LOOKUP = "lookup"; //$NON-NLS-1$
-
-    // Special user function
-    public static final String USER = "user"; //$NON-NLS-1$
-    // Special environment variable lookup function
-    public static final String ENV = "env"; //$NON-NLS-1$
-    public static final String SESSION_ID = "session_id"; //$NON-NLS-1$
-    
-    // Special pseudo-functions only for XML queries
-    public static final String CONTEXT = "context"; //$NON-NLS-1$
-    public static final String ROWLIMIT = "rowlimit"; //$NON-NLS-1$
-    public static final String ROWLIMITEXCEPTION = "rowlimitexception"; //$NON-NLS-1$
-    
-    // Misc.
-    public static final String DECODESTRING = "decodestring"; //$NON-NLS-1$
-    public static final String DECODEINTEGER = "decodeinteger"; //$NON-NLS-1$
-    public static final String COMMAND_PAYLOAD = "commandpayload"; //$NON-NLS-1$
-    
-    public static final String CONCAT = "CONCAT"; //$NON-NLS-1$
-    public static final String CONCAT2 = "CONCAT2"; //$NON-NLS-1$
-    public static final String CONCAT_OPERATOR = "||"; //$NON-NLS-1$
-    public static final String SUBSTRING = "substring"; //$NON-NLS-1$
-    public static final String NVL = "NVL"; //$NON-NLS-1$
-    public static final String IFNULL = "IFNULL"; //$NON-NLS-1$
-    
-    public static final String FROM_UNIXTIME = "from_unixtime"; //$NON-NLS-1$
-    public static final String TIMESTAMPADD = "timestampadd"; //$NON-NLS-1$
-    
-    public static final String PARSETIME = "parsetime"; //$NON-NLS-1$
-    public static final String PARSEDATE = "parsedate"; //$NON-NLS-1$
-    public static final String FORMATTIME = "formattime"; //$NON-NLS-1$
-    public static final String FORMATDATE = "formatdate"; //$NON-NLS-1$
-    
-    public static final String NULLIF = "nullif"; //$NON-NLS-1$
-    public static final String COALESCE = "coalesce"; //$NON-NLS-1$
-
-    public static final String SPACE = "space"; //$NON-NLS-1$
-	public static final String ARRAY_GET = "array_get"; //$NON-NLS-1$
-	public static final String JSONARRAY = "jsonarray"; //$NON-NLS-1$
 	
     // Function tree for system functions (never reloaded)
     private FunctionTree systemFunctions;
@@ -166,6 +122,10 @@ public class FunctionLibrary {
         return form;
     }
 
+    public FunctionDescriptor findFunction(FunctionName name, Class[] types) {
+        return findFunction(name.text(), types);
+    }
+    
 	/**
 	 * Find a function descriptor given a name and the types of the arguments.
 	 * This method matches based on case-insensitive function name and
@@ -174,7 +134,7 @@ public class FunctionLibrary {
      * @param types Array of classes representing the types
      * @return Descriptor if found, null if not found
 	 */
-	public FunctionDescriptor findFunction(String name, Class<?>[] types) {
+	public FunctionDescriptor findFunction(String name, Class[] types) {
         // First look in system functions
         FunctionDescriptor descriptor = systemFunctions.getFunction(name, types);
 
@@ -365,7 +325,7 @@ public class FunctionLibrary {
      */
     public FunctionDescriptor findTypedConversionFunction(Class<?> sourceType, Class<?> targetType) {
     	//TODO: should array to string be prohibited?    	
-        FunctionDescriptor fd = findFunction(CONVERT, new Class[] {sourceType, DataTypeManager.DefaultDataClasses.STRING});
+        FunctionDescriptor fd = findFunction(FunctionName.CONVERT, new Class[] {sourceType, DataTypeManager.DefaultDataClasses.STRING});
         if (fd != null) {
             return copyFunctionChangeReturnType(fd, targetType);
         }
@@ -392,6 +352,6 @@ public class FunctionLibrary {
         Expression[] args = function.getArgs();
         String funcName = function.getName();
         
-        return args.length == 2 && (funcName.equalsIgnoreCase(FunctionLibrary.CONVERT) || funcName.equalsIgnoreCase(FunctionLibrary.CAST));
+        return args.length == 2 && (FunctionName.CONVERT.equalsIgnoreCase(funcName) || FunctionName.CAST.equalsIgnoreCase(funcName));
     }
 }
