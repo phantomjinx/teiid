@@ -259,12 +259,12 @@ public class TestFunctionLibrary {
 	
 	@Test public void testFindFunction1() { 
 		helpFindFunction("convert", new Class<?>[] { T_INTEGER, T_STRING }, //$NON-NLS-1$
-            helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }) );
+            helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }) );
 	}
 	
 	@Test public void testFindFunction2() { 
 		helpFindFunction("cast", new Class<?>[] { T_INTEGER, T_STRING }, //$NON-NLS-1$
-            helpCreateDescriptor(FunctionLibrary.CAST, new Class<?>[] { T_INTEGER, T_STRING }) );
+            helpCreateDescriptor(IFunctionLibrary.FunctionName.CAST, new Class<?>[] { T_INTEGER, T_STRING }) );
 	}
 	
     @Test public void testFindFunction3() {
@@ -344,7 +344,7 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"length", new Class<?>[] { T_INTEGER }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-			    helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_INTEGER, T_STRING })
+			    helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_INTEGER, T_STRING })
 			} );
 	}
 
@@ -352,7 +352,7 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"length", new Class<?>[] { DataTypeManager.DefaultDataClasses.TIMESTAMP }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-			    helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.TIMESTAMP, T_STRING })
+			    helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.TIMESTAMP, T_STRING })
 			} );
 	}
 
@@ -366,16 +366,16 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"+", new Class<?>[] { T_INTEGER, T_FLOAT }, //$NON-NLS-1$
 			new FunctionDescriptor[] { 
-                helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }), 
-                helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_FLOAT, T_STRING }) } );
+                helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }), 
+                helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_FLOAT, T_STRING }) } );
 	}
 
 	@Test public void testFind2ArgConversion3() { 	
 		helpFindConversions(
 			"+", new Class<?>[] { T_FLOAT, T_INTEGER }, //$NON-NLS-1$
 			new FunctionDescriptor[] { 
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_FLOAT, T_STRING }), 
-                helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }) } );
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_FLOAT, T_STRING }), 
+                helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }) } );
 	}
 
 	@Test public void testFind2ArgConversion4() { 	
@@ -388,15 +388,15 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"+", new Class<?>[] { T_NULL, T_NULL }, //$NON-NLS-1$
 			new FunctionDescriptor[] { 
-			    helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }), 
-                helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }) } );
+			    helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }), 
+                helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }) } );
 	}
 
 	@Test public void testFind2ArgConversion6() { 	
 		helpFindConversions(
 			"+", new Class<?>[] { T_NULL, T_INTEGER }, //$NON-NLS-1$
 			new FunctionDescriptor[] { 
-			    helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }), 
+			    helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }), 
 				null } );
 	}
 
@@ -405,7 +405,7 @@ public class TestFunctionLibrary {
 			"+", new Class<?>[] { T_INTEGER, T_NULL }, //$NON-NLS-1$
 			new FunctionDescriptor[] { 
 			    null, 
-			    helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }) } );
+			    helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }) } );
 	}
 
 	@Test public void testFind3ArgConversion1() { 	
@@ -418,7 +418,7 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"substring", new Class<?>[] { T_INTEGER, T_INTEGER, T_INTEGER }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }),
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }),
 				null,
 				null    
 			} );
@@ -428,9 +428,9 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"substring", new Class<?>[] { T_INTEGER, T_INTEGER, DataTypeManager.DefaultDataClasses.SHORT }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }),
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_INTEGER, T_STRING }),
 				null,
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING })    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING })    
 			} );
 	}
 
@@ -445,8 +445,8 @@ public class TestFunctionLibrary {
 			"substring", new Class<?>[] { T_STRING, DataTypeManager.DefaultDataClasses.SHORT, DataTypeManager.DefaultDataClasses.SHORT }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
 			    null,
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING }),    
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING })    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING })    
 			} );
 	}
 
@@ -454,9 +454,9 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"substring", new Class<?>[] { T_INTEGER, DataTypeManager.DefaultDataClasses.SHORT, DataTypeManager.DefaultDataClasses.SHORT }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.INTEGER, T_STRING }),    
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING }),    
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING })    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.INTEGER, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { DataTypeManager.DefaultDataClasses.SHORT, T_STRING })    
 			} );
 	}
 
@@ -464,7 +464,7 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"substring", new Class<?>[] { T_NULL, T_INTEGER, T_INTEGER }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
 				null,
 				null }
 			);
@@ -474,8 +474,8 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"substring", new Class<?>[] { T_NULL, T_NULL, T_INTEGER }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
 				null }
 			);
 	}
@@ -484,9 +484,9 @@ public class TestFunctionLibrary {
 		helpFindConversions(
 			"substring", new Class<?>[] { T_NULL, T_NULL, T_NULL }, //$NON-NLS-1$
 			new FunctionDescriptor[] {
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
-				helpCreateDescriptor(FunctionLibrary.CONVERT, new Class<?>[] { T_NULL, T_STRING }) }
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }),    
+				helpCreateDescriptor(IFunctionLibrary.FunctionName.CONVERT, new Class<?>[] { T_NULL, T_STRING }) }
 			);
 	}
 
@@ -1333,11 +1333,11 @@ public class TestFunctionLibrary {
     }
     
     @Test public void testInvokeCoalesce() {
-    	helpInvokeMethod(FunctionLibrary.COALESCE, new Object[] { Integer.valueOf(0), Integer.valueOf(1), Integer.valueOf(2) }, Integer.valueOf(0));
+    	helpInvokeMethod(IFunctionLibrary.FunctionName.COALESCE, new Object[] { Integer.valueOf(0), Integer.valueOf(1), Integer.valueOf(2) }, Integer.valueOf(0));
     }
     
     @Test public void testInvokeCoalesce1() {
-    	helpInvokeMethod(FunctionLibrary.COALESCE, new Object[] { null, null}, null);
+    	helpInvokeMethod(IFunctionLibrary.FunctionName.COALESCE, new Object[] { null, null}, null);
     }
     
     @Test public void testInvokeNull() throws Exception {

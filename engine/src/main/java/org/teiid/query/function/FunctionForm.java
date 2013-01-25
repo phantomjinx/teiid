@@ -29,6 +29,8 @@ import java.util.List;
 
 import org.teiid.core.util.Assertion;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.udf.IFunctionForm;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.language.SQLConstants.Reserved;
 import org.teiid.metadata.FunctionMethod;
 import org.teiid.metadata.FunctionParameter;
@@ -167,11 +169,11 @@ public class FunctionForm implements Serializable, Comparable<FunctionForm> {
     public String getDisplayString() { 
         StringBuffer str = new StringBuffer();
         
-		if(name.equalsIgnoreCase(FunctionLibrary.CAST)) { 
+        if(IFunctionLibrary.FunctionName.CAST.equalsIgnoreCase(name)) { 
 			str.append(name);
 			str.append("("); //$NON-NLS-1$
 			str.append(inputParamNames.get(0));
-			if(name.equalsIgnoreCase(FunctionLibrary.CONVERT) || name.equalsIgnoreCase(FunctionLibrary.CAST)) {
+			if(IFunctionLibrary.FunctionName.CONVERT.equalsIgnoreCase(name) || IFunctionLibrary.FunctionName.CAST.equalsIgnoreCase(name)) {
 				str.append(", "); //$NON-NLS-1$
 			} else {
 				str.append(" "); //$NON-NLS-1$

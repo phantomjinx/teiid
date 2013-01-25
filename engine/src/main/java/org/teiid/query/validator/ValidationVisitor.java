@@ -52,11 +52,11 @@ import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.designer.query.sql.lang.ISetQuery.Operation;
 import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.language.SQLConstants;
 import org.teiid.metadata.AggregateAttributes;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.eval.Evaluator;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.function.FunctionMethods;
 import org.teiid.query.function.source.XMLSystemFunctions;
 import org.teiid.query.metadata.StoredProcedureInfo;
@@ -300,7 +300,7 @@ public class ValidationVisitor extends AbstractValidationVisitor {
 	}
 
     public void visit(Function obj) {
-    	if(FunctionLibrary.LOOKUP.equalsIgnoreCase(obj.getName())) {
+    	if(IFunctionLibrary.FunctionName.LOOKUP.equalsIgnoreCase(obj.getName())) {
     		try {
 				ResolverUtil.ResolvedLookup resolvedLookup = ResolverUtil.resolveLookup(obj, getMetadata());
 				if(ValidationVisitor.isNonComparable(resolvedLookup.getKeyElement())) {
@@ -311,7 +311,7 @@ public class ValidationVisitor extends AbstractValidationVisitor {
 			} catch (TeiidProcessingException e) {
 				handleException(e, obj);
 			}
-        } else if (obj.getName().equalsIgnoreCase(FunctionLibrary.CONTEXT)) {
+    	} else if (IFunctionLibrary.FunctionName.CONTEXT.equalsIgnoreCase(obj.getName())) {
             if(!isXML) {
                 // can't use this pseudo-function in non-XML queries
                 handleValidationError(QueryPlugin.Util.getString("ValidationVisitor.The_context_function_cannot_be_used_in_a_non-XML_command"), obj); //$NON-NLS-1$
@@ -323,13 +323,13 @@ public class ValidationVisitor extends AbstractValidationVisitor {
                 for (Iterator<Function> functions = FunctionCollectorVisitor.getFunctions(obj.getArg(1), false).iterator(); functions.hasNext();) {
                     Function function = functions.next();
                     
-                    if (function.getName().equalsIgnoreCase(FunctionLibrary.CONTEXT)) {
+                    if (IFunctionLibrary.FunctionName.CONTEXT.equalsIgnoreCase(function.getName())) {
                         handleValidationError(QueryPlugin.Util.getString("ValidationVisitor.Context_function_nested"), obj); //$NON-NLS-1$
                     }
                 }
             }
-    	} else if (obj.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMIT) ||
-                   obj.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMITEXCEPTION)) {
+    	} else if (IFunctionLibrary.FunctionName.ROWLIMIT.equalsIgnoreCase(obj.getName()) ||
+    	            IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.equalsIgnoreCase(obj.getName())) {
             if(isXML) {
                 if (!(obj.getArg(0) instanceof ElementSymbol)) {
                     // Arg must be an element symbol
@@ -425,9 +425,9 @@ public class ValidationVisitor extends AbstractValidationVisitor {
         if (isXML) {
             // Collect all occurrances of rowlimit and rowlimitexception functions
             List<Function> rowLimitFunctions = new ArrayList<Function>();
-            FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(rowLimitFunctions, FunctionLibrary.ROWLIMIT);
+            FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(rowLimitFunctions, IFunctionLibrary.FunctionName.ROWLIMIT.text());
             PreOrderNavigator.doVisit(obj, visitor); 
-            visitor = new FunctionCollectorVisitor(rowLimitFunctions, FunctionLibrary.ROWLIMITEXCEPTION);
+            visitor = new FunctionCollectorVisitor(rowLimitFunctions, IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.text());
             PreOrderNavigator.doVisit(obj, visitor);
             final int functionCount = rowLimitFunctions.size();
             if (functionCount > 0) {
@@ -825,9 +825,9 @@ public class ValidationVisitor extends AbstractValidationVisitor {
     private void validateRowLimitFunctionNotInInvalidCriteria(Criteria obj) {
         // Collect all occurrances of rowlimit and rowlimitexception functions
         List<Function> rowLimitFunctions = new ArrayList<Function>();
-        FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(rowLimitFunctions, FunctionLibrary.ROWLIMIT);
+        FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(rowLimitFunctions, IFunctionLibrary.FunctionName.ROWLIMIT.text());
         PreOrderNavigator.doVisit(obj, visitor);      
-        visitor = new FunctionCollectorVisitor(rowLimitFunctions, FunctionLibrary.ROWLIMITEXCEPTION);
+        visitor = new FunctionCollectorVisitor(rowLimitFunctions, IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.text());
         PreOrderNavigator.doVisit(obj, visitor); 
         if (rowLimitFunctions.size() > 0) {
             handleValidationError(QueryPlugin.Util.getString("ValidationVisitor.3"), obj); //$NON-NLS-1$
@@ -951,9 +951,9 @@ public class ValidationVisitor extends AbstractValidationVisitor {
 
         // Collect all occurrences of rowlimit function
         List rowLimitFunctions = new ArrayList();
-        FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(rowLimitFunctions, FunctionLibrary.ROWLIMIT);
+        FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(rowLimitFunctions, IFunctionLibrary.FunctionName.ROWLIMIT.text());
         PreOrderNavigator.doVisit(obj, visitor);   
-        visitor = new FunctionCollectorVisitor(rowLimitFunctions, FunctionLibrary.ROWLIMITEXCEPTION);
+        visitor = new FunctionCollectorVisitor(rowLimitFunctions, IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.text());
         PreOrderNavigator.doVisit(obj, visitor);            
         final int functionCount = rowLimitFunctions.size();
         if (functionCount > 0) {
@@ -961,16 +961,18 @@ public class ValidationVisitor extends AbstractValidationVisitor {
             Expression expr = null;
             if (obj.getLeftExpression() instanceof Function) {
                 Function leftExpr = (Function)obj.getLeftExpression();
-                if (leftExpr.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMIT) ||
-                    leftExpr.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMITEXCEPTION)) {
+                
+                if (IFunctionLibrary.FunctionName.ROWLIMIT.equalsIgnoreCase(leftExpr.getName()) ||
+                    IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.equalsIgnoreCase(leftExpr.getName())) {
                     function = leftExpr;
                     expr = obj.getRightExpression();
                 }
             } 
             if (function == null && obj.getRightExpression() instanceof Function) {
                 Function rightExpr = (Function)obj.getRightExpression();
-                if (rightExpr.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMIT) ||
-                    rightExpr.getName().equalsIgnoreCase(FunctionLibrary.ROWLIMITEXCEPTION)) {
+                
+                if (IFunctionLibrary.FunctionName.ROWLIMIT.equalsIgnoreCase(rightExpr.getName()) ||
+                IFunctionLibrary.FunctionName.ROWLIMITEXCEPTION.equalsIgnoreCase(rightExpr.getName())) {
                     function = rightExpr;
                     expr = obj.getLeftExpression();
                 }

@@ -24,9 +24,9 @@ package org.teiid.query.sql.visitor;
 
 import java.util.TreeSet;
 
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.metadata.FunctionMethod.PushDown;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.metadata.TempMetadataID;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
@@ -69,7 +69,7 @@ public class EvaluatableVisitor extends LanguageVisitor {
         this.setDeterminismLevel(obj.getFunctionDescriptor().getDeterministic());
         if (obj.getFunctionDescriptor().getPushdown() == PushDown.MUST_PUSHDOWN || obj.getFunctionDescriptor().getDeterministic() == Determinism.NONDETERMINISTIC) {
             evaluationNotPossible(EvaluationLevel.PUSH_DOWN);
-        } else if (obj.getName().equalsIgnoreCase(FunctionLibrary.LOOKUP)
+        } else if (IFunctionLibrary.FunctionName.LOOKUP.equalsIgnoreCase(obj.getName())
         		//TODO: if we had the context here we could plan better for non-prepared requests
         		|| obj.getFunctionDescriptor().getDeterministic().compareTo(Determinism.COMMAND_DETERMINISTIC) <= 0) {
             evaluationNotPossible(EvaluationLevel.PROCESSING);
