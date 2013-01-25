@@ -139,6 +139,13 @@ public class PredicateCollectorVisitor extends LanguageVisitor {
     public Collection<Criteria> getPredicates() {
         return this.predicates;
     }
+    
+    public Collection<Criteria> findPredicates(LanguageObject obj) {
+        if(obj != null) {
+            PreOrderNavigator.doVisit(obj, this);
+        }
+        return getPredicates();
+    }
 
     /**
      * Helper to quickly get the predicates from obj
@@ -146,10 +153,7 @@ public class PredicateCollectorVisitor extends LanguageVisitor {
      */
     public static final Collection<Criteria> getPredicates(LanguageObject obj) {
         PredicateCollectorVisitor visitor = new PredicateCollectorVisitor();
-        if(obj != null) {
-            PreOrderNavigator.doVisit(obj, visitor);
-        }
-        return visitor.getPredicates();
+        return visitor.findPredicates(obj);
     }
 
 }

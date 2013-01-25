@@ -60,6 +60,11 @@ public class ReferenceCollectorVisitor extends LanguageVisitor {
     public void visit(Reference obj) {
         this.references.add(obj);
     }
+    
+    public List<Reference> findReferences(LanguageObject obj) {
+        DeepPreOrderNavigator.doVisit(obj, this);
+        return getReferences();
+    }
 
 	/**
      * Helper to quickly get the references from obj in a collection.
@@ -68,9 +73,7 @@ public class ReferenceCollectorVisitor extends LanguageVisitor {
      */
     public static List<Reference> getReferences(LanguageObject obj) {
     	ReferenceCollectorVisitor visitor = new ReferenceCollectorVisitor();
-        DeepPreOrderNavigator.doVisit(obj, visitor);
-
-        return visitor.getReferences();
+        return visitor.getReferences(obj);
     }
     
 }

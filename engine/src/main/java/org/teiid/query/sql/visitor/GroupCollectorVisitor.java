@@ -58,6 +58,15 @@ public class GroupCollectorVisitor extends LanguageVisitor {
     private Collection<GroupSymbol> inlineViewGroups;    // groups defined by a SubqueryFromClause
 
     /**
+     * Construct a new visitor with a default returning collection
+     * 
+     * @param removeDuplicates 
+     */
+    public GroupCollectorVisitor(boolean removeDuplicates) {
+        this(removeDuplicates ? new HashSet<GroupSymbol>() : new ArrayList<GroupSymbol>());
+    }
+    
+    /**
      * Construct a new visitor with the specified collection, which should
      * be non-null.
      * @param groups Collection to use for groups
@@ -198,5 +207,20 @@ public class GroupCollectorVisitor extends LanguageVisitor {
         return groups;
     }
     
+    public Collection<GroupSymbol> findGroups(LanguageObject obj) {
+        PreOrderNavigator.doVisit(obj, this);
+        return groups;
+    }
+    
+    public Collection<GroupSymbol> findGroupsIgnoreInlineViews(LanguageObject obj) {
+        setIgnoreInlineViewGroups(true);
+        DeepPreOrderNavigator.doVisit(obj, this);  
+        
+        if(getInlineViewGroups() != null) {
+            groups.removeAll(getInlineViewGroups());
+        }
+        
+        return groups;
+    }
 
 }

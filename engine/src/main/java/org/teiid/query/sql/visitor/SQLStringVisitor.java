@@ -65,19 +65,24 @@ public class SQLStringVisitor extends LanguageVisitor {
     private static final char ID_ESCAPE_CHAR = '\"';
 	protected StringBuilder parts = new StringBuilder();
 
-    /**
-     * Helper to quickly get the parser string for an object using the visitor.
-     * 
-     * @param obj Language object
-     * @return String SQL String for obj
-     */
-    public static final String getSQLString( LanguageObject obj ) {
-        if (obj == null) {
+	/**
+	 * Helper to quickly get the parser string for an object using the visitor.
+	 * 
+	 * @param obj Language object
+	 * @return String SQL String for obj
+	 */
+	public static final String getSQLString( LanguageObject obj ) {
+	    SQLStringVisitor visitor = new SQLStringVisitor();
+	    return visitor.returnSQLString(obj);
+	}
+	   
+    public String returnSQLString(LanguageObject languageObject) {
+	    if (languageObject == null) {
             return UNDEFINED;
         }
-        SQLStringVisitor visitor = new SQLStringVisitor();
-        obj.acceptVisitor(visitor);
-        return visitor.getSQLString();
+        
+        languageObject.acceptVisitor(this);
+        return getSQLString(); 
     }
 
     /**
