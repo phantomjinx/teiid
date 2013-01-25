@@ -25,7 +25,6 @@ package org.teiid.query.optimizer.relational.rules;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.teiid.api.exception.query.ExpressionEvaluationException;
 import org.teiid.api.exception.query.QueryMetadataException;
 import org.teiid.api.exception.query.QueryPlannerException;
@@ -34,6 +33,7 @@ import org.teiid.core.TeiidComponentException;
 import org.teiid.core.TeiidException;
 import org.teiid.core.TeiidRuntimeException;
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.analysis.AnalysisRecord;
 import org.teiid.query.eval.Evaluator;
@@ -50,7 +50,6 @@ import org.teiid.query.optimizer.relational.plantree.PlanNode;
 import org.teiid.query.sql.lang.CompareCriteria;
 import org.teiid.query.sql.lang.Criteria;
 import org.teiid.query.sql.lang.JoinType;
-import org.teiid.query.sql.lang.SetQuery;
 import org.teiid.query.sql.symbol.Constant;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.Function;
@@ -154,7 +153,7 @@ public class RulePushLimit implements OptimizerRule {
             }
             case NodeConstants.Types.SET_OP:
             {
-                if (!SetQuery.Operation.UNION.equals(child.getProperty(NodeConstants.Info.SET_OPERATION))) {
+                if (!ISetQuery.Operation.UNION.equals(child.getProperty(NodeConstants.Info.SET_OPERATION))) {
                 	return false;
                 }   
                 if (!child.hasBooleanProperty(NodeConstants.Info.USE_ALL) && !limitNode.hasBooleanProperty(Info.IS_NON_STRICT)) {

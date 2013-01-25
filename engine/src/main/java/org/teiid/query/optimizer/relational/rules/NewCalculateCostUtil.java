@@ -33,7 +33,9 @@ import org.teiid.api.exception.query.QueryPlannerException;
 import org.teiid.common.buffer.BufferManager;
 import org.teiid.core.TeiidComponentException;
 import org.teiid.core.types.DataTypeManager;
-import org.teiid.language.Like.MatchMode;
+import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
+import org.teiid.designer.query.sql.lang.ISetQuery;
+import org.teiid.designer.query.sql.lang.ISetQuery.Operation;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.query.QueryPlugin;
@@ -47,7 +49,6 @@ import org.teiid.query.optimizer.relational.plantree.NodeEditor;
 import org.teiid.query.optimizer.relational.plantree.PlanNode;
 import org.teiid.query.resolver.util.ResolverUtil;
 import org.teiid.query.sql.lang.*;
-import org.teiid.query.sql.lang.SetQuery.Operation;
 import org.teiid.query.sql.symbol.Constant;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
@@ -237,7 +238,7 @@ public class NewCalculateCostUtil {
 			TeiidComponentException {
 		float cost = 0;
 		
-		SetQuery.Operation op = (SetQuery.Operation)node.getProperty(NodeConstants.Info.SET_OPERATION);
+		ISetQuery.Operation op = (ISetQuery.Operation)node.getProperty(NodeConstants.Info.SET_OPERATION);
 
 		float leftCost = (Float)node.getFirstChild().getProperty(NodeConstants.Info.EST_CARDINALITY);
 		float rightCost = (Float)node.getLastChild().getProperty(NodeConstants.Info.EST_CARDINALITY);
@@ -252,7 +253,7 @@ public class NewCalculateCostUtil {
 		setCardinalityEstimate(node, new Float(cost), true, metadata);
 	}
 
-	private static float getCombinedSetEstimate(SetQuery.Operation op, float leftCost, float rightCost, boolean distinct) {
+	private static float getCombinedSetEstimate(ISetQuery.Operation op, float leftCost, float rightCost, boolean distinct) {
 		float cost;
 		cost = leftCost;
 		
@@ -391,7 +392,7 @@ public class NewCalculateCostUtil {
     		colStatsOther = (ColStats) node.getLastChild().getProperty(Info.EST_COL_STATS);
     		outputColsOther = getOutputCols(node.getLastChild(), metadata);
     	}
-    	SetQuery.Operation setOp = (Operation) node.getProperty(Info.SET_OPERATION);
+    	ISetQuery.Operation setOp = (Operation) node.getProperty(Info.SET_OPERATION);
     	List<? extends Expression> outputCols = getOutputCols(node, metadata);
     	ColStats newColStats = new ColStats();
     	for (int i = 0; i < outputCols.size(); i++) {

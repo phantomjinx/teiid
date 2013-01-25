@@ -32,6 +32,7 @@ import org.teiid.core.TeiidRuntimeException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.metadata.QueryMetadataInterface;
 import org.teiid.query.resolver.util.ResolverUtil;
@@ -47,16 +48,7 @@ import org.teiid.query.sql.util.SymbolMap;
  * This object acts as a Set operator on multiple Queries - UNION,
  * INTERSECT, and EXCEPT can be implemented with this Class
  */
-public class SetQuery extends QueryCommand {
-    
-    public enum Operation {
-        /** Represents UNION of two queries */
-        UNION,
-        /** Represents intersection of two queries */
-        INTERSECT,
-        /** Represents set difference of two queries */
-        EXCEPT
-    }
+public class SetQuery extends QueryCommand
 
 	private boolean all = true;
     private Operation operation;                     

@@ -30,6 +30,7 @@ import org.teiid.api.exception.query.QueryMetadataException;
 import org.teiid.api.exception.query.QueryPlannerException;
 import org.teiid.core.TeiidComponentException;
 import org.teiid.core.util.Assertion;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.query.analysis.AnalysisRecord;
 import org.teiid.query.metadata.QueryMetadataInterface;
 import org.teiid.query.optimizer.capabilities.CapabilitiesFinder;
@@ -42,7 +43,6 @@ import org.teiid.query.optimizer.relational.plantree.PlanNode;
 import org.teiid.query.sql.lang.JoinType;
 import org.teiid.query.sql.lang.OrderBy;
 import org.teiid.query.sql.lang.OrderByItem;
-import org.teiid.query.sql.lang.SetQuery;
 import org.teiid.query.sql.symbol.AliasSymbol;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
@@ -130,8 +130,8 @@ public final class RuleRaiseNull implements OptimizerRule {
             case NodeConstants.Types.SET_OP:
             {
                 boolean isLeftChild = parentNode.getFirstChild() == nullNode;
-                SetQuery.Operation operation = (SetQuery.Operation)parentNode.getProperty(NodeConstants.Info.SET_OPERATION);
-                boolean raiseOverSetOp = (operation == SetQuery.Operation.INTERSECT || (operation == SetQuery.Operation.EXCEPT && isLeftChild));
+                ISetQuery.Operation operation = (ISetQuery.Operation)parentNode.getProperty(NodeConstants.Info.SET_OPERATION);
+                boolean raiseOverSetOp = (operation == ISetQuery.Operation.INTERSECT || (operation == ISetQuery.Operation.EXCEPT && isLeftChild));
                 
                 if (raiseOverSetOp) {
                     return raiseNullNode(rootNode, parentNode, nullNode, nodes);

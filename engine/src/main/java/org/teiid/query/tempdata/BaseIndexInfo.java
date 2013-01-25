@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.teiid.language.Like.MatchMode;
+import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
 import org.teiid.language.SortSpecification.NullOrdering;
 import org.teiid.query.eval.Evaluator;
 import org.teiid.query.processor.relational.ListNestedSortComparator;

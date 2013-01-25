@@ -28,6 +28,7 @@ import java.util.List;
 import org.teiid.api.exception.query.QueryMetadataException;
 import org.teiid.api.exception.query.QueryPlannerException;
 import org.teiid.core.TeiidComponentException;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.query.analysis.AnalysisRecord;
 import org.teiid.query.metadata.QueryMetadataInterface;
 import org.teiid.query.optimizer.capabilities.CapabilitiesFinder;
@@ -41,7 +42,6 @@ import org.teiid.query.processor.relational.JoinNode.JoinStrategyType;
 import org.teiid.query.processor.relational.MergeJoinStrategy.SortOption;
 import org.teiid.query.sql.lang.OrderBy;
 import org.teiid.query.sql.lang.OrderByItem;
-import org.teiid.query.sql.lang.SetQuery;
 import org.teiid.query.sql.symbol.AggregateSymbol;
 import org.teiid.query.sql.symbol.AliasSymbol;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -198,7 +198,7 @@ public class RulePlanSorts implements OptimizerRule {
 			break;
 		case NodeConstants.Types.SET_OP:
 			// assumes the use of the merge algorithm
-			if (node.getProperty(NodeConstants.Info.SET_OPERATION) != SetQuery.Operation.UNION) {
+			if (node.getProperty(NodeConstants.Info.SET_OPERATION) != ISetQuery.Operation.UNION) {
 				parentBlocking = true;
 			} else if (!node.hasBooleanProperty(NodeConstants.Info.USE_ALL) && !parentBlocking) {
 				node.setProperty(NodeConstants.Info.IS_DUP_REMOVAL, true);
@@ -321,7 +321,7 @@ public class RulePlanSorts implements OptimizerRule {
 		}
 		switch (node.getFirstChild().getType()) {
 		case NodeConstants.Types.SET_OP:
-			if (node.getFirstChild().getProperty(NodeConstants.Info.SET_OPERATION) == SetQuery.Operation.UNION && !node.getFirstChild().hasBooleanProperty(NodeConstants.Info.USE_ALL)) {
+			if (node.getFirstChild().getProperty(NodeConstants.Info.SET_OPERATION) == ISetQuery.Operation.UNION && !node.getFirstChild().hasBooleanProperty(NodeConstants.Info.USE_ALL)) {
 				node.getFirstChild().setProperty(NodeConstants.Info.USE_ALL, true);
 				return true;
 			}
