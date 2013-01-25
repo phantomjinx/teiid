@@ -54,6 +54,15 @@ public class FunctionCollectorVisitor extends LanguageVisitor {
     private String functionName;
 
     /**
+     * Construct a new visitor with a default returning collection
+     * 
+     * @param removeDuplicates 
+     */
+    public FunctionCollectorVisitor(boolean removeDuplicates) {
+        this(removeDuplicates ? new HashSet<Function>() : new ArrayList<Function>());
+    }
+    
+    /**
      * Construct a new visitor with the specified collection, which should
      * be non-null.
      * @param elements Collection to use for elements
@@ -96,6 +105,16 @@ public class FunctionCollectorVisitor extends LanguageVisitor {
             this.functions.add(obj);
         }
     }
+    
+    public Collection<Function> findFunctions(LanguageObject obj, boolean deep) {
+        if (!deep) {
+            PreOrderNavigator.doVisit(obj, this);
+        } else {
+            DeepPreOrderNavigator.doVisit(obj, this);
+        }
+        
+        return functions;
+    }
 
     /**
      * Helper to quickly get the elements from obj in the elements collection
@@ -113,11 +132,7 @@ public class FunctionCollectorVisitor extends LanguageVisitor {
      */
     public static final void getFunctions(LanguageObject obj, Collection<Function> functions, boolean deep) {
         FunctionCollectorVisitor visitor = new FunctionCollectorVisitor(functions);
-        if (!deep) {
-            PreOrderNavigator.doVisit(obj, visitor);
-        } else {
-            DeepPreOrderNavigator.doVisit(obj, visitor);
-        }
+        visitor.findFunctions(obj, deep);
     }
 
     /**

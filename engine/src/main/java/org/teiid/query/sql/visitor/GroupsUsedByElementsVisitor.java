@@ -77,6 +77,40 @@ public class GroupsUsedByElementsVisitor {
             }
         }
     }
+    
+    public void findGroups(Collection<? extends LanguageObject> objects, Set<GroupSymbol> groups) {
+        // Get groups from elements     
+        for (LanguageObject languageObject : objects) {
+            if (languageObject instanceof ElementSymbol) {
+                ElementSymbol elem = (ElementSymbol) languageObject;
+                groups.add(elem.getGroupSymbol());
+            } else {
+                GroupsUsedByElementsVisitor.getGroups(languageObject, groups);
+            }
+        }
+    }
+    
+    public void findGroups(LanguageObject obj, Collection<GroupSymbol> groups) {
+        Collection<ElementSymbol> elements = ElementCollectorVisitor.getElements(obj, true);
+
+        for (ElementSymbol elementSymbol : elements) {
+            if (elementSymbol.getGroupSymbol() != null) {
+                groups.add(elementSymbol.getGroupSymbol());  
+            }
+        }
+    }
+    
+    public Set<GroupSymbol> findGroups(LanguageObject obj) {
+        Set<GroupSymbol> groups = new HashSet<GroupSymbol>();
+        findGroups(obj, groups);
+        return groups;
+    }
+
+    public <T extends LanguageObject> Set<GroupSymbol> findGroups(Collection<T> objects) {
+        Set<GroupSymbol> groups = new HashSet<GroupSymbol>();
+        findGroups(objects, groups);
+        return groups;
+    }
 
 
 }

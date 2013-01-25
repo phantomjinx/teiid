@@ -140,16 +140,20 @@ public class PredicateCollectorVisitor extends LanguageVisitor {
         return this.predicates;
     }
 
+    public Collection<Criteria> findPredicates(LanguageObject obj) {
+        if(obj != null) {
+            PreOrderNavigator.doVisit(obj, this);
+        }
+        return getPredicates();
+    }
+
     /**
      * Helper to quickly get the predicates from obj
      * @param obj Language object
      */
     public static final Collection<Criteria> getPredicates(LanguageObject obj) {
         PredicateCollectorVisitor visitor = new PredicateCollectorVisitor();
-        if(obj != null) {
-            PreOrderNavigator.doVisit(obj, visitor);
-        }
-        return visitor.getPredicates();
+        return visitor.findPredicates(obj);
     }
 
 }
