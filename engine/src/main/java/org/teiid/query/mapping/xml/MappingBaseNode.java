@@ -43,31 +43,28 @@ public abstract class MappingBaseNode extends MappingNode {
         // implicit constructor
     }
     
-    public MappingBaseNode setMinOccurrs(int cardinality) {
+    public void setMinOccurrs(int cardinality) {
         setProperty(MappingNodeConstants.Properties.CARDINALITY_MIN_BOUND, new Integer(cardinality));
-        return this;
     }
 
-    public MappingBaseNode setMaxOccurrs(int cardinality) {
+    public void setMaxOccurrs(int cardinality) {
         setProperty(MappingNodeConstants.Properties.CARDINALITY_MAX_BOUND, new Integer(cardinality));
-        return this;
     }    
          
-    public MappingBaseNode setSource(String source) {
+    public void setSource(String source) {
         if (source != null) {
             setProperty(MappingNodeConstants.Properties.RESULT_SET_NAME, source);
         }
         else {
             removeProperty(MappingNodeConstants.Properties.RESULT_SET_NAME);
         }
-        return this;
     }
          
     public String getSource() {
         return (String)getProperty(MappingNodeConstants.Properties.RESULT_SET_NAME);
     }     
     
-    public MappingElement addChildElement(MappingElement elem) {
+    public void addChildElement(MappingElement elem) {
         if (elem.isRecursive()) {
             MappingRecursiveElement recursiveElement = (MappingRecursiveElement)elem;
             MappingBaseNode recursiveRoot = getRecursiveRootNode(recursiveElement);
@@ -77,7 +74,6 @@ public abstract class MappingBaseNode extends MappingNode {
         else {
             addChild(elem);
         }
-        return elem;
     }
     
     private MappingBaseNode getRecursiveRootNode(MappingRecursiveElement elem) {
@@ -101,29 +97,24 @@ public abstract class MappingBaseNode extends MappingNode {
         return source.equals(getSource());
     }
     
-    public MappingChoiceNode addChoiceNode(MappingChoiceNode elem) {
+    public void addChoiceNode(MappingChoiceNode elem) {
         addChild(elem);
-        return elem;
     }
     
-    public MappingSequenceNode addSequenceNode(MappingSequenceNode elem) {
+    public void addSequenceNode(MappingSequenceNode elem) {
         addChild(elem);
-        return elem;
     }
     
-    public MappingAllNode addAllNode(MappingAllNode elem) {
+    public void addAllNode(MappingAllNode elem) {
         addChild(elem);
-        return elem;
     }     
     
-    public MappingSourceNode addSourceNode(MappingSourceNode elem) {
+    public void addSourceNode(MappingSourceNode elem) {
         addChild(elem);
-        return elem;
     }     
     
-    public MappingCriteriaNode addCriteriaNode(MappingCriteriaNode node) {
-        addChild(node);
-        return node;        
+    public void addCriteriaNode(MappingCriteriaNode node) {
+        addChild(node);     
     }
     
     public MappingBaseNode getParentNode() {

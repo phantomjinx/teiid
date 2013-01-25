@@ -61,12 +61,11 @@ public class MappingRecursiveElement extends MappingElement {
     /**
      * Sets the criteria on which the recurrsion must occur
      */
-    public MappingRecursiveElement setCriteria(String criteria) {
+    public void setCriteria(String criteria) {
         if (criteria != null && criteria.length() > 0) {
             criteria = criteria.trim();
             setProperty(MappingNodeConstants.Properties.RECURSION_CRITERIA, criteria);
         }
-        return this;
     }
     
     /**
@@ -75,10 +74,9 @@ public class MappingRecursiveElement extends MappingElement {
      * violated then exception will be thrown, otherwise re-currsion will stop at
      * the depth specified.
      */
-    public MappingRecursiveElement setRecursionLimit(int depth, boolean execeptionOnBreach) {
+    public void setRecursionLimit(int depth, boolean execeptionOnBreach) {
         setProperty(MappingNodeConstants.Properties.RECURSION_LIMIT, new Integer(depth));
         setProperty(MappingNodeConstants.Properties.EXCEPTION_ON_RECURSION_LIMIT, Boolean.valueOf(execeptionOnBreach));
-        return this;
     }
     
     public String getMappingClass() {
