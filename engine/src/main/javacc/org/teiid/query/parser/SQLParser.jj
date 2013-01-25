@@ -24,7 +24,8 @@ import org.teiid.query.sql.proc.*;
 import org.teiid.query.sql.symbol.*;
 import org.teiid.metadata.*;
 import org.teiid.metadata.BaseColumn.NullType;
-import org.teiid.language.Like.MatchMode;
+import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
+import org.teiid.designer.query.sql.lang.ISetQuery;
 import org.teiid.translator.*;
 
 /** 
@@ -1819,11 +1820,11 @@ QueryCommand queryExpressionBody(ParseInfo info) :
     Option option = null;
 	OrderBy orderby = null;
 	Limit limit = null;
-	SetQuery.Operation type;
+	ISetQuery.Operation type;
 }
 {
 	query = queryTerm(info) 
-	(	(LOOKAHEAD( <UNION>, { getToken(2).kind != JOIN } ) <UNION> { type = SetQuery.Operation.UNION; } | <EXCEPT> { type = SetQuery.Operation.EXCEPT; }) 
+	(	(LOOKAHEAD( <UNION>, { getToken(2).kind != JOIN } ) <UNION> { type = ISetQuery.Operation.UNION; } | <EXCEPT> { type = ISetQuery.Operation.EXCEPT; }) 
  	 	[<ALL> { all = true; } | <DISTINCT>]
  	 	rightQuery = queryTerm(info)
  	   	{
@@ -1856,7 +1857,7 @@ QueryCommand queryTerm(ParseInfo info) :
  		[<ALL> { all = true; } | <DISTINCT>] 
  		rightQuery=queryPrimary(info)
  		{
- 	   		query = addQueryToSetOperation(query, rightQuery, SetQuery.Operation.INTERSECT, all);
+ 	   		query = addQueryToSetOperation(query, rightQuery, ISetQuery.Operation.INTERSECT, all);
     		all = false;
  		}
 	) *

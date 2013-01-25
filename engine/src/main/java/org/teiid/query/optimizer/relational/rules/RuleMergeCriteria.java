@@ -37,6 +37,8 @@ import org.teiid.client.plan.Annotation;
 import org.teiid.client.plan.Annotation.Priority;
 import org.teiid.core.TeiidComponentException;
 import org.teiid.core.id.IDGenerator;
+import org.teiid.designer.query.sql.lang.ICompareCriteria;
+import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
 import org.teiid.query.analysis.AnalysisRecord;
 import org.teiid.query.metadata.QueryMetadataInterface;
 import org.teiid.query.metadata.SupportConstants;
@@ -57,7 +59,6 @@ import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.lang.*;
 import org.teiid.query.sql.navigator.DeepPostOrderNavigator;
 import org.teiid.query.sql.symbol.AggregateSymbol;
-import org.teiid.query.sql.symbol.AggregateSymbol.Type;
 import org.teiid.query.sql.symbol.Constant;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
@@ -352,7 +353,7 @@ public final class RuleMergeCriteria implements OptimizerRule {
 			if (!unnest && !result.mergeJoin) {
 				return result;
 			}
-			crit = new SubqueryCompareCriteria(ssc.getExpression(), ssc.getCommand(), SubqueryCompareCriteria.EQ, SubqueryCompareCriteria.SOME);
+			crit = new SubqueryCompareCriteria(ssc.getExpression(), ssc.getCommand(), ICompareCriteria.EQ, SubqueryCompareCriteria.SOME);
 		} else if (crit instanceof CompareCriteria) {
 			if (!unnest) {
 				return result;

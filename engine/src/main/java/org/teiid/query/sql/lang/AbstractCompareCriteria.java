@@ -22,6 +22,7 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.ICompareCriteria;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.lang.PredicateCriteria.Negatable;
 import org.teiid.query.sql.symbol.Expression;
@@ -33,37 +34,19 @@ import org.teiid.query.sql.symbol.Expression;
  */
 public abstract class AbstractCompareCriteria extends PredicateCriteria implements Negatable {
 
-    /** Constant indicating the two operands are equal. */
-    public static final int EQ = 1;
-
-    /** Constant indicating the two operands are not equal. */
-    public static final int NE = 2;
-
-    /** Constant indicating the first operand is less than the second. */
-    public static final int LT = 3;
-
-    /** Constant indicating the first operand is greater than the second. */
-    public static final int GT = 4;
-
-    /** Constant indicating the first operand is less than or equal to the second. */
-    public static final int LE = 5;
-
-    /** Constant indicating the first operand is greater than or equal to the second. */
-    public static final int GE = 6;
-
 	/** The left-hand expression. */
 	private Expression leftExpression;
 
     /**
      * The operator used in the clause.
-     * @see #EQ
-     * @see #NE
-     * @see #LT
-     * @see #GT
-     * @see #LE
-     * @see #GE
+     * @see #ICompareCriteria.EQ
+     * @see #ICompareCriteria.NE
+     * @see #ICompareCriteria.LT
+     * @see #ICompareCriteria.GT
+     * @see #ICompareCriteria.LE
+     * @see #ICompareCriteria.GE
      */
-    private int operator = EQ;
+    private int operator = ICompareCriteria.EQ;
 
     /**
      * Returns the operator.
@@ -78,7 +61,7 @@ public abstract class AbstractCompareCriteria extends PredicateCriteria implemen
      * @param operator
      */
     public void setOperator( int operator ) {
-        if (operator < EQ || operator > GE) {
+        if (operator < ICompareCriteria.EQ || operator > ICompareCriteria.GE) {
             throw new IllegalArgumentException(QueryPlugin.Util.getString("ERR.015.010.0001", operator)); //$NON-NLS-1$
         }
         this.operator = operator;
@@ -90,13 +73,13 @@ public abstract class AbstractCompareCriteria extends PredicateCriteria implemen
     * @return Operator, constant form
     */
     public static int getOperator(String op){
-        if(op.equals("=" )) return EQ; //$NON-NLS-1$
-        else if(op.equals("<>")) return NE; //$NON-NLS-1$
-        else if(op.equals("<>")) return NE; //$NON-NLS-1$
-        else if(op.equals("<" )) return LT; //$NON-NLS-1$
-        else if(op.equals(">" )) return GT; //$NON-NLS-1$
-        else if(op.equals("<=")) return LE; //$NON-NLS-1$
-        else if(op.equals(">=")) return GE; //$NON-NLS-1$
+        if(op.equals("=" )) return ICompareCriteria.EQ; //$NON-NLS-1$
+        else if(op.equals("<>")) return ICompareCriteria.NE; //$NON-NLS-1$
+        else if(op.equals("<>")) return ICompareCriteria.NE; //$NON-NLS-1$
+        else if(op.equals("<" )) return ICompareCriteria.LT; //$NON-NLS-1$
+        else if(op.equals(">" )) return ICompareCriteria.GT; //$NON-NLS-1$
+        else if(op.equals("<=")) return ICompareCriteria.LE; //$NON-NLS-1$
+        else if(op.equals(">=")) return ICompareCriteria.GE; //$NON-NLS-1$
         else return -1;
     }
 
@@ -124,12 +107,12 @@ public abstract class AbstractCompareCriteria extends PredicateCriteria implemen
      */
     public String getOperatorAsString() {
         switch ( this.operator ) {
-            case EQ: return "="; //$NON-NLS-1$
-            case NE: return "<>"; //$NON-NLS-1$
-            case LT: return "<"; //$NON-NLS-1$
-            case GT: return ">"; //$NON-NLS-1$
-            case LE: return "<="; //$NON-NLS-1$
-            case GE: return ">="; //$NON-NLS-1$
+            case ICompareCriteria.EQ: return "="; //$NON-NLS-1$
+            case ICompareCriteria.NE: return "<>"; //$NON-NLS-1$
+            case ICompareCriteria.LT: return "<"; //$NON-NLS-1$
+            case ICompareCriteria.GT: return ">"; //$NON-NLS-1$
+            case ICompareCriteria.LE: return "<="; //$NON-NLS-1$
+            case ICompareCriteria.GE: return ">="; //$NON-NLS-1$
             default: return "??"; //$NON-NLS-1$
         }
     }
@@ -141,12 +124,12 @@ public abstract class AbstractCompareCriteria extends PredicateCriteria implemen
     
     public static int getInverseOperator(int op) {
     	switch ( op ) {
-        case EQ: return NE; 
-        case NE: return EQ;
-        case LT: return GE;
-        case GT: return LE;
-        case LE: return GT;
-        case GE: return LT;
+        case ICompareCriteria.EQ: return ICompareCriteria.NE; 
+        case ICompareCriteria.NE: return ICompareCriteria.EQ;
+        case ICompareCriteria.LT: return ICompareCriteria.GE;
+        case ICompareCriteria.GT: return ICompareCriteria.LE;
+        case ICompareCriteria.LE: return ICompareCriteria.GT;
+        case ICompareCriteria.GE: return ICompareCriteria.LT;
         default: return -1;
     	}
     }

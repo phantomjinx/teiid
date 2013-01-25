@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IAggregateSymbol;
 import org.teiid.query.parser.SQLParserUtil;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
@@ -47,29 +48,6 @@ import org.teiid.query.sql.lang.OrderBy;
 public class AggregateSymbol extends Function implements DerivedExpression {
 	
 	private static final Expression[] EMPTY_ARGS = new Expression[0];
-
-	public enum Type {
-		COUNT,
-		SUM,
-		AVG,
-		MIN,
-		MAX,
-		XMLAGG,
-		TEXTAGG,
-		ARRAY_AGG,
-		JSONARRAY_AGG,
-		ANY,
-		SOME,
-		EVERY,
-		STDDEV_POP,
-		STDDEV_SAMP,
-		VAR_POP,
-		VAR_SAMP,
-		RANK,
-		DENSE_RANK,
-		ROW_NUMBER,
-		USER_DEFINED;
-	}
 	
 	private static final Map<String, Type> nameMap = new TreeMap<String, Type>(String.CASE_INSENSITIVE_ORDER);
 	

@@ -33,6 +33,7 @@ import java.util.Map;
 import org.teiid.core.types.ArrayImpl;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
 import org.teiid.language.SQLConstants;
 import org.teiid.language.SQLConstants.NonReserved;
 import org.teiid.language.SQLConstants.Tokens;
@@ -51,7 +52,6 @@ import org.teiid.query.sql.lang.XMLTable.XMLColumn;
 import org.teiid.query.sql.proc.*;
 import org.teiid.query.sql.proc.Statement.Labeled;
 import org.teiid.query.sql.symbol.*;
-import org.teiid.query.sql.symbol.AggregateSymbol.Type;
 import org.teiid.query.sql.symbol.XMLNamespaces.NamespaceItem;
 import org.teiid.translator.SourceSystemFunctions;
 
