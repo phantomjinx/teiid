@@ -33,7 +33,7 @@ import java.util.List;
 import org.teiid.common.buffer.TupleBrowser;
 import org.teiid.common.buffer.TupleSource;
 import org.teiid.core.TeiidComponentException;
-import org.teiid.language.Like.MatchMode;
+import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.query.eval.Evaluator;

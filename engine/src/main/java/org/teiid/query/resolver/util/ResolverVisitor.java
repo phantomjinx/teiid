@@ -39,6 +39,7 @@ import org.teiid.core.TeiidComponentException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.types.DataTypeManager.DefaultDataClasses;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.symbol.IElementSymbol.DisplayMode;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.function.FunctionDescriptor;
 import org.teiid.query.function.FunctionForm;
@@ -72,7 +73,6 @@ import org.teiid.query.sql.symbol.Reference;
 import org.teiid.query.sql.symbol.SearchedCaseExpression;
 import org.teiid.query.sql.symbol.XMLQuery;
 import org.teiid.query.sql.symbol.XMLSerialize;
-import org.teiid.query.sql.symbol.ElementSymbol.DisplayMode;
 
 
 public class ResolverVisitor extends LanguageVisitor {

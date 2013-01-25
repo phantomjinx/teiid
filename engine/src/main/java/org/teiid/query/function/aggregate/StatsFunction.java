@@ -27,7 +27,7 @@ import java.util.List;
 import org.teiid.api.exception.query.ExpressionEvaluationException;
 import org.teiid.api.exception.query.FunctionExecutionException;
 import org.teiid.core.TeiidComponentException;
-import org.teiid.query.sql.symbol.AggregateSymbol.Type;
+import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
 
 public class StatsFunction extends AggregateFunction {
 	

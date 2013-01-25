@@ -45,28 +45,7 @@ import org.teiid.query.sql.lang.OrderBy;
  * floating point expressions not of type bigdecimal return type double and bigdecimal maps to
  * bigdecimal.</p>
  */
-public class AggregateSymbol extends ExpressionSymbol {
-	
-	public enum Type {
-		COUNT,
-		SUM,
-		AVG,
-		MIN,
-		MAX,
-		XMLAGG,
-		TEXTAGG,
-		ARRAY_AGG,
-		ANY,
-		SOME,
-		EVERY,
-		STDDEV_POP,
-		STDDEV_SAMP,
-		VAR_POP,
-		VAR_SAMP,
-		RANK,
-		DENSE_RANK,
-		ROW_NUMBER;
-	}
+public class AggregateSymbol extends ExpressionSymbol
 
 	private Type aggregate;
 	private boolean distinct;

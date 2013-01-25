@@ -67,7 +67,8 @@ import org.teiid.core.types.XMLType;
 import org.teiid.core.types.XMLType.Type;
 import org.teiid.core.types.basic.StringToSQLXMLTransform;
 import org.teiid.core.util.EquivalenceUtil;
-import org.teiid.language.Like.MatchMode;
+import org.teiid.designer.query.sql.lang.ICompareCriteria;
+import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.metadata.FunctionMethod.PushDown;
 import org.teiid.query.QueryPlugin;
@@ -578,22 +579,22 @@ public class Evaluator {
             	int compare = compareValues(leftValue, value);
                 // Compare two non-null values using specified operator
                 switch(criteria.getOperator()) {
-                    case SubqueryCompareCriteria.EQ:
+                    case ICompareCriteria.EQ:
                         result = Boolean.valueOf(compare == 0);
                         break;
-                    case SubqueryCompareCriteria.NE:
+                    case ICompareCriteria.NE:
                         result = Boolean.valueOf(compare != 0);
                         break;
-                    case SubqueryCompareCriteria.LT:
+                    case ICompareCriteria.LT:
                         result = Boolean.valueOf(compare < 0);
                         break;
-                    case SubqueryCompareCriteria.LE:
+                    case ICompareCriteria.LE:
                         result = Boolean.valueOf(compare <= 0);
                         break;
-                    case SubqueryCompareCriteria.GT:
+                    case ICompareCriteria.GT:
                         result = Boolean.valueOf(compare > 0);
                         break;
-                    case SubqueryCompareCriteria.GE:
+                    case ICompareCriteria.GE:
                         result = Boolean.valueOf(compare >= 0);
                         break;
                     default:

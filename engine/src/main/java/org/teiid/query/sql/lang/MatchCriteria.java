@@ -31,7 +31,7 @@ import org.teiid.api.exception.query.ExpressionEvaluationException;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.core.util.LRUCache;
-import org.teiid.language.Like.MatchMode;
+import org.teiid.designer.query.sql.lang.IMatchCriteria;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.PredicateCriteria.Negatable;

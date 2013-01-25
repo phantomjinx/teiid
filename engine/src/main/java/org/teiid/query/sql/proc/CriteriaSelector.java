@@ -27,7 +27,7 @@ import java.util.*;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.query.sql.*;
-import org.teiid.query.sql.lang.CompareCriteria;
+import org.teiid.designer.query.sql.lang.ICompareCriteria;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -42,22 +42,22 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 public class CriteriaSelector implements LanguageObject {
 	
 	// constant for "=" criteria 
-	public static final int COMPARE_EQ = CompareCriteria.EQ;
+	public static final int COMPARE_EQ = ICompareCriteria.EQ;
 
 	// constant for "<>" criteria 	
-	public static final int COMPARE_NE = CompareCriteria.NE;
+	public static final int COMPARE_NE = ICompareCriteria.NE;
 	
 	// constant for "<" criteria 	
-	public static final int COMPARE_LT = CompareCriteria.LT;
+	public static final int COMPARE_LT = ICompareCriteria.LT;
 	
 	// constant for ">" criteria 
-	public static final int COMPARE_GT = CompareCriteria.GT;
+	public static final int COMPARE_GT = ICompareCriteria.GT;
 	
 	// constant for "<=" criteria 	
-	public static final int COMPARE_LE = CompareCriteria.LE;
+	public static final int COMPARE_LE = ICompareCriteria.LE;
 	
 	// constant for ">=" criteria 	
-	public static final int COMPARE_GE = CompareCriteria.GE;
+	public static final int COMPARE_GE = ICompareCriteria.GE;
 	
 	// constant for "LIKE" criteria 	
 	public static final int LIKE = 7;

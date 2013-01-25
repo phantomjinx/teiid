@@ -36,12 +36,7 @@ import org.teiid.query.sql.LanguageVisitor;
  * is set to false.  Common uses when this is set to true are for variables used 
  * within a command, correlated elements within a command, etc. </p>
  */
-public class ElementSymbol extends SingleElementSymbol {
-
-    public enum DisplayMode {
-        FULLY_QUALIFIED, // symbol name 
-        OUTPUT_NAME, // default
-        SHORT_OUTPUT_NAME}
+public class ElementSymbol extends SingleElementSymbol
     
     private GroupSymbol groupSymbol;
     private Object metadataID;

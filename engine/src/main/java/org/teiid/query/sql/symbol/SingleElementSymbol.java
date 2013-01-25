@@ -29,11 +29,6 @@ package org.teiid.query.sql.symbol;
  */
 public abstract class SingleElementSymbol extends Symbol implements Expression, SelectSymbol {
 
-	/**
-     * Character used to delimit name components in a symbol
-	 */
-    public static final String SEPARATOR = "."; //$NON-NLS-1$
-
     /**
      * Passthrough constructor used for cloning 
      * @param name

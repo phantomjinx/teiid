@@ -39,6 +39,8 @@ import org.teiid.language.*;
 import org.teiid.language.DerivedColumn;
 import org.teiid.language.Select;
 import org.teiid.language.WindowSpecification;
+import org.teiid.designer.query.sql.lang.ICompareCriteria;
+import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
 import org.teiid.language.Argument.Direction;
 import org.teiid.language.Comparison.Operator;
 import org.teiid.language.SortSpecification.Ordering;
@@ -316,7 +318,10 @@ public class LanguageBridgeFactory {
                                     translate(criteria.getRightExpression()), 
                                     escapeChar, 
                                     criteria.isNegated());
-        like.setMode(criteria.getMode());
+        
+        MatchMode mode = criteria.getMode();
+        Like.MatchMode likeMode = Like.MatchMode.valueOf(mode.name());
+        like.setMode(likeMode);
         return like;
     }
 
@@ -359,22 +364,22 @@ public class LanguageBridgeFactory {
         
         Operator operator = Operator.EQ;
         switch(criteria.getOperator()) {
-            case SubqueryCompareCriteria.EQ:
+            case ICompareCriteria.EQ:
                 operator = Operator.EQ;
                 break;
-            case SubqueryCompareCriteria.NE:
+            case ICompareCriteria.NE:
                 operator = Operator.NE;
                 break;
-            case SubqueryCompareCriteria.LT:
+            case ICompareCriteria.LT:
                 operator = Operator.LT;
                 break;
-            case SubqueryCompareCriteria.LE:
+            case ICompareCriteria.LE:
                 operator = Operator.LE;
                 break;
-            case SubqueryCompareCriteria.GT:
+            case ICompareCriteria.GT:
                 operator = Operator.GT;
                 break;
-            case SubqueryCompareCriteria.GE:
+            case ICompareCriteria.GE:
                 operator = Operator.GE;
                 break;                    
         }
