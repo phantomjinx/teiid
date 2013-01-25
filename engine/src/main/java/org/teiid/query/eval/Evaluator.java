@@ -59,10 +59,10 @@ import org.teiid.core.types.XMLType.Type;
 import org.teiid.core.types.basic.StringToSQLXMLTransform;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.jdbc.TeiidSQLException;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.function.FunctionDescriptor;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.function.JSONFunctionMethods.JSONBuilder;
 import org.teiid.query.function.source.XMLSystemFunctions;
 import org.teiid.query.function.source.XMLSystemFunctions.XmlConcat;
@@ -1072,7 +1072,7 @@ public class Evaluator {
 	    fd.checkNotPushdown();	
 	    
 	    // Check for special lookup function
-	    if(function.getName().equalsIgnoreCase(FunctionLibrary.LOOKUP)) {
+	    if(IFunctionLibrary.FunctionName.LOOKUP.equalsIgnoreCase(function.getName())) {
 	        if(dataMgr == null) {
 	             throw new ComponentNotFoundException(QueryPlugin.Event.TEIID30342, QueryPlugin.Util.gs(QueryPlugin.Event.TEIID30342));
 	        }

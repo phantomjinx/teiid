@@ -48,6 +48,7 @@ import org.teiid.core.util.StringUtil;
 import org.teiid.core.util.TimestampWithTimezone;
 import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
 import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.language.SQLConstants;
 import org.teiid.language.SQLConstants.NonReserved;
 import org.teiid.query.QueryPlugin;
@@ -2088,16 +2089,16 @@ public class QueryRewriter {
     private static Map<String, Integer> FUNCTION_MAP = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
     
     static {
-    	FUNCTION_MAP.put(FunctionLibrary.SPACE, 0);
-    	FUNCTION_MAP.put(FunctionLibrary.FROM_UNIXTIME, 1);
-    	FUNCTION_MAP.put(FunctionLibrary.NULLIF, 2);
-    	FUNCTION_MAP.put(FunctionLibrary.COALESCE, 3);
-    	FUNCTION_MAP.put(FunctionLibrary.CONCAT2, 4);
-    	FUNCTION_MAP.put(FunctionLibrary.TIMESTAMPADD, 5);
-    	FUNCTION_MAP.put(FunctionLibrary.PARSEDATE, 6);
-    	FUNCTION_MAP.put(FunctionLibrary.PARSETIME, 7);
-    	FUNCTION_MAP.put(FunctionLibrary.FORMATDATE, 8);
-    	FUNCTION_MAP.put(FunctionLibrary.FORMATTIME, 9);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.SPACE.text(),  0);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.FROM_UNIXTIME.text(),  1);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.NULLIF.text(),  2);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.COALESCE.text(),  3);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.CONCAT2.text(),  4);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.TIMESTAMPADD.text(),  5);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.PARSEDATE.text(),  6);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.PARSETIME.text(),  7);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.FORMATDATE.text(),  8);
+    	FUNCTION_MAP.put(IFunctionLibrary.FunctionName.FORMATTIME.text(),  9);
     	FUNCTION_MAP.put(SourceSystemFunctions.TRIM, 10);
     }
     
@@ -2157,11 +2158,11 @@ public class QueryRewriter {
 				break;
 			}
 			case 1: {//from_unixtime(a) => timestampadd(SQL_TSI_SECOND, a, new Timestamp(0)) 
-				Function result = new Function(FunctionLibrary.TIMESTAMPADD,
+				Function result = new Function(IFunctionLibrary.FunctionName.TIMESTAMPADD.text(),
 						new Expression[] {new Constant(NonReserved.SQL_TSI_SECOND), function.getArg(0), new Constant(new Timestamp(0)) });
 				//resolve the function
 				FunctionDescriptor descriptor = 
-					funcLibrary.findFunction(FunctionLibrary.TIMESTAMPADD, new Class[] { DataTypeManager.DefaultDataClasses.STRING, DataTypeManager.DefaultDataClasses.INTEGER, DataTypeManager.DefaultDataClasses.TIMESTAMP });
+					funcLibrary.findFunction(IFunctionLibrary.FunctionName.TIMESTAMPADD.text(), new Class[] { DataTypeManager.DefaultDataClasses.STRING, DataTypeManager.DefaultDataClasses.INTEGER, DataTypeManager.DefaultDataClasses.TIMESTAMP });
 				result.setFunctionDescriptor(descriptor);
 				result.setType(DataTypeManager.DefaultDataClasses.TIMESTAMP);
 				function = result;
@@ -2323,8 +2324,8 @@ public class QueryRewriter {
         }
 
         //convert DECODESTRING function to CASE expression
-        if( function.getName().equalsIgnoreCase(FunctionLibrary.DECODESTRING) 
-                || function.getName().equalsIgnoreCase(FunctionLibrary.DECODEINTEGER)) { 
+        if( IFunctionLibrary.FunctionName.DECODESTRING.equalsIgnoreCase(function.getName()) 
+            || IFunctionLibrary.FunctionName.DECODEINTEGER.equalsIgnoreCase(function.getName())) {  
             return convertDecodeFunction(function);
         }
         
@@ -2368,7 +2369,7 @@ public class QueryRewriter {
         }
         
         newCaseExpr.setType(DefaultDataClasses.STRING);
-        if (function.getName().equalsIgnoreCase(FunctionLibrary.DECODEINTEGER)) {
+        if (IFunctionLibrary.FunctionName.DECODEINTEGER.equalsIgnoreCase(function.getName())) {
         	return ResolverUtil.getConversion(newCaseExpr, DataTypeManager.DefaultDataTypes.STRING, DataTypeManager.DefaultDataTypes.INTEGER, false, metadata.getFunctionLibrary());
         }
         return newCaseExpr;

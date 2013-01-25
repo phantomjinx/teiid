@@ -42,6 +42,7 @@ import org.teiid.core.types.DataTypeManager.DefaultDataClasses;
 import org.teiid.core.util.StringUtil;
 import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
 import org.teiid.designer.query.sql.symbol.IElementSymbol.DisplayMode;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.function.FunctionDescriptor;
 import org.teiid.query.function.FunctionForm;
@@ -558,7 +559,7 @@ public class ResolverVisitor extends LanguageVisitor {
 	    	fd.setCalledWithVarArgArrayParam(true);
 	    }
 	    
-	    if(fd.isSystemFunction(FunctionLibrary.CONVERT) || fd.isSystemFunction(FunctionLibrary.CAST)) {
+	    if(fd.isSystemFunction(IFunctionLibrary.FunctionName.CONVERT) || fd.isSystemFunction(IFunctionLibrary.FunctionName.CAST)) {
 	        String dataType = (String) ((Constant)args[1]).getValue();
 	        Class<?> dataTypeClass = DataTypeManager.getDataTypeClass(dataType);
 	        fd = library.findTypedConversionFunction(args[0].getType(), dataTypeClass);
@@ -571,10 +572,10 @@ public class ResolverVisitor extends LanguageVisitor {
 	
 	             throw new QueryResolverException(QueryPlugin.Event.TEIID30071, QueryPlugin.Util.gs(QueryPlugin.Event.TEIID30071, new Object[] {DataTypeManager.getDataTypeName(srcTypeClass), dataType}));
 	        }
-	    } else if(fd.isSystemFunction(FunctionLibrary.LOOKUP)) {
+	    } else if(fd.isSystemFunction(IFunctionLibrary.FunctionName.LOOKUP)) {
 			ResolverUtil.ResolvedLookup lookup = ResolverUtil.resolveLookup(function, metadata);
 			fd = library.copyFunctionChangeReturnType(fd, lookup.getReturnElement().getType());
-	    } else if (fd.isSystemFunction(FunctionLibrary.ARRAY_GET) && args[0].getType().isArray()) {
+	    } else if (fd.isSystemFunction(IFunctionLibrary.FunctionName.ARRAY_GET) && args[0].getType().isArray()) {
 	    	//hack to use typed array values
 			fd = library.copyFunctionChangeReturnType(fd, args[0].getType().getComponentType());
 	    } else if (Boolean.valueOf(fd.getMethod().getProperty(TEIID_PASS_THROUGH_TYPE, false))) {

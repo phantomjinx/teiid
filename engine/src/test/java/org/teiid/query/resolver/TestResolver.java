@@ -1184,7 +1184,7 @@ public class TestResolver {
 		Collection functions = FunctionCollectorVisitor.getFunctions(outerQuery, true);
 		assertTrue(functions.size() == 1);
 		Function function = (Function)functions.iterator().next();
-		assertTrue(function.getName().equals(FunctionLibrary.CONVERT));
+		assertTrue(function.getName().equals(IFunctionLibrary.FunctionName.CONVERT));
 		Expression[] args = function.getArgs();
 		assertSame(e2, args[0]);
 		assertTrue(args[1] instanceof Constant);		
@@ -1273,7 +1273,7 @@ public class TestResolver {
         Expression expression = new Constant("2003-02-27"); //$NON-NLS-1$
         
 		FunctionLibrary library = RealMetadataFactory.SFM.getSystemFunctionLibrary();                         
-		FunctionDescriptor fd = library.findFunction(FunctionLibrary.CONVERT, new Class[] { srcType, DataTypeManager.DefaultDataClasses.STRING });
+		FunctionDescriptor fd = library.findFunction(IFunctionLibrary.FunctionName.CONVERT, new Class[] { srcType, DataTypeManager.DefaultDataClasses.STRING });
 
 		Function conversion = new Function(fd.getName(), new Expression[] { expression, new Constant(tgtTypeName) });
 		conversion.setType(DataTypeManager.getDataTypeClass(tgtTypeName));
@@ -1309,7 +1309,7 @@ public class TestResolver {
 		Expression expression = new Constant("2003-02-27"); //$NON-NLS-1$
         
 		FunctionLibrary library = RealMetadataFactory.SFM.getSystemFunctionLibrary();                        
-		FunctionDescriptor fd = library.findFunction(FunctionLibrary.CONVERT, new Class[] { srcType, DataTypeManager.DefaultDataClasses.STRING });
+		FunctionDescriptor fd = library.findFunction(IFunctionLibrary.FunctionName.CONVERT, new Class[] { srcType, DataTypeManager.DefaultDataClasses.STRING });
 
 		Function conversion = new Function(fd.getName(), new Expression[] { expression, new Constant(tgtTypeName) });
 		conversion.setType(DataTypeManager.getDataTypeClass(tgtTypeName));
