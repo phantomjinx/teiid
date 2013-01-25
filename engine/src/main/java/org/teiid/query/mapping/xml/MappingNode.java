@@ -149,10 +149,9 @@ public abstract class MappingNode implements Cloneable, Serializable {
      * @param MappingNode to add as a child of this node
      * @return the added node, with parent set to this node
      */
-    public MappingNode addChild( MappingNode node ) {
+    public void addChild( MappingNode node ) {
         this.children.add( node );
         node.setParent(this);
-        return node;
     }
 
     /**
@@ -444,9 +443,8 @@ public abstract class MappingNode implements Cloneable, Serializable {
         return null;
     }
     
-    public MappingNode setExclude(boolean exclude) {
+    public void setExclude(boolean exclude) {
         setProperty(MappingNodeConstants.Properties.IS_EXCLUDED, Boolean.valueOf(exclude));
-        return this;
     }
 
     public boolean isExcluded() {

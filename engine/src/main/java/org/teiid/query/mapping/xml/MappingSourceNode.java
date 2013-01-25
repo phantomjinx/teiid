@@ -68,11 +68,10 @@ public class MappingSourceNode extends MappingBaseNode {
         setProperty(MappingNodeConstants.Properties.ALIAS_RESULT_SET_NAME, alias);
     }    
     
-    public MappingBaseNode setSource(String source) {
+    public void setSource(String source) {
         if (source != null) {
             setProperty(MappingNodeConstants.Properties.RESULT_SET_NAME, source);
         }
-        return this;
     }        
     
     public MappingSourceNode getSourceNode() {

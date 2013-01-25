@@ -68,80 +68,71 @@ public class MappingElement extends MappingBaseNode {
         return this.namespace;
     }
         
-    public MappingElement setNameInSource(String srcName) {
+    public void setNameInSource(String srcName) {
         if (srcName != null) {
             setProperty(MappingNodeConstants.Properties.ELEMENT_NAME, srcName);
         }
-        return this;
     }
     
-    public MappingElement setNillable(boolean nil) {
+    public void setNillable(boolean nil) {
         setProperty(MappingNodeConstants.Properties.IS_NILLABLE, Boolean.valueOf(nil));
-        return this;
     }
     
-    public MappingElement setDefaultValue(String value) {
+    public void setDefaultValue(String value) {
         if (value != null) {
             setProperty(MappingNodeConstants.Properties.DEFAULT_VALUE, value);
         }
         return this;
     }
 
-    public MappingElement setValue(String value) {
+    public void setValue(String value) {
         if (value != null) {
             setProperty(MappingNodeConstants.Properties.FIXED_VALUE, value);
         }
-        return this;
     }
        
-    public MappingElement setOptional(boolean optional) {
+    public void setOptional(boolean optional) {
         setProperty(MappingNodeConstants.Properties.IS_OPTIONAL, Boolean.valueOf(optional));
-        return this;
     }
     
-    public MappingElement setNormalizeText(String normalize) {
+    public void setNormalizeText(String normalize) {
         if (normalize != null) {
             setProperty(MappingNodeConstants.Properties.NORMALIZE_TEXT, normalize);    
         }
-        return this;
     }
     
-    public MappingElement setType(String type) {
+    public void setType(String type) {
         if (type != null) {
             setProperty(MappingNodeConstants.Properties.BUILT_IN_TYPE, type);
         }
-        return this;
     }
     
-    public MappingElement setAlwaysInclude(boolean include) {
+    public void setAlwaysInclude(boolean include) {
         setProperty(MappingNodeConstants.Properties.ALWAYS_INCLUDE, Boolean.valueOf(include));
-        return this;
     }
                   
     /**
      * Adds a comment node to the current element and returns the added
      * child node 
      */
-    public MappingCommentNode addCommentNode(MappingCommentNode elem) {
+    public void addCommentNode(MappingCommentNode elem) {
         addChild(elem);
-        return elem;
-    } 
+    }
+    
     
     /**
      * Adds the attribute node to the current node and returns the current node
      */
-    public MappingElement addAttribute(MappingAttribute attr) {
+    public void addAttribute(MappingAttribute attr) {
         addChild(attr);
-        return this;
     }
 
     /**
      * Adds a sibiling node to the current node and returns the added sibiling node;
      * @param elem
      */
-    public MappingElement addSibilingElement(MappingElement elem) {
+    public void addSibilingElement(MappingElement elem) {
         getParent().addChild(elem);
-        return elem;
     }
     
     /**

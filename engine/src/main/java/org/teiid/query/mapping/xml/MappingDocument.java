@@ -120,29 +120,27 @@ public class MappingDocument extends MappingBaseNode {
         root.setMinOccurrs(1);
     }     
     
-    public MappingAllNode addAllNode(MappingAllNode elem) {
+    public void addAllNode(MappingAllNode elem) {
          throw new TeiidRuntimeException(QueryPlugin.Event.TEIID30452, QueryPlugin.Util.gs(QueryPlugin.Event.TEIID30452));
     }
 
-    public MappingChoiceNode addChoiceNode(MappingChoiceNode elem) {
+    public void addChoiceNode(MappingChoiceNode elem) {
          throw new TeiidRuntimeException(QueryPlugin.Event.TEIID30452, QueryPlugin.Util.gs(QueryPlugin.Event.TEIID30452));
     }
 
-    public MappingSequenceNode addSequenceNode(MappingSequenceNode elem) {
+    public void addSequenceNode(MappingSequenceNode elem) {
          throw new TeiidRuntimeException(QueryPlugin.Event.TEIID30452, QueryPlugin.Util.gs(QueryPlugin.Event.TEIID30452));
     }
     
-    public MappingElement addChildElement(MappingElement elem) {
+    public void addChildElement(MappingElement elem) {
     	Assertion.isNotNull(elem);
         fixCardinality(elem);
         setRoot(elem);
-        return elem;
     }    
     
-    public MappingSourceNode addSourceNode(MappingSourceNode elem) {
+    public void addSourceNode(MappingSourceNode elem) {
         Assertion.isNotNull(elem);
         setRoot(elem);
-        return elem;
     }
     
     /** 
