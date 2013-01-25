@@ -69,11 +69,11 @@ import org.teiid.core.types.basic.StringToSQLXMLTransform;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.designer.query.sql.lang.ICompareCriteria;
 import org.teiid.designer.query.sql.lang.IMatchCriteria.MatchMode;
+import org.teiid.designer.udf.IFunctionLibrary.FunctionName;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.metadata.FunctionMethod.PushDown;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.function.FunctionDescriptor;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.function.source.XMLSystemFunctions;
 import org.teiid.query.function.source.XMLSystemFunctions.XmlConcat;
 import org.teiid.query.processor.ProcessorDataManager;
@@ -1042,7 +1042,7 @@ public class Evaluator {
 	    }
 	
 	    // Check for special lookup function
-	    if(fd.getName().equalsIgnoreCase(FunctionLibrary.LOOKUP)) {
+	    if(FunctionName.LOOKUP.equalsIgnoreCase(fd.getName())) {
 	        if(dataMgr == null) {
 	            throw new ComponentNotFoundException("ERR.015.006.0055", QueryPlugin.Util.getString("ERR.015.006.0055")); //$NON-NLS-1$ //$NON-NLS-2$
 	        }

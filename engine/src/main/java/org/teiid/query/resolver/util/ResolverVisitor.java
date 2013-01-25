@@ -40,6 +40,7 @@ import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.types.DataTypeManager.DefaultDataClasses;
 import org.teiid.core.util.StringUtil;
 import org.teiid.designer.query.sql.symbol.IElementSymbol.DisplayMode;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.function.FunctionDescriptor;
 import org.teiid.query.function.FunctionForm;
@@ -531,8 +532,7 @@ public class ResolverVisitor extends LanguageVisitor {
 	        // Known function form - unable to find implicit conversions
 	        throw new QueryResolverException("ERR.015.008.0040", QueryPlugin.Util.getString("ERR.015.008.0040", function)); //$NON-NLS-1$ //$NON-NLS-2$
 	    }
-	    
-	    if(fd.getName().equalsIgnoreCase(FunctionLibrary.CONVERT) || fd.getName().equalsIgnoreCase(FunctionLibrary.CAST)) {
+	    if(IFunctionLibrary.FunctionName.CONVERT.equalsIgnoreCase(fd.getName()) || IFunctionLibrary.FunctionName.CAST.equalsIgnoreCase(fd.getName())) {
 	        String dataType = (String) ((Constant)args[1]).getValue();
 	        Class<?> dataTypeClass = DataTypeManager.getDataTypeClass(dataType);
 	        fd = library.findTypedConversionFunction(args[0].getType(), dataTypeClass);
@@ -545,7 +545,7 @@ public class ResolverVisitor extends LanguageVisitor {
 	
 	            throw new QueryResolverException("ERR.015.008.0037", QueryPlugin.Util.getString("ERR.015.008.0037", new Object[] {DataTypeManager.getDataTypeName(srcTypeClass), dataType})); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
-	    } else if(fd.getName().equalsIgnoreCase(FunctionLibrary.LOOKUP)) {
+	    } else if(IFunctionLibrary.FunctionName.LOOKUP.equalsIgnoreCase(fd.getName())) {
 			ResolverUtil.ResolvedLookup lookup = ResolverUtil.resolveLookup(function, metadata);
 			fd = library.copyFunctionChangeReturnType(fd, lookup.getReturnElement().getType());
 	    } 

@@ -33,7 +33,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.teiid.CommandContext;
 import org.teiid.PolicyDecider;
 import org.teiid.adminapi.DataPolicy;
@@ -43,13 +42,13 @@ import org.teiid.api.exception.query.QueryMetadataException;
 import org.teiid.core.CoreConstants;
 import org.teiid.core.TeiidComponentException;
 import org.teiid.core.TeiidProcessingException;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.dqp.internal.process.multisource.MultiSourceElement;
 import org.teiid.logging.AuditMessage;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.logging.MessageLevel;
 import org.teiid.query.QueryPlugin;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.metadata.TempMetadataID;
 import org.teiid.query.resolver.util.ResolverUtil;
 import org.teiid.query.sql.LanguageObject;
@@ -154,7 +153,7 @@ public class AuthorizationValidationVisitor extends AbstractValidationVisitor {
     }
     
     public void visit(Function obj) {
-    	if (FunctionLibrary.LOOKUP.equalsIgnoreCase(obj.getName())) {
+    	if (IFunctionLibrary.FunctionName.LOOKUP.equalsIgnoreCase(obj.getName())) {
     		try {
 				ResolverUtil.ResolvedLookup lookup = ResolverUtil.resolveLookup(obj, this.getMetadata());
     			List<Symbol> symbols = new LinkedList<Symbol>();

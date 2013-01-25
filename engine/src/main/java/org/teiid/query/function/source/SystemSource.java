@@ -29,10 +29,10 @@ import java.util.List;
 
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.metadata.FunctionParameter;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.metadata.FunctionMethod.PushDown;
 import org.teiid.query.QueryPlugin;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.function.FunctionMetadataSource;
 import org.teiid.query.function.FunctionMethods;
 import org.teiid.query.function.metadata.FunctionCategoryConstants;
@@ -622,7 +622,7 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
 
 	private void addSpaceFunction() {
 		functions.add(
-			new FunctionMethod(FunctionLibrary.SPACE, QueryPlugin.Util.getString("SystemSource.Space_desc"), STRING, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$ 
+			new FunctionMethod(IFunctionLibrary.FunctionName.SPACE.text(), QueryPlugin.Util.getString("SystemSource.Space_desc"), STRING, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$ 
 				new FunctionParameter[] {
 					new FunctionParameter("count", DataTypeManager.DefaultDataTypes.INTEGER, QueryPlugin.Util.getString("SystemSource.Space_arg1"))}, //$NON-NLS-1$ //$NON-NLS-2$
 				new FunctionParameter("result", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Space_result")) ) );                 //$NON-NLS-1$ //$NON-NLS-2$
@@ -847,7 +847,7 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
     
     private void addSessionIdFunction() {
         functions.add(
-            new FunctionMethod(FunctionLibrary.SESSION_ID, QueryPlugin.Util.getString("SystemSource.session_id_desc"), MISCELLANEOUS, PushDown.CANNOT_PUSHDOWN, FUNCTION_CLASS, "session_id", null, //$NON-NLS-1$ //$NON-NLS-2$ 
+            new FunctionMethod(IFunctionLibrary.FunctionName.SESSION_ID.text(), QueryPlugin.Util.getString("SystemSource.session_id_desc"), MISCELLANEOUS, PushDown.CANNOT_PUSHDOWN, FUNCTION_CLASS, "session_id", null, //$NON-NLS-1$ //$NON-NLS-2$ 
                 new FunctionParameter("result", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.session_id_result")), false, Determinism.SESSION_DETERMINISTIC) );                     //$NON-NLS-1$ //$NON-NLS-2$
     }    
     
@@ -901,13 +901,13 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
 					new FunctionParameter("format", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Formattimestamp_arg2")) }, //$NON-NLS-1$ //$NON-NLS-2$
 				new FunctionParameter("result", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Formattimestamp_result_desc")) ) );       //$NON-NLS-1$ //$NON-NLS-2$
 		functions.add(
-				new FunctionMethod(FunctionLibrary.FORMATDATE, QueryPlugin.Util.getString("SystemSource.Formatdate_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
+				new FunctionMethod(IFunctionLibrary.FunctionName.FORMATDATE.text(), QueryPlugin.Util.getString("SystemSource.Formatdate_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
 					new FunctionParameter[] { 
 						new FunctionParameter("date", DataTypeManager.DefaultDataTypes.DATE, QueryPlugin.Util.getString("SystemSource.Formatdate_arg1")), //$NON-NLS-1$ //$NON-NLS-2$
 						new FunctionParameter("format", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Formatdate_arg2")) }, //$NON-NLS-1$ //$NON-NLS-2$
 					new FunctionParameter("result", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Formatdate_result_desc")) ) );       //$NON-NLS-1$ //$NON-NLS-2$
 		functions.add(
-				new FunctionMethod(FunctionLibrary.FORMATTIME, QueryPlugin.Util.getString("SystemSource.Formattime_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
+				new FunctionMethod(IFunctionLibrary.FunctionName.FORMATTIME.text(), QueryPlugin.Util.getString("SystemSource.Formattime_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
 					new FunctionParameter[] { 
 						new FunctionParameter("time", DataTypeManager.DefaultDataTypes.TIME, QueryPlugin.Util.getString("SystemSource.Formattime_arg1")), //$NON-NLS-1$ //$NON-NLS-2$
 						new FunctionParameter("format", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Formattime_arg2")) }, //$NON-NLS-1$ //$NON-NLS-2$
@@ -922,13 +922,13 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
 					new FunctionParameter("format", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Parsetimestamp_arg2")) }, //$NON-NLS-1$ //$NON-NLS-2$
 				new FunctionParameter("result", DataTypeManager.DefaultDataTypes.TIMESTAMP, QueryPlugin.Util.getString("SystemSource.Parsetimestamp_result_desc")) ) );       //$NON-NLS-1$ //$NON-NLS-2$
 		functions.add(
-				new FunctionMethod(FunctionLibrary.PARSETIME, QueryPlugin.Util.getString("SystemSource.Parsetime_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
+				new FunctionMethod(IFunctionLibrary.FunctionName.PARSETIME.text(), QueryPlugin.Util.getString("SystemSource.Parsetime_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
 					new FunctionParameter[] { 
 						new FunctionParameter("time", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Parsetime_arg1")), //$NON-NLS-1$ //$NON-NLS-2$
 						new FunctionParameter("format", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Parsetime_arg2")) }, //$NON-NLS-1$ //$NON-NLS-2$
 					new FunctionParameter("result", DataTypeManager.DefaultDataTypes.TIME, QueryPlugin.Util.getString("SystemSource.Parsetime_result_desc")) ) );       //$NON-NLS-1$ //$NON-NLS-2$
 		functions.add(
-				new FunctionMethod(FunctionLibrary.PARSEDATE, QueryPlugin.Util.getString("SystemSource.Parsedate_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
+				new FunctionMethod(IFunctionLibrary.FunctionName.PARSEDATE.text(), QueryPlugin.Util.getString("SystemSource.Parsedate_desc"),CONVERSION, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$
 					new FunctionParameter[] { 
 						new FunctionParameter("date", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Parsedate_arg1")), //$NON-NLS-1$ //$NON-NLS-2$
 						new FunctionParameter("format", DataTypeManager.DefaultDataTypes.STRING, QueryPlugin.Util.getString("SystemSource.Parsedate_arg2")) }, //$NON-NLS-1$ //$NON-NLS-2$
@@ -1063,7 +1063,7 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
     }
     
     private void addUnixTimeFunctions() {
-    	functions.add(new FunctionMethod(FunctionLibrary.FROM_UNIXTIME, QueryPlugin.Util.getString("SystemSource.from_unixtime_description"), DATETIME, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$ 
+    	functions.add(new FunctionMethod(IFunctionLibrary.FunctionName.FROM_UNIXTIME.text(), QueryPlugin.Util.getString("SystemSource.from_unixtime_description"), DATETIME, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$ 
     			new FunctionParameter[] {
     				new FunctionParameter("unix_timestamp", DataTypeManager.DefaultDataTypes.INTEGER, QueryPlugin.Util.getString("SystemSource.from_unixtime_param1")) //$NON-NLS-1$ //$NON-NLS-2$
     			},
@@ -1072,7 +1072,7 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
     
     private void addTypedNullIfFunction(String type) {
         functions.add(
-            new FunctionMethod(FunctionLibrary.NULLIF, QueryPlugin.Util.getString("SystemSource.nullif_description"), MISCELLANEOUS, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$ 
+            new FunctionMethod(IFunctionLibrary.FunctionName.NULLIF.text(), QueryPlugin.Util.getString("SystemSource.nullif_description"), MISCELLANEOUS, PushDown.SYNTHETIC, null, null, //$NON-NLS-1$ 
                 new FunctionParameter[] { 
                     new FunctionParameter("op1", type, QueryPlugin.Util.getString("SystemSource.nullif_param1")), //$NON-NLS-1$ //$NON-NLS-2$
                     new FunctionParameter("op2", type, QueryPlugin.Util.getString("SystemSource.nullif_param1")) }, //$NON-NLS-1$ //$NON-NLS-2$
@@ -1081,7 +1081,7 @@ public class SystemSource implements FunctionMetadataSource, FunctionCategoryCon
     
     private void addTypedCoalesceFunction(String type) {
         functions.add(
-            new FunctionMethod(FunctionLibrary.COALESCE, QueryPlugin.Util.getString("SystemSource.coalesce_description"), MISCELLANEOUS, PushDown.CAN_PUSHDOWN, FUNCTION_CLASS, "coalesce", //$NON-NLS-1$ //$NON-NLS-2$
+            new FunctionMethod(IFunctionLibrary.FunctionName.COALESCE.text(), QueryPlugin.Util.getString("SystemSource.coalesce_description"), MISCELLANEOUS, PushDown.CAN_PUSHDOWN, FUNCTION_CLASS, "coalesce", //$NON-NLS-1$ //$NON-NLS-2$
                 new FunctionParameter[] { 
                     new FunctionParameter("op1", type, QueryPlugin.Util.getString("SystemSource.coalesce_param1")), //$NON-NLS-1$ //$NON-NLS-2$
                     new FunctionParameter("op2", type, QueryPlugin.Util.getString("SystemSource.coalesce_param1")), //$NON-NLS-1$ //$NON-NLS-2$

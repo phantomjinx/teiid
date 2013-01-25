@@ -32,9 +32,9 @@ import org.teiid.core.id.IDGenerator;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.designer.query.sql.lang.ISetQuery.Operation;
 import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.language.SQLConstants.NonReserved;
 import org.teiid.query.analysis.AnalysisRecord;
-import org.teiid.query.function.FunctionLibrary;
 import org.teiid.query.metadata.QueryMetadataInterface;
 import org.teiid.query.metadata.TempMetadataAdapter;
 import org.teiid.query.metadata.TempMetadataStore;
@@ -869,7 +869,7 @@ public class RulePushAggregates implements
                 //COUNT(x) -> CONVERT(SUM(COUNT(x)), INTEGER)
                 AggregateSymbol newAgg = new AggregateSymbol("stagedAgg", NonReserved.SUM, false, partitionAgg); //$NON-NLS-1$
                 // Build conversion function to convert SUM (which returns LONG) back to INTEGER
-                Function convertFunc = new Function(FunctionLibrary.CONVERT, new Expression[] {newAgg, new Constant(DataTypeManager.getDataTypeName(partitionAgg.getType()))});
+                Function convertFunc = new Function(IFunctionLibrary.FunctionName.CONVERT.text(), new Expression[] {newAgg, new Constant(DataTypeManager.getDataTypeName(partitionAgg.getType()))});
                 ResolverVisitor.resolveLanguageObject(convertFunc, metadata);
 
                 newExpression = convertFunc;  
@@ -882,8 +882,8 @@ public class RulePushAggregates implements
                 AggregateSymbol sumSumAgg = new AggregateSymbol("stagedAgg", NonReserved.SUM, false, sumAgg); //$NON-NLS-1$
                 AggregateSymbol sumCountAgg = new AggregateSymbol("stagedAgg", NonReserved.SUM, false, countAgg); //$NON-NLS-1$
 
-                Expression convertedSum = new Function(FunctionLibrary.CONVERT, new Expression[] {sumSumAgg, new Constant(DataTypeManager.getDataTypeName(partitionAgg.getType()))});
-                Expression convertCount = new Function(FunctionLibrary.CONVERT, new Expression[] {sumCountAgg, new Constant(DataTypeManager.getDataTypeName(partitionAgg.getType()))});
+                Expression convertedSum = new Function(IFunctionLibrary.FunctionName.CONVERT.text(), new Expression[] {sumSumAgg, new Constant(DataTypeManager.getDataTypeName(partitionAgg.getType()))});
+                Expression convertCount = new Function(IFunctionLibrary.FunctionName.CONVERT.text(), new Expression[] {sumCountAgg, new Constant(DataTypeManager.getDataTypeName(partitionAgg.getType()))});
                 
                 Function divideFunc = new Function("/", new Expression[] {convertedSum, convertCount}); //$NON-NLS-1$
                 ResolverVisitor.resolveLanguageObject(divideFunc, metadata);
@@ -901,7 +901,7 @@ public class RulePushAggregates implements
                 AggregateSymbol sumCountAgg = new AggregateSymbol("stagedAgg", NonReserved.SUM, false, countAgg); //$NON-NLS-1$
                 AggregateSymbol sumSumSqAgg = new AggregateSymbol("stagedAgg", NonReserved.SUM, false, sumSqAgg); //$NON-NLS-1$
                 
-                Expression convertedSum = new Function(FunctionLibrary.CONVERT, new Expression[] {sumSumAgg, new Constant(DataTypeManager.DefaultDataTypes.DOUBLE)});
+                Expression convertedSum = new Function(IFunctionLibrary.FunctionName.CONVERT.text(), new Expression[] {sumSumAgg, new Constant(DataTypeManager.DefaultDataTypes.DOUBLE)});
 
                 Function divideFunc = new Function(SourceSystemFunctions.DIVIDE_OP, new Expression[] {new Function(SourceSystemFunctions.POWER, new Expression[] {convertedSum, new Constant(2)}), sumCountAgg}); 
                 
@@ -916,7 +916,7 @@ public class RulePushAggregates implements
                 if (aggFunction == Type.STDDEV_POP || aggFunction == Type.STDDEV_SAMP) {
                 	result = new Function(SourceSystemFunctions.SQRT, new Expression[] {result});
                 } else {
-                    result = new Function(FunctionLibrary.CONVERT, new Expression[] {result, new Constant(DataTypeManager.DefaultDataTypes.DOUBLE)});
+                    result = new Function(IFunctionLibrary.FunctionName.CONVERT.text(), new Expression[] {result, new Constant(DataTypeManager.DefaultDataTypes.DOUBLE)});
                 }
                 Expression n = new Constant(0);
                 if (aggFunction == Type.STDDEV_SAMP || aggFunction == Type.VAR_SAMP) {
