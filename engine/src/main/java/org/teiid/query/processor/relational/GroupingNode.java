@@ -41,6 +41,7 @@ import org.teiid.common.buffer.TupleBuffer;
 import org.teiid.common.buffer.TupleSource;
 import org.teiid.core.TeiidComponentException;
 import org.teiid.core.TeiidProcessingException;
+import org.teiid.designer.query.sql.symbol.IAggregateSymbol.Type;
 import org.teiid.language.SortSpecification.NullOrdering;
 import org.teiid.query.eval.Evaluator;
 import org.teiid.query.function.aggregate.*;
@@ -55,7 +56,6 @@ import org.teiid.query.sql.symbol.AggregateSymbol;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.TextLine;
-import org.teiid.query.sql.symbol.AggregateSymbol.Type;
 import org.teiid.query.sql.util.SymbolMap;
 import org.teiid.query.util.CommandContext;
 
