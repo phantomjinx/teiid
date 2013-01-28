@@ -2344,4 +2344,14 @@ public class DatabaseMetaDataImpl extends WrapperImpl implements DatabaseMetaDat
         	}
         }
 	}
+	
+    public boolean generatedKeyAlwaysReturned() throws SQLException {
+        return false;
+    }
+
+    public ResultSet getPseudoColumns(String catalog, String schemaPattern,
+            String tableNamePattern, String columnNamePattern)
+            throws SQLException {
+        throw SqlUtil.createFeatureNotSupportedException();
+    }
 }

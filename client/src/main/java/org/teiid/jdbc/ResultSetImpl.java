@@ -1733,4 +1733,13 @@ public class ResultSetImpl extends WrapperImpl implements ResultSet, BatchFetche
 			throws SQLException {
 		throw SqlUtil.createFeatureNotSupportedException();	
 	}
+
+    public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+        return DataTypeTransformer.transform(getObject(columnIndex), type);
+    }
+
+    public <T> T getObject(String columnLabel, Class<T> type)
+            throws SQLException {
+        return DataTypeTransformer.transform(getObject(columnLabel), type);
+    }
 }

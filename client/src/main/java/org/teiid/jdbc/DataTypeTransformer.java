@@ -58,6 +58,10 @@ final class DataTypeTransformer {
     	return transform(value, BigDecimal.class, "BigDecimal"); //$NON-NLS-1$
     }
     
+    static final <T> T transform(Object value, Class<T> type) throws SQLException {
+        return transform(value, type, type, type.getSimpleName());
+    }
+    
     private static final <T> T transform(Object value, Class<T> type, String typeName) throws SQLException {
     	return transform(value, type, type, typeName);
     }

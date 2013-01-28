@@ -55,7 +55,7 @@ import org.teiid.net.TeiidURL;
 
 public class TeiidDriver implements Driver {
 	
-	private static Logger logger = Logger.getLogger("org.teiid.jdbc"); //$NON-NLS-1$
+	static Logger logger = Logger.getLogger("org.teiid.jdbc"); //$NON-NLS-1$
 	static final String DRIVER_NAME = "Teiid JDBC Driver"; //$NON-NLS-1$
 	
     private static TeiidDriver INSTANCE = new TeiidDriver();
@@ -226,6 +226,10 @@ public class TeiidDriver implements Driver {
      */
     public boolean jdbcCompliant() {
         return false;
+    }
+    
+    public Logger getParentLogger() {
+        return logger;
     }
 }
 

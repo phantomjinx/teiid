@@ -756,4 +756,13 @@ public class CallableStatementImpl extends PreparedStatementImpl implements Call
 		throw SqlUtil.createFeatureNotSupportedException();
 	}
 
+    public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+        throw SqlUtil.createFeatureNotSupportedException();
+    }
+
+    public <T> T getObject(String columnLabel, Class<T> type)
+            throws SQLException {
+        throw SqlUtil.createFeatureNotSupportedException();
+    }
+
 }
