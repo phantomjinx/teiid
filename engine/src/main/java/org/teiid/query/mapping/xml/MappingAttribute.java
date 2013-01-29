@@ -29,7 +29,7 @@ import org.teiid.query.sql.symbol.ElementSymbol;
 /** 
  * A Mapping node which denotes a attribute node.
  */
-public class MappingAttribute extends MappingNode implements IMappingAttribute<MappingNode> {
+public class MappingAttribute extends MappingNode implements IMappingAttribute {
     // Element symbol in the resultset source
     ElementSymbol symbol;
     
@@ -185,13 +185,5 @@ public class MappingAttribute extends MappingNode implements IMappingAttribute<M
             }
         }
         return super.getSourceNode();
-    }
-    
-    public void setSource(String source) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public void addStagingTable(String stagingTable) {
-        throw new UnsupportedOperationException();
     }
 }

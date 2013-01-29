@@ -22,11 +22,13 @@
 
 package org.teiid.query.mapping.xml;
 
+import org.teiid.designer.xml.IMappingCommentNode;
+
 
 /** 
  * This node describes a <b>comment</b> in XML Mapping document 
  */
-public class MappingCommentNode extends MappingNode {
+public class MappingCommentNode extends MappingNode implements IMappingCommentNode {
 
     public MappingCommentNode(String comment) {
         setProperty(MappingNodeConstants.Properties.NODE_TYPE, MappingNodeConstants.COMMENT);
@@ -45,13 +47,5 @@ public class MappingCommentNode extends MappingNode {
     
     public String getComment() {
         return (String)getProperty(MappingNodeConstants.Properties.COMMENT_TEXT);
-    }
-    
-    public void setSource(String source) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public void addStagingTable(String stagingTable) {
-        throw new UnsupportedOperationException();
     }
 }
