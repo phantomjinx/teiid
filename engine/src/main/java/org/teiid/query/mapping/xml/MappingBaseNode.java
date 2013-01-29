@@ -24,8 +24,8 @@ package org.teiid.query.mapping.xml;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.teiid.core.TeiidRuntimeException;
+import org.teiid.designer.xml.IMappingBaseNode;
 import org.teiid.query.QueryPlugin;
 
 
@@ -35,7 +35,7 @@ import org.teiid.query.QueryPlugin;
  * enough to define a Element node. Specially designed for sequence, choice and all node 
  * types
  */
-public abstract class MappingBaseNode extends MappingNode {
+public abstract class MappingBaseNode extends MappingNode implements IMappingBaseNode<MappingNode> {
     // An ID on the recursive parent as to who the recursive child node is?  
     String recursionId;
     
@@ -43,6 +43,24 @@ public abstract class MappingBaseNode extends MappingNode {
         // implicit constructor
     }
     
+    @Override
+    public void addChildNode(MappingNode childNode) {
+        if (childNode instanceof MappingAllNode)
+            addAllNode((MappingAllNode) childNode);
+        else if (childNode instanceof MappingChoiceNode)
+            addChoiceNode((MappingChoiceNode) childNode);
+        else if (childNode instanceof MappingCriteriaNode)
+            addCriteriaNode((MappingCriteriaNode) childNode);
+        else if (childNode instanceof MappingElement)
+            addChildElement((MappingElement) childNode);
+        else if (childNode instanceof MappingSequenceNode)
+            addSequenceNode((MappingSequenceNode) childNode);
+        else if (childNode instanceof MappingSourceNode)
+            addSourceNode((MappingSourceNode) childNode);
+        else
+            throw new TeiidRuntimeException(QueryPlugin.Event.TEIID30457, QueryPlugin.Util.gs(QueryPlugin.Event.TEIID30457, childNode));
+    }
+
     public void setMinOccurrs(int cardinality) {
         setProperty(MappingNodeConstants.Properties.CARDINALITY_MIN_BOUND, new Integer(cardinality));
     }
