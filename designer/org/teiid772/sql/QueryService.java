@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.teiid.core.types.JDBCSQLTypeInfo;
+import org.teiid.designer.query.IProcedureService;
 import org.teiid.designer.query.IQueryFactory;
 import org.teiid.designer.query.IQueryParser;
 import org.teiid.designer.query.IQueryResolver;
@@ -73,6 +74,7 @@ import org.teiid772.sql.impl.validator.WrappedValidator;
 import org.teiid772.sql.impl.visitor.CallbackSQLStringVisitor;
 import org.teiid772.sql.impl.visitor.WrappedResolverVisitor;
 import org.teiid772.sql.impl.xml.MappingDocumentFactory;
+import org.teiid772.sql.proc.ProcedureService;
 
 /**
  *
@@ -307,6 +309,11 @@ public class QueryService implements IQueryService {
     @Override
     public IQueryResolver getQueryResolver() {
         return new WrappedQueryResolver();
+    }
+
+    @Override
+    public IProcedureService getProcedureService() {
+        return new ProcedureService();
     }
 
 }
