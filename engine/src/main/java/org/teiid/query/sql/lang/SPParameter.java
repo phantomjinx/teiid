@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.designer.query.sql.lang.ISPParameter;
 import org.teiid.query.QueryPlugin;
@@ -45,23 +44,23 @@ import org.teiid.query.sql.symbol.Expression;
 public class SPParameter implements Serializable, Cloneable, ISPParameter {
 
     /** Constant identifying an IN parameter */
-    public static final int IN = ParameterInfo.IN.ordinal();
+    public static final int IN = ParameterInfo.IN.index();
 
     /** Constant identifying an OUT parameter */
-    public static final int OUT = ParameterInfo.OUT.ordinal();
+    public static final int OUT = ParameterInfo.OUT.index();
 
     /** Constant identifying an INOUT parameter */
-    public static final int INOUT = ParameterInfo.INOUT.ordinal();
+    public static final int INOUT = ParameterInfo.INOUT.index();
 
     /** Constant identifying a RETURN parameter */
-    public static final int RETURN_VALUE = ParameterInfo.RETURN_VALUE.ordinal();
+    public static final int RETURN_VALUE = ParameterInfo.RETURN_VALUE.index();
 
     /** Constant identifying a RESULT SET parameter */
-    public static final int RESULT_SET = ParameterInfo.RESULT_SET.ordinal();
+    public static final int RESULT_SET = ParameterInfo.RESULT_SET.index();
 
     // Basic state
     private String name;        // Param name, qualified by full procedure name
-    private int parameterType = ParameterInfo.IN.ordinal();
+    private int parameterType = ParameterInfo.IN.index();
     private Class classType;
     private Expression expression;
     private int index;
@@ -124,7 +123,7 @@ public class SPParameter implements Serializable, Cloneable, ISPParameter {
      */
     public void setParameterType(int parameterType){
         // validate against above types
-        if(parameterType < ParameterInfo.IN.ordinal() || parameterType > ParameterInfo.RESULT_SET.ordinal()) {
+        if(parameterType < ParameterInfo.IN.index() || parameterType > ParameterInfo.RESULT_SET.index()) {
             throw new IllegalArgumentException(QueryPlugin.Util.getString("ERR.015.010.0006", parameterType)); //$NON-NLS-1$
         }
         this.parameterType = parameterType;
@@ -132,7 +131,7 @@ public class SPParameter implements Serializable, Cloneable, ISPParameter {
     
     @Override
     public void setParameterType(ParameterInfo parameterInfo) {
-        this.parameterType = parameterInfo.ordinal();
+        this.parameterType = parameterInfo.index();
     }
 
     /**
@@ -281,7 +280,7 @@ public class SPParameter implements Serializable, Cloneable, ISPParameter {
      * @return True if parameter is a return value, false otherwise
      */
     public boolean isInternal() {
-        return (this.parameterType == ParameterInfo.RETURN_VALUE.ordinal() || this.parameterType == ParameterInfo.RESULT_SET.ordinal());
+        return (this.parameterType == ParameterInfo.RETURN_VALUE.index() || this.parameterType == ParameterInfo.RESULT_SET.index());
     }
 
     /**
