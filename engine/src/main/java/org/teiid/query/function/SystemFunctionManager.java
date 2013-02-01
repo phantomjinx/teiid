@@ -22,7 +22,6 @@
 package org.teiid.query.function;
 
 import java.util.Collection;
-
 import org.teiid.core.CoreConstants;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.function.metadata.FunctionMetadataValidator;
@@ -40,7 +39,7 @@ public class SystemFunctionManager {
     	if(systemFunctionTree == null) { 
 	    	// Create the system source and add it to the source list
 	    	SystemSource systemSource = new SystemSource(this.allowEnvFunction);
-	
+	    	systemSource.setClassLoader(classLoader);
 			// Validate the system source - should never fail
 	        ActivityReport report = new ActivityReport("Function Validation"); //$NON-NLS-1$
 	       	validateSource(systemSource, report);
