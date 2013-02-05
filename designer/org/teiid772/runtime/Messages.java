@@ -39,6 +39,8 @@ public final class Messages extends NLS {
     public static String cannotLoadDriverClass;
     
     public static String procedureServiceTextTableSqlTemplate;
+    public static String procedureServiceXmlGetTextFilesTableSqlTemplate;
+    public static String procedureServiceXmlInvokeHttpTableSqlTemplate;
     
     static {
         NLS.initializeMessages("org.teiid772.runtime.messages", Messages.class); //$NON-NLS-1$
