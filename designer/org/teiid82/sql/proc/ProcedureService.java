@@ -9,14 +9,21 @@ package org.teiid82.sql.proc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import org.eclipse.osgi.util.NLS;
 import org.teiid.designer.query.IProcedureService;
 import org.teiid.designer.query.proc.ITeiidColumnInfo;
 import org.teiid.designer.query.proc.ITeiidMetadataFileInfo;
 import org.teiid.designer.query.proc.ITeiidXmlColumnInfo;
 import org.teiid.designer.query.proc.ITeiidXmlFileInfo;
+import org.teiid.designer.query.proc.wsdl.IWsdlRequestInfo;
+import org.teiid.designer.query.proc.wsdl.IWsdlResponseInfo;
+import org.teiid.designer.query.proc.wsdl.IWsdlWrapperInfo;
 import org.teiid.designer.query.sql.ISQLConstants;
 import org.teiid82.runtime.Messages;
+import org.teiid82.sql.proc.wsdl.WsdlRequestProcedureHelper;
+import org.teiid82.sql.proc.wsdl.WsdlResponseProcedureHelper;
+import org.teiid82.sql.proc.wsdl.WsdlWrapperHelper;
 
 /**
  *
@@ -237,6 +244,30 @@ public class ProcedureService implements IProcedureService, ISQLConstants {
             finalSQLString = NLS.bind(Messages.procedureServiceXmlGetTextFilesTableSqlTemplate, tokens.toArray(new String[0]));
         }
         return finalSQLString;
+    }
+    
+    @Override
+    public String getSQLStatement(IWsdlWrapperInfo wrapperInfo) {
+        WsdlWrapperHelper helper = new WsdlWrapperHelper(wrapperInfo);
+        return helper.getWrapperStatement();
+    }
+    
+    @Override
+    public String getSQLStatement(IWsdlWrapperInfo wrapperInfo, Properties properties) {
+        WsdlWrapperHelper helper = new WsdlWrapperHelper(wrapperInfo);
+        return helper.getWrapperProcedureStatement(properties);
+    }
+    
+    @Override
+    public String getSQLStatement(IWsdlRequestInfo requestInfo, Properties properties) {
+        WsdlRequestProcedureHelper helper = new WsdlRequestProcedureHelper(requestInfo, properties);
+        return helper.getSQLStatement();
+    }
+    
+    @Override
+    public String getSQLStatement(IWsdlResponseInfo responseInfo, Properties properties) {
+        WsdlResponseProcedureHelper helper = new WsdlResponseProcedureHelper(responseInfo, properties);
+        return helper.getSQLStatement();
     }
 
 }
