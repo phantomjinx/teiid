@@ -62,7 +62,7 @@ import org.teiid.logging.LogManager;
  */
 public class ExecutionAdmin implements IExecutionAdmin {
 
-    private static String PLUGIN_ID = "org.teiid.8-2";  //$NON-NLS-1$
+    private static String PLUGIN_ID = "org.teiid.8.2.x";  //$NON-NLS-1$
     
     /**
      * Test VDB model
