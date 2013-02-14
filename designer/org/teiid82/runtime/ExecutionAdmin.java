@@ -720,6 +720,13 @@ public class ExecutionAdmin implements IExecutionAdmin {
         throw new Exception(NLS.bind(Messages.cannotLoadDriverClass, driverClass));
     }
     
+    @Override
+    @Deprecated
+    public void mergeVdbs( String sourceVdbName, int sourceVdbVersion, 
+                                            String targetVdbName, int targetVdbVersion ) throws Exception {
+        throw new UnsupportedOperationException(Messages.mergeVdbUnsupported);
+    }
+
     /**
      * Executes VDB refresh when a VDB is loading - as a background job.
      */
