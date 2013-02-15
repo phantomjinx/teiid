@@ -183,7 +183,7 @@ public class ProcedureService implements IProcedureService, ISQLConstants {
         String proc = S_QUOTE + xmlFileInfo.getDataFile().getName() + S_QUOTE;
         if( xmlFileInfo.isUrl() ) {
             proc = S_QUOTE + GET + S_QUOTE
-                    + COMMA + SPACE + NULL
+                    + COMMA + SPACE + NULL.toLowerCase()
                     + COMMA + SPACE + S_QUOTE + xmlFileInfo.getXmlFileUrl() + S_QUOTE
                     + COMMA + SPACE + S_QUOTE + TRUE + S_QUOTE;
         }
