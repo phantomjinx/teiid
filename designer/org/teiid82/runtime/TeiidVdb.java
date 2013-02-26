@@ -76,6 +76,11 @@ public class TeiidVdb implements ITeiidVdb, Comparable<TeiidVdb> {
         return this.vdb.getName();
     }
 
+    @Override
+    public String getDeployedName() {
+        return getName();
+    }
+
     /* (non-Javadoc)
      * @see org.teiid.designer.runtime.impl.ITeiidVdb#getVersion()
      */
