@@ -25,6 +25,7 @@ package org.teiid.query.sql.lang;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.query.sql.*;
+import org.teiid.designer.query.sql.lang.INotCriteria;
 
 
 /**
@@ -32,7 +33,7 @@ import org.teiid.query.sql.*;
  * That is, if the contained criteria returns true, this criteria returns 
  * false.  For example:  "NOT (element = 5)"
  */
-public class NotCriteria extends AtomicCriteria {
+public class NotCriteria extends AtomicCriteria implements INotCriteria<LanguageVisitor> {
 
 	/**
 	 * Constructs a default instance of this class.

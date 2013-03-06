@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import org.teiid.query.function.FunctionLibrary;
+import org.teiid.designer.udf.IFunctionLibrary;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.navigator.PreOrderNavigator;
 import org.teiid.query.sql.symbol.Expression;
@@ -65,7 +65,7 @@ class ContextReplacerVisitor extends ExpressionMappingVisitor {
     public Expression replaceExpression(Expression exp) {
         if (exp instanceof Function){
             Function function = (Function)exp;
-            if (function.getName().equalsIgnoreCase(FunctionLibrary.CONTEXT)){
+            if (IFunctionLibrary.FunctionName.CONTEXT.equalsIgnoreCase(function.getName())){
                 this.contextFunctions.add(function);
                 //return 2nd argument to 'context'
                 return function.getArg(1);

@@ -23,10 +23,11 @@
 package org.teiid.query.sql.symbol;
 
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.symbol.IXMLParse;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class XMLParse implements Expression {
+public class XMLParse implements Expression, IXMLParse<LanguageVisitor> {
 
 	private boolean document;
 	private Expression expression;

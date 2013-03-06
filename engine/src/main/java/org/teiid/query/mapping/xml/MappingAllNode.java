@@ -22,12 +22,13 @@
 
 package org.teiid.query.mapping.xml;
 
+import org.teiid.designer.xml.IMappingAllNode;
 
 
 /** 
  * This defines a "All" node in the XML Schema Mapping document
  */
-public class MappingAllNode extends MappingBaseNode {
+public class MappingAllNode extends MappingBaseNode implements IMappingAllNode<MappingNode> {
 
     public MappingAllNode() {
         setProperty(MappingNodeConstants.Properties.NODE_TYPE, MappingNodeConstants.ALL);

@@ -35,6 +35,7 @@ import java.util.TreeSet;
 
 import org.teiid.api.exception.query.QueryParserException;
 import org.teiid.connector.DataPlugin;
+import org.teiid.designer.query.IQueryParser;
 import org.teiid.language.SQLConstants;
 import org.teiid.metadata.DuplicateRecordException;
 import org.teiid.metadata.FunctionMethod;
@@ -52,7 +53,7 @@ import org.teiid.query.sql.symbol.Expression;
  * input stream.  Putting multiple queries into the same stream will result
  * in unpredictable and most likely incorrect behavior.</p>
  */
-public class QueryParser implements Parser {
+public class QueryParser implements Parser, IQueryParser {
     
     private static ThreadLocal<QueryParser> QUERY_PARSER = new ThreadLocal<QueryParser>() {
         /** 

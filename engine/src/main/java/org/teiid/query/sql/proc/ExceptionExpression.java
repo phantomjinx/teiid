@@ -25,12 +25,12 @@ package org.teiid.query.sql.proc;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
-import org.teiid.query.sql.LanguageObject;
+import org.teiid.designer.query.sql.proc.IExceptionExpression;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class ExceptionExpression implements Expression, LanguageObject {
+public class ExceptionExpression implements Expression, IExceptionExpression<LanguageVisitor> {
 	
 	private Expression message;
 	private Expression sqlState;

@@ -26,12 +26,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.teiid.designer.query.sql.symbol.ISearchedCaseExpression;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Criteria;
 
 
-public class SearchedCaseExpression extends AbstractCaseExpression {
+public class SearchedCaseExpression extends AbstractCaseExpression
+    implements ISearchedCaseExpression<LanguageVisitor> {
 
     /**
      * Ordered List of Criteria in the WHEN parts of this expression.

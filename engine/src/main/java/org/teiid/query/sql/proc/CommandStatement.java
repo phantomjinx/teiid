@@ -23,6 +23,7 @@
 package org.teiid.query.sql.proc;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.proc.ICommandStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.lang.SubqueryContainer;
@@ -33,7 +34,8 @@ import org.teiid.query.sql.lang.SubqueryContainer;
  * It extends the <code>Statement</code> that could part of a block.  This statement has
  * a command that should be executed as part of the procedure.</p>
  */
-public class CommandStatement extends Statement implements SubqueryContainer {
+public class CommandStatement extends Statement
+    implements SubqueryContainer<Command>, ICommandStatement<LanguageVisitor, Command> {
 
 	// the command this statement represents
 	Command command;

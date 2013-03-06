@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.teiid.designer.query.sql.IFunctionCollectorVisitor;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageObject;
@@ -47,7 +48,8 @@ import org.teiid.query.sql.symbol.Function;
  * the visitor (and possibly the collection), run the visitor, and return the collection.
  * The public visit() methods should NOT be called directly.</p>
  */
-public class FunctionCollectorVisitor extends LanguageVisitor {
+public class FunctionCollectorVisitor extends LanguageVisitor
+    implements IFunctionCollectorVisitor<LanguageObject, Function> {    
 
     private Collection<Function> functions;
     
@@ -106,6 +108,7 @@ public class FunctionCollectorVisitor extends LanguageVisitor {
         }
     }
     
+    @Override
     public Collection<Function> findFunctions(LanguageObject obj, boolean deep) {
         if (!deep) {
             PreOrderNavigator.doVisit(obj, this);

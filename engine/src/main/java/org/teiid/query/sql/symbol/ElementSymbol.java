@@ -23,6 +23,7 @@
 package org.teiid.query.sql.symbol;
 
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IElementSymbol;
 import org.teiid.query.sql.LanguageVisitor;
 
 /**
@@ -37,10 +38,11 @@ import org.teiid.query.sql.LanguageVisitor;
  * within a command, correlated elements within a command, etc. </p>
  */
 public class ElementSymbol extends Symbol
+    implements DerivedExpression, IElementSymbol<GroupSymbol, LanguageVisitor> {
     
     private GroupSymbol groupSymbol;
     private Object metadataID;
-	private Class<?> type;
+	private Class type;
     private boolean isExternalReference;
     private boolean isAggregate;
         
@@ -201,7 +203,7 @@ public class ElementSymbol extends Symbol
 	 * Get the type of the symbol
 	 * @return Type of the symbol, may be null before resolution
 	 */
-	public Class<?> getType() {
+	public Class getType() {
 		return this.type;
 	}	
 	
@@ -209,7 +211,7 @@ public class ElementSymbol extends Symbol
 	 * Set the type of the symbol
 	 * @param type New type
 	 */
-	public void setType(Class<?> type) {
+	public void setType(Class type) {
 		this.type = type;
 	}	
 

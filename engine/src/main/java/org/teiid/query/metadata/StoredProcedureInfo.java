@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.teiid.client.metadata.ParameterInfo;
+import org.teiid.designer.query.metadata.IStoredProcedureInfo;
 import org.teiid.query.mapping.relational.QueryNode;
 import org.teiid.query.sql.lang.SPParameter;
 
@@ -35,7 +36,7 @@ import org.teiid.query.sql.lang.SPParameter;
 * and the QueryResolver via the facades
 */
 
-public class StoredProcedureInfo implements Serializable {
+public class StoredProcedureInfo implements Serializable, IStoredProcedureInfo<SPParameter, QueryNode> {
 
     /** Constant identifying an IN parameter */
     public static final int IN = ParameterInfo.IN;

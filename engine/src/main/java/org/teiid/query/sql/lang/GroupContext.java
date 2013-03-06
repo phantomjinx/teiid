@@ -28,13 +28,14 @@ import java.util.List;
 import org.teiid.core.TeiidRuntimeException;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.symbol.GroupSymbol;
+import org.teiid.designer.query.sql.lang.IGroupContext;
 
 
 /**
  *  A GroupContext represents a set of groups in a hierarchy that determines
  *  resolving order.
  */
-public class GroupContext implements Cloneable {
+public class GroupContext implements Cloneable, IGroupContext {
     
     private Collection<GroupSymbol> groups;
     

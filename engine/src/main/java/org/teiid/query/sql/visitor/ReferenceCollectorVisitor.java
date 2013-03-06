@@ -25,6 +25,7 @@ package org.teiid.query.sql.visitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.teiid.designer.query.sql.IReferenceCollectorVisitor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.navigator.DeepPreOrderNavigator;
@@ -39,7 +40,8 @@ import org.teiid.query.sql.symbol.Reference;
  * the visitor (and possibly the collection), run the visitor, and return the collection.
  * The public visit() methods should NOT be called directly.</p>
  */
-public class ReferenceCollectorVisitor extends LanguageVisitor {
+public class ReferenceCollectorVisitor extends LanguageVisitor
+    implements IReferenceCollectorVisitor<LanguageObject, Reference> {
 
     private List<Reference> references = new ArrayList<Reference>();
 
@@ -61,6 +63,7 @@ public class ReferenceCollectorVisitor extends LanguageVisitor {
         this.references.add(obj);
     }
 
+    @Override
     public List<Reference> findReferences(LanguageObject obj) {
         DeepPreOrderNavigator.doVisit(obj, this);
         return getReferences();

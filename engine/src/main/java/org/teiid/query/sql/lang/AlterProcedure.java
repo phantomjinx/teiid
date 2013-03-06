@@ -21,10 +21,13 @@
  */
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IAlterProcedure;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.proc.CreateProcedureCommand;
+import org.teiid.query.sql.symbol.Expression;
 
-public class AlterProcedure extends Alter<CreateProcedureCommand> {
+public class AlterProcedure extends Alter<CreateProcedureCommand>
+    implements IAlterProcedure<Expression, LanguageVisitor> {
 	
 	@Override
 	public void acceptVisitor(LanguageVisitor visitor) {

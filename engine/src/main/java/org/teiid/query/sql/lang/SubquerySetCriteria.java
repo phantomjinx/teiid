@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ISubquerySetCriteria;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.ExistsCriteria.SubqueryHint;
 import org.teiid.query.sql.symbol.ContextReference;
@@ -37,7 +38,8 @@ import org.teiid.query.sql.symbol.Expression;
  * of values returned from a subquery.  This criteria can be represented as
  * "<expression> IN (SELECT ...)".
  */
-public class SubquerySetCriteria extends AbstractSetCriteria implements SubqueryContainer<QueryCommand>, ContextReference {
+public class SubquerySetCriteria extends AbstractSetCriteria
+    implements SubqueryContainer<QueryCommand>, ContextReference, ISubquerySetCriteria<Expression, LanguageVisitor, QueryCommand> {
 
 	private static AtomicInteger ID = new AtomicInteger();
 
@@ -135,7 +137,7 @@ public class SubquerySetCriteria extends AbstractSetCriteria implements Subquery
     public SubquerySetCriteria clone() {
         Expression copy = null;
         if(getExpression() != null) {
-            copy = (Expression) getExpression().clone();
+            copy = getExpression().clone();
         }
 
         QueryCommand copyCommand = null;

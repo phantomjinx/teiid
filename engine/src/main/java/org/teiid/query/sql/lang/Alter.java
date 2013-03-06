@@ -26,10 +26,13 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IAlter;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.GroupSymbol;
 
-public abstract class Alter<T extends Command> extends Command {
+public abstract class Alter<T extends Command> extends Command
+    implements IAlter<Expression, LanguageVisitor> {
 	
 	private GroupSymbol target;
 	private T definition;

@@ -27,6 +27,7 @@ import java.util.List;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IXMLElement;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -35,7 +36,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 /**
  * Represents XMLATTRIBUTES/XMLFOREST name value pairs
  */
-public class XMLElement implements Expression {
+public class XMLElement implements Expression, IXMLElement<LanguageVisitor> {
 
 	private static final long serialVersionUID = -3348922701950966494L;
 	private String name;

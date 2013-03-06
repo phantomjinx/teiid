@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.proc.ICreateProcedureCommand;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Command;
@@ -42,7 +43,8 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * It extends the <code>Command</code> and represents the command for Insert , Update
  * and Delete procedures.</p>
  */
-public class CreateProcedureCommand extends Command {
+public class CreateProcedureCommand extends Command
+    implements ICreateProcedureCommand<Block, Expression, LanguageVisitor> {
 	
 	// top level block for the procedure
 	private Block block;

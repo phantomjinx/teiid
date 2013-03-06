@@ -24,6 +24,7 @@ package org.teiid.query.sql.proc;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.proc.IAssignmentStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.lang.Query;
@@ -39,7 +40,8 @@ import org.teiid.query.sql.symbol.ScalarSubquery;
  * statement holds references to the variable and it's value which could be an 
  * <code>Expression</code> or a <code>Command</code>.</p>
  */
-public class AssignmentStatement extends Statement implements ExpressionStatement {
+public class AssignmentStatement extends Statement
+    implements ExpressionStatement, IAssignmentStatement<Expression, LanguageVisitor> {
 
 	// the variable to which a value is assigned
 	private ElementSymbol variable;

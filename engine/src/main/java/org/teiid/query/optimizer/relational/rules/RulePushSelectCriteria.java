@@ -825,7 +825,7 @@ public final class RulePushSelectCriteria implements OptimizerRule {
                 return false;
             }
             
-            Collection<SubqueryContainer<?>> scalarSubqueries = ValueIteratorProviderCollectorVisitor.getValueIteratorProviders(converted);
+            Collection<SubqueryContainer> scalarSubqueries = ValueIteratorProviderCollectorVisitor.getValueIteratorProviders(converted);
             if (!scalarSubqueries.isEmpty()){
                 return false;
             }

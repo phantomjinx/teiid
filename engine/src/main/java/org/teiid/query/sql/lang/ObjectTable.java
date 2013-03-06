@@ -29,11 +29,12 @@ import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.IObjectTable;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.DerivedColumn;
 import org.teiid.query.sql.symbol.Expression;
 
-public class ObjectTable extends TableFunctionReference {
+public class ObjectTable extends TableFunctionReference implements IObjectTable<LanguageVisitor> {
 	
 	public static final String DEFAULT_LANGUAGE = "teiid_script"; //$NON-NLS-1$
 	

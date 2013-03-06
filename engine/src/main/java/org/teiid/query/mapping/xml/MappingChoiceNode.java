@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.teiid.core.TeiidRuntimeException;
+import org.teiid.designer.xml.IMappingChoiceNode;
 import org.teiid.query.QueryPlugin;
 
 
@@ -36,7 +37,8 @@ import org.teiid.query.QueryPlugin;
  * 
  * This allows only the criteria nodes to be added to choice node.
  */
-public class MappingChoiceNode extends MappingBaseNode {
+public class MappingChoiceNode extends MappingBaseNode
+    implements IMappingChoiceNode<MappingCriteriaNode, MappingNode> {
 
     public MappingChoiceNode() {
         this(false);

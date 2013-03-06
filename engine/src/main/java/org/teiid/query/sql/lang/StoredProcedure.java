@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.teiid.client.metadata.ParameterInfo;
+import org.teiid.designer.query.sql.lang.IStoredProcedure;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -44,7 +45,8 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 /**
  * Represents a StoredProcedure statement of the form:
  */
-public class StoredProcedure extends ProcedureContainer {
+public class StoredProcedure extends ProcedureContainer
+    implements IStoredProcedure<SPParameter, Expression, LanguageVisitor> {
 
     // =========================================================================
     //                         C O N S T R U C T O R S
@@ -318,6 +320,10 @@ public class StoredProcedure extends ProcedureContainer {
             return new GroupSymbol(this.getProcedureCallableName());
         }
         return group;
+    }
+    
+    public String getGroupName() {
+        return getGroup().getName();
     }
 	
 	/**

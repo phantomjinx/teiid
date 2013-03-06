@@ -25,6 +25,7 @@ package org.teiid.query.sql.lang;
 import java.util.Collection;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.IUnaryFromClause;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.GroupSymbol;
 
@@ -34,7 +35,8 @@ import org.teiid.query.sql.symbol.GroupSymbol;
  * "FROM a, b" will have two UnaryFromClause objects, each holding a reference to 
  * a GroupSymbol (for a and b).
  */
-public class UnaryFromClause extends FromClause {
+public class UnaryFromClause extends FromClause
+    implements IUnaryFromClause<GroupSymbol, LanguageVisitor> {
 
 	private GroupSymbol group;
     

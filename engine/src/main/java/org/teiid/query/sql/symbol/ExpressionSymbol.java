@@ -22,9 +22,11 @@
 
 package org.teiid.query.sql.symbol;
 
+import org.teiid.designer.query.sql.symbol.IExpressionSymbol;
 import org.teiid.query.sql.LanguageVisitor;
 
-public class ExpressionSymbol extends Symbol implements DerivedExpression {
+public class ExpressionSymbol extends Symbol
+    implements DerivedExpression, IExpressionSymbol<Expression, LanguageVisitor> {
 	private Expression expression;
 
     /**

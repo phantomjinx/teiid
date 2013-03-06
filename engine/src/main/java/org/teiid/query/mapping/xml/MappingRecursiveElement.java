@@ -22,6 +22,7 @@
 
 package org.teiid.query.mapping.xml;
 
+import org.teiid.designer.xml.IMappingRecursiveElement;
 import org.teiid.query.sql.lang.Criteria;
 
 
@@ -31,7 +32,8 @@ import org.teiid.query.sql.lang.Criteria;
  * A recursive element is that embeds the self node type of elements 
  * upto given depth limit. 
  */
-public class MappingRecursiveElement extends MappingElement {
+public class MappingRecursiveElement extends MappingElement
+    implements IMappingRecursiveElement<MappingAttribute, MappingNode> {
     Criteria criteriaNode;    
     
     public MappingRecursiveElement(String name, String mappingClass) {

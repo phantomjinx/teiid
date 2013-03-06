@@ -23,8 +23,9 @@
 package org.teiid.query.sql.lang;
 
 import org.teiid.query.sql.symbol.GroupSymbol;
+import org.teiid.designer.query.sql.lang.ITargetedCommand;
 
-public interface TargetedCommand {
+public interface TargetedCommand extends ITargetedCommand {
 
 	GroupSymbol getGroup();
 }

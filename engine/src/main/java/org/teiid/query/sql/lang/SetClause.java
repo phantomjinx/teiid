@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.ArgCheck;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ISetClause;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -31,7 +32,7 @@ import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
-public class SetClause implements LanguageObject {
+public class SetClause implements LanguageObject, ISetClause<LanguageVisitor> {
 	
 	private static final long serialVersionUID = 8174681510498719451L;
 	

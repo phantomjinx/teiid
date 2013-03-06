@@ -27,9 +27,10 @@ import java.util.Iterator;
 
 import org.teiid.core.TeiidComponentException;
 import org.teiid.query.sql.util.ValueIterator;
+import org.teiid.designer.query.sql.lang.ICollectionValueIterator;
 
 
-public class CollectionValueIterator implements ValueIterator {
+public class CollectionValueIterator implements ValueIterator, ICollectionValueIterator {
 
     private Collection vals;
     

@@ -25,8 +25,9 @@ package org.teiid.query.sql.lang;
 import org.teiid.metadata.FunctionMethod.Determinism;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 import org.teiid.translator.CacheDirective;
+import org.teiid.designer.query.sql.lang.ICacheHint;
 
-public class CacheHint extends CacheDirective {
+public class CacheHint extends CacheDirective implements ICacheHint {
 
 	private static final long serialVersionUID = -4119606289701982511L;
 	

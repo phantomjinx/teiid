@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IGroupBy;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
@@ -40,7 +41,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * GROUP BY clause.  The GROUP BY clause may not contain aliased elements,
  * expressions, or constants.
  */
-public class GroupBy implements LanguageObject {
+public class GroupBy implements LanguageObject, IGroupBy<Expression, LanguageVisitor> {
 
     /** The set of expressions for the data elements to be group. */
     private List<Expression> symbols; 

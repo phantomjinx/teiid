@@ -24,11 +24,12 @@ package org.teiid.query.sql.symbol;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IDerivedColumn;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class DerivedColumn implements LanguageObject {
+public class DerivedColumn implements LanguageObject, IDerivedColumn<LanguageVisitor> {
 
     private String alias;
     private Expression expression;

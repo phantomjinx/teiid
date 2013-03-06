@@ -22,8 +22,13 @@
 
 package org.teiid.query.mapping.xml;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import org.teiid.core.TeiidRuntimeException;
 import org.teiid.core.util.Assertion;
+import org.teiid.designer.xml.IMappingDocument;
 import org.teiid.query.QueryPlugin;
 
 
@@ -31,7 +36,7 @@ import org.teiid.query.QueryPlugin;
 /** 
  * A Mapping Node document object.
  */
-public class MappingDocument extends MappingBaseNode {
+public class MappingDocument extends MappingBaseNode implements IMappingDocument<MappingNode> {
     
     MappingBaseNode root;
     boolean formatted;
@@ -151,5 +156,33 @@ public class MappingDocument extends MappingBaseNode {
 		clone.root = (MappingBaseNode) clone.getChildren().iterator().next();
 		return clone;
     }  
+    
+    @Override
+    public String getMappingString() throws Exception{
+     // Output the mapping objects to a stream
+        String result = null;
+        OutputStream moStream = null;
+        try {
+            moStream = new ByteArrayOutputStream();
+            final PrintWriter pw = new PrintWriter(moStream, true);
+            final MappingOutputter outputter = new MappingOutputter();
+            outputter.write(this, pw); // TODO FIX/REPLACE??? , isNewlines(), isIndent());
+            pw.flush();
+
+            result = moStream.toString();
+        } catch (final Exception e) {
+            throw e;
+        } finally {
+            if (moStream != null) {
+                try {
+                    moStream.close();
+                } catch (final IOException e1) {
+                    throw e1;
+                }
+                moStream = null;
+            }
+        }
+        return result;
+    }
     
 }

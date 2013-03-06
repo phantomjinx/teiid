@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.teiid.designer.query.sql.IGroupCollectorVisitor;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
@@ -47,7 +48,8 @@ import org.teiid.query.sql.symbol.GroupSymbol;
  * the visitor (and possibly the collection), run the visitor, and get the collection.
  * The public visit() methods should NOT be called directly.</p>
  */
-public class GroupCollectorVisitor extends LanguageVisitor {
+public class GroupCollectorVisitor extends LanguageVisitor
+    implements IGroupCollectorVisitor<LanguageObject, GroupSymbol> {
 
     private Collection<GroupSymbol> groups;
 
@@ -207,11 +209,13 @@ public class GroupCollectorVisitor extends LanguageVisitor {
         return groups;
     }
     
+    @Override
     public Collection<GroupSymbol> findGroups(LanguageObject obj) {
         PreOrderNavigator.doVisit(obj, this);
         return groups;
     }
     
+    @Override
     public Collection<GroupSymbol> findGroupsIgnoreInlineViews(LanguageObject obj) {
         setIgnoreInlineViewGroups(true);
         DeepPreOrderNavigator.doVisit(obj, this);  

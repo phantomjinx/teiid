@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import java.util.Collection;
 
+import org.teiid.designer.query.sql.lang.IFromClause;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.GroupSymbol;
@@ -37,7 +38,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * is the {@link JoinPredicate} which represents a join between two FromClauses
  * and may contain criteria.
  */
-public abstract class FromClause implements LanguageObject {
+public abstract class FromClause implements LanguageObject, IFromClause<LanguageVisitor> {
 	
 	public static final String MAKEIND = "MAKEIND"; //$NON-NLS-1$
 	public static final String PRESERVE = "PRESERVE"; //$NON-NLS-1$

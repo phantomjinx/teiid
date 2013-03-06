@@ -22,13 +22,14 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IOrderByItem;
 import org.teiid.language.SortSpecification.NullOrdering;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class OrderByItem implements LanguageObject {
+public class OrderByItem implements LanguageObject, IOrderByItem<Expression, LanguageVisitor> {
 	
 	private static final long serialVersionUID = 6937561370697819126L;
 	

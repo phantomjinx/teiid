@@ -28,6 +28,7 @@ import java.util.LinkedHashSet;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ISetCriteria;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
@@ -37,7 +38,7 @@ import org.teiid.query.sql.symbol.Expression;
  * A criteria which is true is the expression's value is a member in a list 
  * of values.  This criteria can be represented as "<expression> IN (<expr>, ...)".  
  */
-public class SetCriteria extends AbstractSetCriteria {
+public class SetCriteria extends AbstractSetCriteria implements ISetCriteria<Expression, LanguageVisitor> {
 
 	/** The set of value expressions */
     private Collection values;

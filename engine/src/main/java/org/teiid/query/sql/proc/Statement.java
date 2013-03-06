@@ -22,7 +22,9 @@
 
 package org.teiid.query.sql.proc;
 
+import org.teiid.designer.query.sql.proc.IStatement;
 import org.teiid.query.sql.LanguageObject;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 /**
@@ -30,7 +32,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * The subclasses of this class represent specific statements like an
  * <code>IfStatement</code>, <code>AssignmentStatement</code> etc.</p>
  */
-public abstract class Statement implements LanguageObject {
+public abstract class Statement implements LanguageObject, IStatement<LanguageVisitor> {
 	
 	public interface Labeled {
 		String getLabel();

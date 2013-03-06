@@ -31,8 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.teiid.core.TeiidRuntimeException;
+import org.teiid.designer.xml.IMappingNode;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.symbol.ElementSymbol;
 
@@ -42,7 +42,7 @@ import org.teiid.query.sql.symbol.ElementSymbol;
  * for every entity (element or attribute) in a target XML document.
  * @see MappingNodeConstants
  */
-public abstract class MappingNode implements Cloneable, Serializable {
+public abstract class MappingNode implements Cloneable, Serializable, IMappingNode {
 
 	private static final long serialVersionUID = 6761829541871178451L;
 

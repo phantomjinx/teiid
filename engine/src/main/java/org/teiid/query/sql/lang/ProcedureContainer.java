@@ -22,10 +22,14 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IProcedureContainer;
+import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.validator.UpdateValidator.UpdateInfo;
 
 
-public abstract class ProcedureContainer extends Command implements TargetedCommand {
+public abstract class ProcedureContainer extends Command
+    implements TargetedCommand, IProcedureContainer<Expression, LanguageVisitor> {
 
     private int updateCount = -1;
     private UpdateInfo updateInfo;

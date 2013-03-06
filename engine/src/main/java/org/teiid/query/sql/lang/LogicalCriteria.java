@@ -22,11 +22,14 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.ILogicalCriteria;
+import org.teiid.query.sql.LanguageVisitor;
+
 /**
  * This class represents a criteria that works by logically combining other
  * criteria.  It is an abstract class in the hierarchy.  See subclasses for 
  * particular types of logical criteria.  
  */
-public abstract class LogicalCriteria extends Criteria {
+public abstract class LogicalCriteria extends Criteria implements ILogicalCriteria<LanguageVisitor> {
 
 }  // END CLASS

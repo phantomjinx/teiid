@@ -25,6 +25,7 @@ package org.teiid.query.mapping.relational;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.teiid.designer.query.metadata.IQueryNode;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.validator.UpdateValidator.UpdateInfo;
 
@@ -39,7 +40,7 @@ import org.teiid.query.validator.UpdateValidator.UpdateInfo;
  * <p>A QueryNode must have a group name and a query.  It may have a command (just used
  * for convenient storage during conversion - this is not persisted).</p>
  */
-public class QueryNode {
+public class QueryNode implements IQueryNode {
 
 	// Initial state
 	private String query;
