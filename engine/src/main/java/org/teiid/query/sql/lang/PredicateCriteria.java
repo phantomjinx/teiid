@@ -22,6 +22,8 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IPredicateCriteria;
+import org.teiid.query.sql.LanguageVisitor;
 
 
 /**
@@ -32,7 +34,7 @@ package org.teiid.query.sql.lang;
  * <p>Predicate criteria can be composed into more sophisticated criteria
  * using "OR" and "AND" logical operators.</P>
  */
-public abstract class PredicateCriteria extends Criteria {
+public abstract class PredicateCriteria extends Criteria implements IPredicateCriteria<LanguageVisitor> {
    
 	public interface Negatable {
 		

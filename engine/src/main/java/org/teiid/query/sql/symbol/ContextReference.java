@@ -22,7 +22,9 @@
 
 package org.teiid.query.sql.symbol;
 
-public interface ContextReference {
+import org.teiid.designer.query.sql.symbol.IContextReference;
+
+public interface ContextReference extends IContextReference {
 
 	public String getContextSymbol();
 	

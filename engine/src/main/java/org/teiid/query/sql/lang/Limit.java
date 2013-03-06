@@ -24,6 +24,7 @@ package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ILimit;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
@@ -31,7 +32,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
 
-public class Limit implements LanguageObject {
+public class Limit implements LanguageObject, ILimit<LanguageVisitor> {
 	
 	public static String NON_STRICT = "NON_STRICT"; //$NON-NLS-1$
     

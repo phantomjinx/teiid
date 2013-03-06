@@ -26,12 +26,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.teiid.designer.query.sql.IGroupsUsedByElementsVisitor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.GroupSymbol;
 
 
-public class GroupsUsedByElementsVisitor {
+public class GroupsUsedByElementsVisitor
+    implements IGroupsUsedByElementsVisitor<LanguageObject, GroupSymbol> {
 
     /**
      * Helper to quickly get the groups from obj in the elements collection
@@ -100,12 +102,14 @@ public class GroupsUsedByElementsVisitor {
         }
     }
     
+    @Override
     public Set<GroupSymbol> findGroups(LanguageObject obj) {
         Set<GroupSymbol> groups = new HashSet<GroupSymbol>();
         findGroups(obj, groups);
         return groups;
     }
 
+    @Override
     public <T extends LanguageObject> Set<GroupSymbol> findGroups(Collection<T> objects) {
         Set<GroupSymbol> groups = new HashSet<GroupSymbol>();
         findGroups(objects, groups);

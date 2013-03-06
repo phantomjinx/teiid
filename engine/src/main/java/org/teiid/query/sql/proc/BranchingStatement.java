@@ -26,13 +26,15 @@ package org.teiid.query.sql.proc;
 
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.proc.IBranchingStatement;
 import org.teiid.query.sql.LanguageVisitor;
 
 /**
  * <p> This class represents a break statement in the storedprocedure language.
  * It extends the <code>Statement</code> that could part of a block.</p>
  */
-public class BranchingStatement extends Statement {
+public class BranchingStatement extends Statement
+    implements IBranchingStatement<LanguageVisitor> {
 	
 	public enum BranchingMode {
 		/**

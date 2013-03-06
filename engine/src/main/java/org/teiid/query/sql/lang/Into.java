@@ -25,6 +25,7 @@
 package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.IInto;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.GroupSymbol;
@@ -32,10 +33,10 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
 /**
- * Rpresent INTO clause in SELECT ... INTO ... clause, which is used to create
+ * Represent INTO clause in SELECT ... INTO ... clause, which is used to create
  * temporary table.
  */
-public class Into implements LanguageObject {
+public class Into implements LanguageObject, IInto<LanguageVisitor> {
     private GroupSymbol group;
     
     /**

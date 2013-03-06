@@ -30,6 +30,7 @@ import java.util.List;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IQuery;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -52,7 +53,8 @@ import org.teiid.query.sql.visitor.AggregateSymbolCollectorVisitor;
  *	 	Option			Defines any extra options on the query
  * </pre>
  */
-public class Query extends QueryCommand implements FilteredCommand {
+public class Query extends QueryCommand implements FilteredCommand,
+    IQuery<Select, From, Into, Criteria, GroupBy, OrderBy, Query, Expression, LanguageVisitor> {
 
     /** The select clause. */
     private Select select;

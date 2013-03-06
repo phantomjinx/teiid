@@ -23,14 +23,14 @@
 package org.teiid.query.sql.symbol;
 
 import java.util.List;
-
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IJSONObject;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class JSONObject implements Expression {
+public class JSONObject implements Expression, IJSONObject<LanguageVisitor> {
 
 	private List<DerivedColumn> args;
 	

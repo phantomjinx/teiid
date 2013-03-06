@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ISelect;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -42,7 +43,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * This class represents the SELECT clause of a query, which defines what elements
  * or expressions are returned from the query.
  */
-public class Select implements LanguageObject {
+public class Select implements LanguageObject, ISelect<Expression, LanguageVisitor> {
 
     /** The set of symbols for the data elements to be selected. */
     private List<Expression> symbols = new ArrayList<Expression>();

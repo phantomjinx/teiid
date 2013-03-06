@@ -25,10 +25,11 @@ package org.teiid.query.sql.symbol;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IXMLSerialize;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
-public class XMLSerialize implements Expression {
+public class XMLSerialize implements Expression, IXMLSerialize<LanguageVisitor> {
 
 	private Boolean document;
 	private Boolean declaration;

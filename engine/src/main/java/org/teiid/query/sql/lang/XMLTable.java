@@ -8,13 +8,14 @@ import net.sf.saxon.sxpath.XPathExpression;
 import org.teiid.core.TeiidProcessingException;
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.IXMLTable;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.DerivedColumn;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.XMLNamespaces;
 import org.teiid.query.xquery.saxon.SaxonXQueryExpression;
 
-public class XMLTable extends TableFunctionReference {
+public class XMLTable extends TableFunctionReference implements IXMLTable<LanguageVisitor> {
 	
 	public static class XMLColumn extends ProjectedColumn {
 		private boolean ordinal;

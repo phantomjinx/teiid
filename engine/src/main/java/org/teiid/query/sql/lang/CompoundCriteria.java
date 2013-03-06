@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.ICompoundCriteria;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 
@@ -37,13 +38,7 @@ import org.teiid.query.sql.LanguageVisitor;
  * expression involves one or more criteria and a logical operator.  The valid
  * operators are "AND" and "OR".
  */
-public class CompoundCriteria extends LogicalCriteria {
-
-    /** Constant indicating the logical "or" of two or more criteria. */
-    public static final int OR = 1;
-
-    /** Constant indicating the logical "and" of two or more criteria.*/
-    public static final int AND = 0;
+public class CompoundCriteria extends LogicalCriteria implements ICompoundCriteria<Criteria, LanguageVisitor> {
 
     /** The criterias. */
     private List<Criteria> criteria;  // List<Criteria>

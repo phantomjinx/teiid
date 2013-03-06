@@ -22,13 +22,15 @@
 
 package org.teiid.query.sql.lang;
 
+import org.teiid.designer.query.sql.lang.IAtomicCriteria;
+import org.teiid.query.sql.LanguageVisitor;
 
 /**
  * This abstract class represents an atomic logical criteria.  An
  * atomic criteria operates on a single other criteria and evaluates
  * to true or false during processing.
  */
-public abstract class AtomicCriteria extends LogicalCriteria {
+public abstract class AtomicCriteria extends LogicalCriteria implements IAtomicCriteria<LanguageVisitor> {
 
 	/** The single sub criteria */
 	private Criteria criteria;

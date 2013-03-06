@@ -23,6 +23,7 @@
 package org.teiid.query.sql.symbol;
 
 import org.teiid.core.util.Assertion;
+import org.teiid.designer.query.sql.symbol.IAliasSymbol;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 
@@ -34,7 +35,8 @@ import org.teiid.query.sql.LanguageVisitor;
  * the type of it's underlying SingleElementSymbol.  AliasSymbols are typically
  * applied to ElementSymbol, ExpressionSymbol, and AggregateSymbol.
  */
-public class AliasSymbol extends Symbol implements DerivedExpression {
+public class AliasSymbol extends Symbol
+    implements DerivedExpression, IAliasSymbol<Expression, LanguageVisitor> {
 
 	private Expression symbol;
 

@@ -23,11 +23,14 @@
 package org.teiid.query.sql.lang;
 
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.IAlterTrigger;
 import org.teiid.metadata.Table;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.proc.TriggerAction;
+import org.teiid.query.sql.symbol.Expression;
 
-public class AlterTrigger extends Alter<TriggerAction> {
+public class AlterTrigger extends Alter<TriggerAction>
+    implements IAlterTrigger<Expression, LanguageVisitor> {
 	
 	private Table.TriggerEvent event;
 	private Boolean enabled;

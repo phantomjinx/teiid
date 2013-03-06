@@ -29,6 +29,7 @@ import java.util.List;
 import org.teiid.common.buffer.TupleSource;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IInsert;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -40,7 +41,8 @@ import org.teiid.query.sql.symbol.GroupSymbol;
  * Represents a SQL Insert statement of the form:
  * "INSERT INTO <group> (<variables>) VALUES <values>".
  */
-public class Insert extends ProcedureContainer {
+public class Insert extends ProcedureContainer
+    implements IInsert<ElementSymbol, Expression, GroupSymbol, QueryCommand, LanguageVisitor> {
 
     /** Identifies the group to be udpdated. */
     private GroupSymbol group;
@@ -280,5 +282,9 @@ public class Insert extends ProcedureContainer {
 	public void setMerge(boolean merge) {
 		this.merge = merge;
 	}
+	
+	public boolean hasTupleSource() {
+    return getTupleSource() != null;
+  }
     
 }

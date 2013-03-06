@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IDynamicCommand;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.Expression;
@@ -36,8 +37,9 @@ import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
 
-public class DynamicCommand extends Command {
-
+public class DynamicCommand extends Command
+    implements IDynamicCommand<Expression, LanguageVisitor> {
+    
     private Expression sql;
     
     private List asColumns;

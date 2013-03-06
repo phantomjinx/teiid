@@ -23,6 +23,7 @@
 package org.teiid.query.sql.proc;
 
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.proc.IRaiseStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 
@@ -32,7 +33,8 @@ import org.teiid.query.sql.symbol.Expression;
  * It extends the <code>Statement</code> that could part of a <code>Block</code>.  This
  * this object holds and error message.</p>
  */
-public class RaiseStatement extends Statement implements ExpressionStatement {
+public class RaiseStatement extends Statement
+    implements ExpressionStatement, IRaiseStatement<LanguageVisitor, Expression> {
 	
 	private Expression expression;
 	private boolean warning;

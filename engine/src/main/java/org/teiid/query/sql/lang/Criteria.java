@@ -28,6 +28,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.teiid.core.types.DataTypeManager;
+import org.teiid.designer.query.sql.lang.ICompoundCriteria;
+import org.teiid.designer.query.sql.lang.ICriteria;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -37,7 +40,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * constraints on the data values to be retrieved for each parameter in the
  * select clause. <p>
  */
-public abstract class Criteria implements Expression {
+public abstract class Criteria implements Expression, ICriteria<LanguageVisitor> {
     
     /**
      * Constructs a default instance of this class.
@@ -96,7 +99,7 @@ public abstract class Criteria implements Expression {
 	private static void separateCriteria(Criteria crit, Collection<Criteria> parts) {
 		if(crit instanceof CompoundCriteria) {
 			CompoundCriteria compCrit = (CompoundCriteria) crit;
-			if(compCrit.getOperator() == CompoundCriteria.AND) {
+			if(compCrit.getOperator() == ICompoundCriteria.AND) {
 				for (Criteria conjunct : compCrit.getCriteria()) {
 					separateCriteria(conjunct, parts);
 				}
@@ -131,13 +134,13 @@ public abstract class Criteria implements Expression {
 			return primaryCrit;
 		}
 		CompoundCriteria compCrit = new CompoundCriteria();
-		compCrit.setOperator((disjunctively?CompoundCriteria.OR:CompoundCriteria.AND));
-		if ((primaryCrit instanceof CompoundCriteria) && ((CompoundCriteria)primaryCrit).getOperator() == (disjunctively?CompoundCriteria.OR:CompoundCriteria.AND)) {
+		compCrit.setOperator((disjunctively?ICompoundCriteria.OR:ICompoundCriteria.AND));
+		if ((primaryCrit instanceof CompoundCriteria) && ((CompoundCriteria)primaryCrit).getOperator() == (disjunctively?ICompoundCriteria.OR:ICompoundCriteria.AND)) {
 			compCrit.getCriteria().addAll(((CompoundCriteria)primaryCrit).getCriteria());
 		} else {
 			compCrit.addCriteria(primaryCrit);
 		}
-		if ((additionalCrit instanceof CompoundCriteria) && ((CompoundCriteria)additionalCrit).getOperator() == (disjunctively?CompoundCriteria.OR:CompoundCriteria.AND)) {
+		if ((additionalCrit instanceof CompoundCriteria) && ((CompoundCriteria)additionalCrit).getOperator() == (disjunctively?ICompoundCriteria.OR:ICompoundCriteria.AND)) {
 			compCrit.getCriteria().addAll(((CompoundCriteria)additionalCrit).getCriteria());
 		} else {
 			compCrit.addCriteria(additionalCrit);
@@ -159,7 +162,7 @@ public abstract class Criteria implements Expression {
         
         CompoundCriteria compCrit = (CompoundCriteria)input;
         
-        int operator = (compCrit.getOperator()==CompoundCriteria.OR)?CompoundCriteria.AND:CompoundCriteria.OR;
+        int operator = (compCrit.getOperator()==ICompoundCriteria.OR)?ICompoundCriteria.AND:ICompoundCriteria.OR;
         
         List<Criteria> criteria = new ArrayList<Criteria>(compCrit.getCriteria().size());
         

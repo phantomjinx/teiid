@@ -26,7 +26,9 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IDelete;
 import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.Expression;
 import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
 
@@ -36,7 +38,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * "DELETE FROM <group> [WHERE <criteria>]".
  * Implements Command interface.
  */
-public class Delete extends TranslatableProcedureContainer implements FilteredCommand {
+public class Delete extends TranslatableProcedureContainer implements FilteredCommand, IDelete<Criteria, GroupSymbol, Expression, LanguageVisitor> {
 
     /** Identifies the group to delete data from. */
     private GroupSymbol group;

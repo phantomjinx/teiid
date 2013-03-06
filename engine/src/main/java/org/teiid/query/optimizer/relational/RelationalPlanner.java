@@ -290,7 +290,7 @@ public class RelationalPlanner {
         Set<GroupSymbol> groupSymbols = getGroupSymbols(plan);
 
         for (PlanNode node : NodeEditor.findAllNodes(plan, NodeConstants.Types.PROJECT | NodeConstants.Types.SELECT | NodeConstants.Types.JOIN | NodeConstants.Types.SOURCE | NodeConstants.Types.GROUP)) {
-            List<SubqueryContainer<?>> subqueryContainers = node.getSubqueryContainers();
+            List<SubqueryContainer> subqueryContainers = node.getSubqueryContainers();
             if (subqueryContainers.isEmpty()){
             	continue;
             }

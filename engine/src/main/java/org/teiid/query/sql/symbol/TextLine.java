@@ -30,6 +30,7 @@ import org.teiid.core.types.TransformationException;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.symbol.ITextLine;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.visitor.SQLStringVisitor;
@@ -38,7 +39,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * Represents the only allowable expression for the textagg aggregate.
  * This is a Teiid specific construct.
  */
-public class TextLine implements Expression {
+public class TextLine implements Expression, ITextLine<LanguageVisitor> {
 	public static final String nl = System.getProperty("line.separator"); //$NON-NLS-1$
 
 	private Character delimiter;

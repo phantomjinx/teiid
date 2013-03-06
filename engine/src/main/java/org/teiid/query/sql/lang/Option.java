@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.lang.IOption;
 import org.teiid.language.SQLConstants.Reserved;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
@@ -38,7 +39,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * are declared in a list after the OPTION keyword, such as:
  * "OPTION SHOWPLAN DEBUG".
  */
-public class Option implements LanguageObject {
+public class Option implements LanguageObject, IOption<LanguageVisitor> {
     
     public final static String MAKEDEP = Reserved.MAKEDEP; 
     public final static String MAKENOTDEP = Reserved.MAKENOTDEP; 

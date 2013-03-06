@@ -28,11 +28,14 @@ import java.util.List;
 
 import org.teiid.core.types.DataTypeManager;
 import org.teiid.core.util.EquivalenceUtil;
+import org.teiid.designer.query.sql.lang.ITableFunctionReference;
+import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.symbol.ElementSymbol;
 import org.teiid.query.sql.symbol.GroupSymbol;
 import org.teiid.query.sql.util.SymbolMap;
 
-public abstract class TableFunctionReference extends FromClause {
+public abstract class TableFunctionReference extends FromClause
+    implements ITableFunctionReference<LanguageVisitor> {
 	
 	public static class ProjectedColumn {
 		private String name;

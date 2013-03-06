@@ -27,6 +27,7 @@ package org.teiid.query.sql.proc;
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
 import org.teiid.core.util.StringUtil;
+import org.teiid.designer.query.sql.proc.ILoopStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.lang.Query;
@@ -41,7 +42,8 @@ import org.teiid.query.sql.proc.Statement.Labeled;
  * a block, a select statement and a cursor. 
  * determines which block should be executed..</p>
  */
-public class LoopStatement extends Statement implements SubqueryContainer, Labeled {
+public class LoopStatement extends Statement
+    implements SubqueryContainer<Command>, Labeled, ILoopStatement<LanguageVisitor, Command> {
     private String cursorName;
     private Block loopBlock;
     private Command query;

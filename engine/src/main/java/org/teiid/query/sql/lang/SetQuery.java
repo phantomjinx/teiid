@@ -49,6 +49,7 @@ import org.teiid.query.sql.util.SymbolMap;
  * INTERSECT, and EXCEPT can be implemented with this Class
  */
 public class SetQuery extends QueryCommand
+    implements ISetQuery<QueryCommand, OrderBy, Query, Expression, LanguageVisitor> {
 
 	private boolean all = true;
     private Operation operation;                     

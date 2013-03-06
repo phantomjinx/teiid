@@ -237,8 +237,8 @@ public class AnalysisRecord {
 		int index = 0;
 		for (LanguageObject languageObject : objects) {
 			values.add(languageObject.toString());
-			List<SubqueryContainer<?>> subqueries = ValueIteratorProviderCollectorVisitor.getValueIteratorProviders(objects);
-			for (ListIterator<SubqueryContainer<?>> iterator = subqueries.listIterator(); iterator.hasNext();) {
+			List<SubqueryContainer> subqueries = ValueIteratorProviderCollectorVisitor.getValueIteratorProviders(objects);
+			for (ListIterator<SubqueryContainer> iterator = subqueries.listIterator(); iterator.hasNext();) {
 				SubqueryContainer<?> subqueryContainer = iterator.next();
 				node.addProperty(key + " Subplan " + index++, subqueryContainer.getCommand().getProcessorPlan().getDescriptionProperties()); //$NON-NLS-1$
 			}

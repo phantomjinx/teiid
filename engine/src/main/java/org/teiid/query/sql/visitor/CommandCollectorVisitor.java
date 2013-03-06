@@ -25,6 +25,7 @@ package org.teiid.query.sql.visitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.teiid.designer.query.sql.ICommandCollectorVisitor;
 import org.teiid.query.sql.LanguageObject;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.BatchedUpdateCommand;
@@ -48,7 +49,8 @@ import org.teiid.query.sql.symbol.ScalarSubquery;
  * the visitor, run the visitor, and get the collection. 
  * The public visit() methods should NOT be called directly.</p>
  */
-public class CommandCollectorVisitor extends LanguageVisitor {
+public class CommandCollectorVisitor extends LanguageVisitor
+    implements ICommandCollectorVisitor<Command> {
 
     private List<Command> commands = new ArrayList<Command>();
 
@@ -116,6 +118,7 @@ public class CommandCollectorVisitor extends LanguageVisitor {
         this.commands.addAll(obj.getUpdateCommands());
     }
     
+    @Override
     public List<Command> findCommands(Command command) {
         final boolean visitCommands = command instanceof SetQuery;
         PreOrderNavigator navigator = new PreOrderNavigator(this) {

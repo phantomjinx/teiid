@@ -24,6 +24,7 @@ package org.teiid.query.sql.symbol;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.symbol.IGroupSymbol;
 import org.teiid.query.QueryPlugin;
 import org.teiid.query.sql.LanguageVisitor;
 
@@ -39,7 +40,8 @@ import org.teiid.query.sql.LanguageVisitor;
  * first would have name=G, definition=Group1 and the second would have
  * name=Group2, definition=null.</p>
  */
-public class GroupSymbol extends Symbol implements Comparable<GroupSymbol> {
+public class GroupSymbol extends Symbol
+    implements Comparable<GroupSymbol>, IGroupSymbol<LanguageVisitor> {
 	
     public static final String TEMP_GROUP_PREFIX = "#"; //$NON-NLS-1$
 

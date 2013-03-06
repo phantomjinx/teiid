@@ -24,6 +24,7 @@ package org.teiid.query.sql.proc;
 
 import org.teiid.core.util.EquivalenceUtil;
 import org.teiid.core.util.HashCodeUtil;
+import org.teiid.designer.query.sql.proc.IDeclareStatement;
 import org.teiid.query.sql.LanguageVisitor;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.symbol.ElementSymbol;
@@ -35,7 +36,7 @@ import org.teiid.query.sql.visitor.SQLStringVisitor;
  * <p> This class represents a statement used to declare variables in the 
  * storedprocedure language.</p>
  */
-public class DeclareStatement extends AssignmentStatement {
+public class DeclareStatement extends AssignmentStatement implements IDeclareStatement<Expression, LanguageVisitor> {
 
 	// type of the variable
 	private String varType;

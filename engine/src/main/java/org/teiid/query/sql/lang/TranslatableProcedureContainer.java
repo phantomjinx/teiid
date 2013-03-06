@@ -22,7 +22,12 @@
 
 package org.teiid.query.sql.lang;
 
-public abstract class TranslatableProcedureContainer extends ProcedureContainer {
+import org.teiid.designer.query.sql.lang.ITranslatableProcedureContainer;
+import org.teiid.query.sql.LanguageVisitor;
+import org.teiid.query.sql.symbol.Expression;
+
+public abstract class TranslatableProcedureContainer extends ProcedureContainer
+    implements ITranslatableProcedureContainer<Expression, LanguageVisitor> {
 	
 	public abstract Criteria getCriteria();
 }
