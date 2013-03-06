@@ -1,8 +1,17 @@
-.settings
 target
-.project
-.classpath
+.settings
 bin
-build.xml
+tmp
+
+# OS X (Mac)
 .DS_Store
 m2e-wtp
+
+# Eclipse
+.metadata
+
+# Ignore generated files
+engine/src/main/javacc/org/teiid/query/parser/*.java
+
+# Ignore maven libraries
+lib/*.jar
