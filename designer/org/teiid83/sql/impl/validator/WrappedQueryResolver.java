@@ -7,8 +7,10 @@
 */
 package org.teiid83.sql.impl.validator;
 
+import java.util.List;
 import org.teiid.designer.query.IQueryResolver;
 import org.teiid.designer.query.metadata.IQueryMetadataInterface;
+import org.teiid.designer.query.sql.symbol.IElementSymbol;
 import org.teiid.query.resolver.QueryResolver;
 import org.teiid.query.sql.lang.Command;
 import org.teiid.query.sql.symbol.GroupSymbol;
@@ -25,6 +27,12 @@ public class WrappedQueryResolver implements IQueryResolver<Command, GroupSymbol
         
         CrossQueryMetadata cqMetadata = new CrossQueryMetadata(metadata);
         QueryResolver.resolveCommand(command, gSymbol, commandType, cqMetadata, true);
+    }
+
+    @Override
+    public void postResolveCommand(Command command, GroupSymbol gSymbol, int commandType,
+                                   IQueryMetadataInterface metadata, List<IElementSymbol> projectedSymbols) {
+        // Nothing required
     }
 
 }
