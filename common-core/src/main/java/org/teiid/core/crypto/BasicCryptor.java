@@ -29,11 +29,9 @@ import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
-
 import org.teiid.core.CorePlugin;
 import org.teiid.core.util.AccessibleByteArrayOutputStream;
 import org.teiid.core.util.Base64;
@@ -145,8 +143,11 @@ public class BasicCryptor implements Cryptor {
     }
     
     public synchronized Object unsealObject(Object object) throws CryptoException {
+        System.out.println("unsealObject() -> Object instance of " + object.getClass().getSimpleName());
+        System.out.println("unsealObject() -> useSealedObject " + useSealedObject);
         if (useSealedObject) {
 	        if (!(object instanceof SealedObject)) {
+	            System.out.println("Not a sealed object");
 	            return object;
 	        }
 	        
@@ -157,6 +158,7 @@ public class BasicCryptor implements Cryptor {
 	        	if (cl != classLoader) {
 	        		Thread.currentThread().setContextClassLoader(BasicCryptor.class.getClassLoader());
 	        	}
+	        	System.out.println("Getting object from sealed object using decryptCipher" + decryptCipher);
 	            return so.getObject(decryptCipher);
 	        } catch ( Exception e ) {
 	            try {
@@ -169,7 +171,9 @@ public class BasicCryptor implements Cryptor {
 	        	Thread.currentThread().setContextClassLoader(cl);
 	        }
         }
+        System.out.println("Not using sealed object");
         if (!(object instanceof byte[])) {
+            System.out.println("Object NOT instance of byte[]");
         	return object;
         }
         byte[] bytes = (byte[])object;
@@ -245,7 +249,9 @@ public class BasicCryptor implements Cryptor {
     
     public synchronized Object sealObject(Object object) throws CryptoException {
         try {
+            System.out.println("sealObject() -> useSealedObject " + useSealedObject);
         	if (useSealedObject) {
+        	    System.out.println("Sealing object");
         		return new SealedObject((Serializable)object, encryptCipher);
         	}
         	AccessibleByteArrayOutputStream baos = new AccessibleByteArrayOutputStream(1 << 13);
