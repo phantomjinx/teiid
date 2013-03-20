@@ -35,9 +35,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.StringTokenizer;
-
 import org.teiid.core.CorePlugin;
 import org.teiid.core.TeiidRuntimeException;
 
@@ -65,9 +65,17 @@ public final class ApplicationInfo implements Serializable {
 		} catch (IOException e) {
 			  throw new TeiidRuntimeException(CorePlugin.Event.TEIID10045, e);
 		}
+		
+		Properties properties = System.getProperties();
+		for (Entry<Object, Object> property : properties.entrySet())
+		    System.out.println("System property: " + property.getKey() + " -- " + property.getValue());
+		
+		System.out.println("In private constructor");
+		getReleaseNumber();
     }
     
     public String getReleaseNumber() {
+        System.out.println("Release Number: " + props.getProperty("build.releaseNumber"));
 		return props.getProperty("build.releaseNumber"); //$NON-NLS-1$
 	}
     

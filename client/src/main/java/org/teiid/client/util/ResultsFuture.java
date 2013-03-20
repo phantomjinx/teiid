@@ -68,6 +68,9 @@ public class ResultsFuture<T> implements Future<T> {
 				if (done) {
 					throw new IllegalStateException("Already sent results"); //$NON-NLS-1$
 				}
+				if (results != null)
+				    System.out.println("Receive Results object: " + results.getClass().getSimpleName());
+				
 				result = results;
 				done = true;
 				ResultsFuture.this.notifyAll();

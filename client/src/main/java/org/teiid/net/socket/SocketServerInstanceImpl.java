@@ -140,12 +140,17 @@ public class SocketServerInstanceImpl implements SocketServerInstance {
             if (serverPublicKey != null) {
             	DhKeyGenerator keyGen = new DhKeyGenerator();
             	byte[] publicKey = keyGen.createPublicKey();
-            	System.out.println("Server version " + serverVersion);
+            	System.out.println("server version " + serverVersion);
+            	System.out.println("Comparision: " + ("8.3".compareTo(serverVersion) > 0));
                 this.cryptor = keyGen.getSymmetricCryptor(serverPublicKey, "8.3".compareTo(serverVersion) > 0, this.getClass().getClassLoader());  //$NON-NLS-1$
                 handshake.setPublicKey(publicKey);
             } else {
                 this.cryptor = new NullCryptor();
             }
+            
+            System.out.println("handshake auth type: " + handshake.getAuthType());
+            System.out.println("handshake public key: " + handshake.getPublicKey());
+            System.out.println("handshake version: " + handshake.getVersion());
             
             this.socketChannel.write(handshake);
         } catch (CryptoException e) {
@@ -315,8 +320,10 @@ public class SocketServerInstanceImpl implements SocketServerInstance {
 				Message message = new Message();
 				message.setContents(new ServiceInvocationStruct(args, method.getName(),
 						targetClass));
+				System.out.println("Secure Optional: " + secureOptional);
 				Secure secure = method.getAnnotation(Secure.class);
 				if (secure != null && (!secure.optional() || secureOptional)) {
+				    System.out.println("Sealing the contents of message");
 					message.setContents(instance.getCryptor().sealObject(message.getContents()));
 				}
 				ResultsFuture<Object> results = new ResultsFuture<Object>() {
