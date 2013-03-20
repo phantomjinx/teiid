@@ -43,7 +43,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.teiid.client.security.Secure;
 import org.teiid.client.util.ExceptionHolder;
 import org.teiid.client.util.ExceptionUtil;
@@ -141,6 +140,7 @@ public class SocketServerInstanceImpl implements SocketServerInstance {
             if (serverPublicKey != null) {
             	DhKeyGenerator keyGen = new DhKeyGenerator();
             	byte[] publicKey = keyGen.createPublicKey();
+            	System.out.println("Server version " + serverVersion);
                 this.cryptor = keyGen.getSymmetricCryptor(serverPublicKey, "8.3".compareTo(serverVersion) > 0, this.getClass().getClassLoader());  //$NON-NLS-1$
                 handshake.setPublicKey(publicKey);
             } else {
