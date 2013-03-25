@@ -45,7 +45,7 @@ public final class Messages extends NLS {
     public static String procedureServiceXmlInvokeHttpTableSqlTemplate;
     
     static {
-        NLS.initializeMessages("org.teiid82.runtime.messages", Messages.class); //$NON-NLS-1$
+        NLS.initializeMessages(Messages.class.getCanonicalName().toLowerCase(), Messages.class); //$NON-NLS-1$
     }
 
 }
